@@ -10,7 +10,7 @@ public class JellyController : MonoBehaviour
     {
         if (other.CompareTag("Player")) // 플레이어가 충돌했는지 확인
         {
-            GameManager.Instance.AddScore(scoreValue); // 점수 추가
+            //GameManager.Instance.AddScore(scoreValue); // 점수 추가
             Destroy(gameObject); // 젤리 삭제
         }
     }
