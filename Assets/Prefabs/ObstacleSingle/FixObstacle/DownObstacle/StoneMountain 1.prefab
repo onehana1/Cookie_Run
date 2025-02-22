@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 9221512431942185307}
   - component: {fileID: 1570012137653494700}
   - component: {fileID: 4146507211048680917}
+  - component: {fileID: 8431706649860222205}
   m_Layer: 0
-  m_Name: StoneMountain
+  m_Name: StoneMountain 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.45604336, y: -1.1977022, z: 0.26650468}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -160,3 +161,15 @@ PolygonCollider2D:
       - {x: 0.78499997, y: -0.91499996}
       - {x: 0.755, y: -0.835}
   m_UseDelaunayMesh: 0
+--- !u!114 &8431706649860222205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3344152910560200371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73698dbc5cb0e1b4cbd50266559c2433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

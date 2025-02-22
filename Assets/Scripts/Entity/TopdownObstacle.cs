@@ -15,7 +15,6 @@ public class TopdownObstacle : BaseObstacle
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("½ÇÇà");
         animator.enabled = true;
         base.OnDamage();
     }
