@@ -57,4 +57,13 @@ public class AnimationHandler : MonoBehaviour
         animator.ResetTrigger("isDie");
     }
 
+    public void SetRescue()
+    {
+        animator.SetTrigger("isRescue");
+    }
+    public void ResetRescue()
+    {
+        animator.ResetTrigger("isRescue");
+    }
+
 }

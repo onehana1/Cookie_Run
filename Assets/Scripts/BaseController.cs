@@ -22,15 +22,19 @@ public class BaseController : MonoBehaviour
     [SerializeField] float jumpForce = 10.0f;
     [SerializeField] float hitTime = 0.5f;
     [SerializeField] float invinvibleTime = 2.0f;
+    [SerializeField] float rescueTime = 2.0f;
 
 
 
-    
+
+
     private bool isGrounded = true;
     private bool isDoubleJump = false;
     private bool isSliding = false;
     private bool isHit = false;
     private bool isLive = true;
+    private bool isRescue = true;
+
 
 
     protected bool isFastRunning = false;
@@ -44,7 +48,13 @@ public class BaseController : MonoBehaviour
     protected virtual void Update()
     {
         if (isHit) return;
+        HandleAction();
 
+
+    }
+
+    protected void HandleAction()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
@@ -86,7 +96,7 @@ public class BaseController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D))    // 테스트
         {
-            Die();            
+            Die();
         }
     }
 
@@ -198,7 +208,19 @@ public class BaseController : MonoBehaviour
             animationHandler.ResetDie();
             animationHandler.SetRunning(1.0f);
         }
-        
     }
 
+    private void StartRescue()
+    {
+        isRescue = true;
+        animationHandler.SetRescue();
+        StartCoroutine(RescueToLand());
+    }
+
+    private IEnumerator RescueToLand()
+    {
+        yield return new WaitForSeconds(rescueTime);
+        animationHandler.SetLanding();
+        isRescue = false;
+    }
 }
