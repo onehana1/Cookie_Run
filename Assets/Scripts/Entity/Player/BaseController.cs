@@ -16,24 +16,28 @@ public class BaseController : MonoBehaviour
 
     protected Rigidbody2D rb;
     protected AnimationHandler animationHandler;
+    protected SpriteRenderer spriteRenderer;
 
 
     [SerializeField] float moveSpeed = 10.0f;
     [SerializeField] float jumpForce = 10.0f;
     [SerializeField] float hitTime = 0.5f;
-    [SerializeField] float invinvibleTime = 2.0f;
+    [SerializeField] float invinvibleTime = 3.0f;
+    [SerializeField] float blinkIntervalTime = 0.5f;    
+
     [SerializeField] float rescueTime = 2.0f;
-
-
-
-
 
     private bool isGrounded = true;
     private bool isDoubleJump = false;
     private bool isSliding = false;
     private bool isHit = false;
     private bool isLive = true;
-    private bool isRescue = true;
+    private bool isRescue = false;
+
+    [Header("Test")]
+    [SerializeField] private bool isInvincible = false;
+    [SerializeField] float groundY = -1.5f;
+    [SerializeField] float returnGroundY = 2.0f;
 
 
 
@@ -43,12 +47,28 @@ public class BaseController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animationHandler = GetComponentInChildren<AnimationHandler>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     protected virtual void Update()
     {
         if (isHit) return;
         HandleAction();
+
+        //if (isInvincible)   // 무적시간동안 안떨어지게..
+        //{
+        //    transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+
+        //}
+
+        if ( transform.position.y < groundY && isLive)
+        {
+            if (!isRescue)
+            {
+                Debug.Log("구해줘요");
+                StartRescue();
+            }
+        }
 
 
     }
@@ -98,6 +118,11 @@ public class BaseController : MonoBehaviour
         {
             Die();
         }
+
+        if (Input.GetKeyDown(KeyCode.I))    // 테스트
+        {
+            StartInvincible();
+        }
     }
 
 
@@ -142,15 +167,38 @@ public class BaseController : MonoBehaviour
     }
 
 
-
-    private void Knockback()
+    private void StartInvincible()
     {
-       
+        if (isInvincible) return;
+
+        isInvincible = true;
+        StartCoroutine(BlinkEffect());
+        StartCoroutine(EndInvincible());    
     }
 
-    private void Invincible()
+    private IEnumerator BlinkEffect()
     {
-        
+        float time = 0f;
+
+        while(time < invinvibleTime)
+        {
+            spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+            yield return new WaitForSeconds(blinkIntervalTime);
+            spriteRenderer.color = new Color(1, 1, 1, 1.0f);
+            yield return new WaitForSeconds(blinkIntervalTime);
+            time += blinkIntervalTime * 2;
+
+
+        }
+    }
+
+    private IEnumerator EndInvincible()
+    {
+
+        yield return new WaitForSeconds(invinvibleTime);
+        isInvincible = false;
+        spriteRenderer.color = new Color(1,1,1,1);
+
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D other)
@@ -179,7 +227,7 @@ public class BaseController : MonoBehaviour
 
     private void TakeHit()
     {
-        if (isHit) return;
+        if (isHit || isInvincible) return;
 
         isHit = true;
         animationHandler.SetHit(true);
@@ -212,15 +260,22 @@ public class BaseController : MonoBehaviour
 
     private void StartRescue()
     {
+        transform.position = new Vector3(transform.position.x, returnGroundY, transform.position.z);
+        rb.gravityScale = 0.0f;
         isRescue = true;
-        animationHandler.SetRescue();
+        animationHandler.SetRescue(true);
         StartCoroutine(RescueToLand());
     }
 
     private IEnumerator RescueToLand()
     {
         yield return new WaitForSeconds(rescueTime);
-        animationHandler.SetLanding();
         isRescue = false;
+        animationHandler.SetRescue(false);
+        rb.gravityScale = 1.0f;
+        Debug.Log("구해줬어요");
+
+        StartInvincible();
+
     }
 }
