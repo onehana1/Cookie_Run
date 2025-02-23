@@ -22,17 +22,17 @@ public class BaseController : MonoBehaviour
     [SerializeField] float invinvibleTiem = 2.0f;
 
 
+    
     private bool isGrounded = true;
     private bool isDoubleJump = false;
     private bool isSliding = false;
-    private bool isJump = false;
-    private bool isLanding = false;
 
+    protected bool isFastRunning = false;
 
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animationHandler = GetComponent<AnimationHandler>();
+        animationHandler = GetComponentInChildren<AnimationHandler>();
     }
 
     protected virtual void Update()
@@ -43,7 +43,7 @@ public class BaseController : MonoBehaviour
             {
                 Jump(); // 첫 번째 점프
             }
-            else if (!isDoubleJump)
+            else if (isDoubleJump)
             {
                 DoubleJump(); // 공중에서 한 번만 더 점프 가능
             }
@@ -58,12 +58,21 @@ public class BaseController : MonoBehaviour
         {
             EndSlide();
         }
+
+        if (!isGrounded && rb.velocity.y < 0)
+        {
+            animationHandler.SetFalling(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            isFastRunning = !isFastRunning; // 상태 토글
+            float newSpeed = isFastRunning ? 1.0f : 0.0f;
+            animationHandler.SetRunning(newSpeed);
+        }
+
     }
 
-    protected virtual void HandleAction()
-    {
-
-    }
 
     protected virtual void Move()
     {
@@ -75,36 +84,34 @@ public class BaseController : MonoBehaviour
     {
         if (isGrounded)
         {
-            rb.velocity = new Vector2 (0f, jumpForce);
-            isGrounded = false; // 점프했으므로 착지 상태 해제
-            isJump = true; // 점프 상태 활성화
-            // animationHandler.SetJumping(); 
+            rb.velocity = new Vector2(0f, jumpForce);
+            isGrounded = false; 
+            isDoubleJump = true;
+            animationHandler.SetJumping();
         }
     }
 
     protected virtual void DoubleJump()
     {
-        if (!isDoubleJump) // 한 번만 더블 점프 가능
-        {
-            rb.velocity = new Vector2(0f, jumpForce);
-            isDoubleJump = true; // 더블 점프 후에는 다시 점프 불가능
-            // animationHandler.SetDoubleJump();
-        }
+        if (!isDoubleJump) return;
+
+        rb.velocity = new Vector2(0f, jumpForce);
+        isDoubleJump = false; 
+        animationHandler.SetDoubleJump();
     }
 
     private void StartSlide()
     {
-        if (isJump) return;
+        if (!isGrounded) return; // 공중에서 슬라이드 x
+
         isSliding = true;
-        // animationHandler.SetSlide(isSliding);
-        rb.velocity = new Vector2(0f, 0f);
-        
+        animationHandler.SetSlide(true);
     }
 
     private void EndSlide()
     {
         isSliding = false;
-        //animationHandler.SetSlide(isSliding);
+        animationHandler.SetSlide(false);
     }
 
 
@@ -128,10 +135,9 @@ public class BaseController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true; // 바닥에 닿으면 착지 상태
-            isJump = false;
-            isDoubleJump = false; // 착지하면 다시 더블 점프 가능하도록 설정
-            // animationHandler.SetLanding(isLanding);
+            isGrounded = true;
+            isDoubleJump = false;
+            animationHandler.SetLanding(); 
         }
 
     }
@@ -140,7 +146,7 @@ public class BaseController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false; // 바닥에서 떨어졌으므로 공중 상태
+            isGrounded = false;
         }
     }
 

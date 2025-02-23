@@ -12,31 +12,34 @@ public class AnimationHandler : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void SetRunning(bool isRunning)
+    public void SetRunning(float speed)
     {
-        //animator.SetBool("isRunning", isRunning);
+        animator.SetFloat("speed", speed); // 블렌드 트리의 speed 값을 변경
     }
-    public void SetJumping(bool isJumping)
+    public void SetJumping()
     {
-        //animator.SetBool("isJumping", isJumping);
+        animator.SetTrigger("Jump");
     }
-    public void SetDoubleJump(bool isJumping)
-    {
-        //animator.SetBool("isJumping", isJumping);
 
+    public void SetDoubleJump()
+    {
+        animator.SetTrigger("DoubleJump");
     }
 
     public void SetSlide(bool isSliding)
     {
-        //animator.SetBool("isSliding", isSliding);
+        animator.SetBool("isSliding", isSliding);
     }
 
-    public void SetLanding(bool isLanding)
+
+    public void SetFalling(bool isFalling)
     {
-        //animator.SetBool("isLanding", isLanding);
+        animator.SetBool("isFalling", isFalling);
     }
 
-
-
-
+    public void SetLanding()
+    {
+        animator.SetTrigger("Land");
+        animator.SetBool("isFalling", false); 
+    }
 }
