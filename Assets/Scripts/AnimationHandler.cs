@@ -48,4 +48,13 @@ public class AnimationHandler : MonoBehaviour
         animator.SetBool("isHit", isHitting);
     }
 
+    public void SetDie()    
+    {
+        animator.SetTrigger("isDie");
+    }
+    public void ResetDie()
+    {
+        animator.ResetTrigger("isDie");
+    }
+
 }

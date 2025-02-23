@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class BaseController : MonoBehaviour
@@ -29,6 +30,8 @@ public class BaseController : MonoBehaviour
     private bool isDoubleJump = false;
     private bool isSliding = false;
     private bool isHit = false;
+    private bool isLive = true;
+
 
     protected bool isFastRunning = false;
 
@@ -72,13 +75,18 @@ public class BaseController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             isFastRunning = !isFastRunning; // 상태 토글
-            float newSpeed = isFastRunning ? 1.0f : 0.0f;
+            float newSpeed = isFastRunning ? 0.0f : 1.0f;
             animationHandler.SetRunning(newSpeed);
         }
 
         if (Input.GetKeyDown(KeyCode.H) && !isHit)
         {
             TakeHit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))    // 테스트
+        {
+            Die();            
         }
     }
 
@@ -167,6 +175,7 @@ public class BaseController : MonoBehaviour
         animationHandler.SetHit(true);
 
         StartCoroutine(ResetHitState());
+
     }
     private IEnumerator ResetHitState() // OnStateExit vs 코루틴 생각하다가 피격 애니메이션 1프레임 고정이라 코루틴 사용
     {
@@ -175,6 +184,21 @@ public class BaseController : MonoBehaviour
 
         animationHandler.SetHit(false);
         animationHandler.SetRunning(1.0f);  // 다시 뛰는 애니메이션
+    }
+
+    private void Die()
+    {
+        isLive = false;
+
+        if(!isLive)
+            animationHandler.SetDie();
+
+        else
+        {
+            animationHandler.ResetDie();
+            animationHandler.SetRunning(1.0f);
+        }
+        
     }
 
 }
