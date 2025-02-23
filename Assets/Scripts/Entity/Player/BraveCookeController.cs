@@ -8,8 +8,6 @@ public class BraveCookeController : BaseController
     protected override void Update()
     {
         base.Update();
-
-       
     }
 
 }
