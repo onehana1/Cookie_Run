@@ -18,14 +18,16 @@ public class BaseController : MonoBehaviour
     protected AnimationHandler animationHandler;
     protected SpriteRenderer spriteRenderer;
 
-
+    [Header("Character")]
     [SerializeField] float moveSpeed = 10.0f;
     [SerializeField] float jumpForce = 10.0f;
+    [Header("Time")]
     [SerializeField] float hitTime = 0.5f;
     [SerializeField] float invinvibleTime = 3.0f;
     [SerializeField] float blinkIntervalTime = 0.5f;    
-
     [SerializeField] float rescueTime = 2.0f;
+    [SerializeField] float rescueLerpTime = 0.5f;
+
 
     private bool isGrounded = true;
     private bool isDoubleJump = false;
@@ -97,7 +99,7 @@ public class BaseController : MonoBehaviour
             EndSlide();
         }
 
-        if (!isGrounded && rb.velocity.y < 0)
+        if (!isGrounded && rb.velocity.y <= 0)
         {
             animationHandler.SetFalling(true);
         }
@@ -170,17 +172,17 @@ public class BaseController : MonoBehaviour
     private void StartInvincible()
     {
         if (isInvincible) return;
-
+        Debug.Log("무적쿠키가 간다");
         isInvincible = true;
-        StartCoroutine(BlinkEffect());
+        StartCoroutine(BlinkEffect(invinvibleTime));
         StartCoroutine(EndInvincible());    
     }
 
-    private IEnumerator BlinkEffect()
+    private IEnumerator BlinkEffect(float BlinkTime)
     {
         float time = 0f;
 
-        while(time < invinvibleTime)
+        while(time < BlinkTime)
         {
             spriteRenderer.color = new Color(1, 1, 1, 0.5f);
             yield return new WaitForSeconds(blinkIntervalTime);
@@ -201,29 +203,7 @@ public class BaseController : MonoBehaviour
 
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            // 체력 감소 이벤트 넣기
-        }
 
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-            isDoubleJump = false;
-            animationHandler.SetLanding(); 
-        }
-
-    }
-
-    protected virtual void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
-    }
 
     private void TakeHit()
     {
@@ -260,22 +240,65 @@ public class BaseController : MonoBehaviour
 
     private void StartRescue()
     {
-        transform.position = new Vector3(transform.position.x, returnGroundY, transform.position.z);
+        Vector3 targetPos = new Vector3(transform.position.x, returnGroundY, transform.position.z);
         rb.gravityScale = 0.0f;
         isRescue = true;
         animationHandler.SetRescue(true);
+        StartCoroutine(LerpToRescuePoint(transform.position, targetPos));
+;
+    }
+
+    private IEnumerator LerpToRescuePoint( Vector3 startPos, Vector3 targetPos)
+    {
+        float duration = rescueLerpTime;
+        float time = 0f;
+        StartCoroutine(BlinkEffect(duration));
+        while (time < duration)
+        {
+            transform.position = Vector3.Lerp(startPos, targetPos, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetPos;
+        yield return new WaitForSeconds(rescueTime);
         StartCoroutine(RescueToLand());
     }
 
     private IEnumerator RescueToLand()
     {
-        yield return new WaitForSeconds(rescueTime);
+        if (isGrounded) yield return null;
         isRescue = false;
         animationHandler.SetRescue(false);
         rb.gravityScale = 1.0f;
         Debug.Log("구해줬어요");
 
         StartInvincible();
+        yield return null;
+    }
 
+    protected virtual void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            // 체력 감소 이벤트 넣기
+        }
+
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            animationHandler.SetLanding();
+            Debug.Log("닿았다");
+            isGrounded = true;
+            isDoubleJump = false;
+            animationHandler.SetRescue(false);
+        }
+
+    }
+
+    protected virtual void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
 }
