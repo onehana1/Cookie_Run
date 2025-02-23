@@ -42,4 +42,10 @@ public class AnimationHandler : MonoBehaviour
         animator.SetTrigger("Land");
         animator.SetBool("isFalling", false); 
     }
+
+    public void SetHit(bool isHitting)
+    {
+        animator.SetBool("isHit", isHitting);
+    }
+
 }

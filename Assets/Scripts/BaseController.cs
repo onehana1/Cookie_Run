@@ -19,13 +19,16 @@ public class BaseController : MonoBehaviour
 
     [SerializeField] float moveSpeed = 10.0f;
     [SerializeField] float jumpForce = 10.0f;
-    [SerializeField] float invinvibleTiem = 2.0f;
+    [SerializeField] float hitTime = 0.5f;
+    [SerializeField] float invinvibleTime = 2.0f;
+
 
 
     
     private bool isGrounded = true;
     private bool isDoubleJump = false;
     private bool isSliding = false;
+    private bool isHit = false;
 
     protected bool isFastRunning = false;
 
@@ -37,6 +40,8 @@ public class BaseController : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (isHit) return;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
@@ -71,6 +76,10 @@ public class BaseController : MonoBehaviour
             animationHandler.SetRunning(newSpeed);
         }
 
+        if (Input.GetKeyDown(KeyCode.H) && !isHit)
+        {
+            TakeHit();
+        }
     }
 
 
@@ -150,7 +159,22 @@ public class BaseController : MonoBehaviour
         }
     }
 
+    private void TakeHit()
+    {
+        if (isHit) return;
 
+        isHit = true;
+        animationHandler.SetHit(true);
 
+        StartCoroutine(ResetHitState());
+    }
+    private IEnumerator ResetHitState() // OnStateExit vs 코루틴 생각하다가 피격 애니메이션 1프레임 고정이라 코루틴 사용
+    {
+        yield return new WaitForSeconds(hitTime); // 피격 애니메이션 길이만큼 대기
+        isHit = false;
+
+        animationHandler.SetHit(false);
+        animationHandler.SetRunning(1.0f);  // 다시 뛰는 애니메이션
+    }
 
 }
