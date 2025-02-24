@@ -1175,6 +1175,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 803093800591688447, guid: 04f47d59350ce5647be2be0acf0dd67c, type: 3}
+      propertyPath: jumpForce
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1556818694459815704, guid: 04f47d59350ce5647be2be0acf0dd67c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.44
@@ -1214,6 +1218,14 @@ PrefabInstance:
     - target: {fileID: 1556818694459815704, guid: 04f47d59350ce5647be2be0acf0dd67c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2040109360458794497, guid: 04f47d59350ce5647be2be0acf0dd67c, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2040109360458794497, guid: 04f47d59350ce5647be2be0acf0dd67c, type: 3}
+      propertyPath: m_GravityScale
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4263156653250246002, guid: 04f47d59350ce5647be2be0acf0dd67c, type: 3}
       propertyPath: m_Name
