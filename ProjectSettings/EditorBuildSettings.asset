@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/UI/01.StartScene.unity
     guid: 871c4cbfbd3eb0143948aa998245094f
   - enabled: 1
+    path: Assets/Scenes/UI/CHB_Scene.unity
+    guid: f755dacfbc309de42bbed991d76ef993
+  - enabled: 1
+    path: Assets/Scenes/UI/ScoreScene.unity
+    guid: 2a88c9ac4a7d99242b0f8fe72de841cb
+  - enabled: 1
     path: Assets/Scenes/PHN_Scene.unity
     guid: 0ad42bc397ffc1f4ebddc6931f6fca4d
   - enabled: 1

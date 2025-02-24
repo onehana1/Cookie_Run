@@ -4,11 +4,18 @@ using UnityEngine.SceneManagement;
 public class ChangeScene : MonoBehaviour
 {
     public void ChangeGameScene()
-    {
-        SceneManager.LoadScene("PHN_Scene"); 
+    { 
+        Time.timeScale = 1;
+        SceneManager.LoadScene("CHB_Scene"); 
     }
     public void ChangeLobbyScene()
     {
-        SceneManager.LoadScene("02.LobbyScene"); 
+        Time.timeScale = 1;
+        SceneManager.LoadScene("02.LobbyScene");
+    }
+    public void ChangeScoreScene()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("ScoreScene");
     }
 }

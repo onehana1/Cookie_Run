@@ -4,21 +4,25 @@ using UnityEngine.UI;
 
 public class ScoreUI : BaseUI
 {
-    TextMeshProUGUI currentGoldText;
-
-    public override void Init(UIManager uiManager)
-    {
-        base.Init(uiManager);
-        currentGoldText = transform.Find("CurrentGold").GetComponent<TextMeshProUGUI>();
-    }
+    TextMeshProUGUI currentScoreText;
+    TextMeshProUGUI bestScoreText;
 
     protected override UIState GetUIState()
     {
         return UIState.Score;
     }
 
-    public void SetUI(int currentGold)
+    public override void Init(UIManager uiManager)
     {
-        currentGoldText.text = currentGold.ToString();
+        base.Init(uiManager);
+
+        currentScoreText = transform.Find("CurrentScoreText").GetComponent<TextMeshProUGUI>();
+        bestScoreText = transform.Find("BestScoreText").GetComponent<TextMeshProUGUI>();
+    }
+
+    public void SetUI(int currentScore,int bestScore)
+    {
+        currentScoreText.text = currentScore.ToString();
+        bestScoreText.text = bestScore.ToString();
     }
 }
