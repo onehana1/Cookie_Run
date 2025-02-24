@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Obstacle
   - Ground
-  - HealPack
+  - Item
   layers:
   - Default
   - TransparentFX

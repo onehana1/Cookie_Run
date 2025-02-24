@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JellyController : MonoBehaviour
+public class Rain_JellyController : MonoBehaviour
 {
-    public int scoreValue = 10; // Á©¸®¸¦ ¸ÔÀ¸¸é ¾ò´Â Á¡¼ö
+    public int scoreValue = 25; // Á©¸®¸¦ ¸ÔÀ¸¸é ¾ò´Â Á¡¼ö
 
-    //public int scoreValue = 10; // Á©¸® Á¡¼ö
+    //public int scoreValue = 25; // Á©¸® Á¡¼ö
 
     private void OnTriggerEnter2D(Collider2D other)
     {

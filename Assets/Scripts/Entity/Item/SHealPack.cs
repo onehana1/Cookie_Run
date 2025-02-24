@@ -10,10 +10,10 @@ public class SHealPack : MonoBehaviour
     {
         if (other.CompareTag("Player")) // 태그 "Player"
         {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>(); // 플레이어의 체력 스크립트 가져오기
-            if (playerHealth != null)
+            BaseState baseState = other.GetComponent<BaseState>(); // 플레이어의 체력 스크립트 가져오기
+            if (baseState != null)
             {
-                playerHealth.Heal(healAmount); // 체력 회복
+                //baseState.hp(healAmount); // 체력 회복
             }
 
             Destroy(gameObject); // 힐팩 아이템 삭제
