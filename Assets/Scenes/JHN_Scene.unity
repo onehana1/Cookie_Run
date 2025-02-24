@@ -562,7 +562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6600349042350563615, guid: 04f47d59350ce5647be2be0acf0dd67c, type: 3}
       propertyPath: rescueTime
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

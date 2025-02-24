@@ -128,6 +128,7 @@ public class BaseController : MonoBehaviour
     {
         if (baseState.isGrounded)
         {
+            rb.velocity = Vector2.zero;
             rb.velocity = new Vector2(0f, baseState.jumpForce);
             baseState.isGrounded = false;
             baseState.isDoubleJump = true;
@@ -220,11 +221,13 @@ public class BaseController : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
+        rb.velocity = Vector2.zero;
         StartCoroutine(StayInAir(rescueTime));
     }
 
     private IEnumerator StayInAir(float time)
     {
+        rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(time); 
         StartCoroutine(RescueToLand());
     }
@@ -234,6 +237,7 @@ public class BaseController : MonoBehaviour
         baseState.isRescue = false;
         animationHandler.SetRescue(false);
         rb.gravityScale = 1.0f;
+        rb.velocity = Vector2.zero;
         Debug.Log("구해줬어요");
 
         baseState.StartInvincibility(invinvibleTime);
