@@ -50,6 +50,9 @@ public class BaseController : MonoBehaviour
         baseState = GetComponent<BaseState>();
 
         slideColliderSize = new Vector2(originalColliderSize.x, originalColliderSize.y * 0.5f);
+
+        baseState.OnTakeDamage += HandleTakeDamage;
+        baseState.OnDie += Die;
     }
 
 
@@ -109,7 +112,7 @@ public class BaseController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.H) && !baseState.isHit)    // 데미지 테스트
         {
-            TakeHit(damage);
+            baseState.TakeDamage(damage);
         }
 
         if (Input.GetKeyDown(KeyCode.E))    // 빨리 달리기 테스트
@@ -287,13 +290,21 @@ public class BaseController : MonoBehaviour
         baseState.isBigger = false;
     }
 
+    private void HandleTakeDamage(float currentHp)
+    {
+        Debug.Log($"체력 업데이트: {currentHp}");
+        animationHandler.SetHit(true);
+        baseState.StartInvincibility(invinvibleTime);
+        StartCoroutine(BlinkEffect(invinvibleTime));
+        StartCoroutine(ResetHitState());
+    }
+
+
     private void TakeHit(float damage)
     {
         if (baseState.isHit || baseState.isInvincible) return;
 
         baseState.isHit = true;
-        animationHandler.SetHit(true);
-
         baseState.TakeDamage(damage);
 
         baseState.StartInvincibility(invinvibleTime);
@@ -311,17 +322,12 @@ public class BaseController : MonoBehaviour
 
     private void Die()
     {
+        if (!baseState.isLive) return;
+
         baseState.isLive = false;
-
-        if(!baseState.isLive)
-            animationHandler.SetDie();
-
-        else
-        {
-            animationHandler.ResetDie();
-            animationHandler.SetRunning(1.0f);
-        }
+        animationHandler.SetDie();
     }
+
 
     private void StartRescue()
     {
@@ -391,7 +397,7 @@ public class BaseController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            TakeHit(damage);
+            baseState.TakeDamage(damage);
         }
 
         if (other.gameObject.CompareTag("Ground"))
