@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class BaseController : MonoBehaviour
 {
-
-
     // 애니메이션 연결 
     // 이동 => 이 없네..
     // 점프/더블점프
@@ -18,9 +16,8 @@ public class BaseController : MonoBehaviour
     protected AnimationHandler animationHandler;
     protected SpriteRenderer spriteRenderer;
 
-    [Header("Character")]
-    [SerializeField] float moveSpeed = 10.0f;
-    [SerializeField] float jumpForce = 10.0f;
+    public BaseState baseState;
+
     [Header("Time")]
     [SerializeField] float hitTime = 0.5f;
     [SerializeField] float invinvibleTime = 3.0f;
@@ -29,32 +26,28 @@ public class BaseController : MonoBehaviour
     [SerializeField] float rescueLerpTime = 0.5f;
 
 
-    private bool isGrounded = true;
-    private bool isDoubleJump = false;
-    private bool isSliding = false;
-    private bool isHit = false;
-    private bool isLive = true;
-    private bool isRescue = false;
 
     [Header("Test")]
-    [SerializeField] private bool isInvincible = false;
     [SerializeField] float groundY = -1.5f;
     [SerializeField] float returnGroundY = 2.0f;
+    [SerializeField] float itemTime = 3.0f;
 
 
 
-    protected bool isFastRunning = false;
+
+
 
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animationHandler = GetComponentInChildren<AnimationHandler>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        baseState = GetComponent<BaseState>();
     }
 
     protected virtual void Update()
     {
-        if (isHit) return;
+        if (baseState.isHit) return;
         HandleAction();
 
         //if (isInvincible)   // 무적시간동안 안떨어지게..
@@ -63,9 +56,9 @@ public class BaseController : MonoBehaviour
 
         //}
 
-        if ( transform.position.y < groundY && isLive)
+        if ( transform.position.y < groundY && baseState.isLive)
         {
-            if (!isRescue)
+            if (!baseState.isRescue)
             {
                 Debug.Log("구해줘요");
                 StartRescue();
@@ -79,17 +72,17 @@ public class BaseController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (isGrounded)
+            if (baseState.isGrounded)
             {
                 Jump(); // 첫 번째 점프
             }
-            else if (isDoubleJump)
+            else if (baseState.isDoubleJump)
             {
                 DoubleJump(); // 공중에서 한 번만 더 점프 가능
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && baseState.isGrounded)
         {
             StartSlide();
         }
@@ -99,31 +92,36 @@ public class BaseController : MonoBehaviour
             EndSlide();
         }
 
-        if (!isGrounded && rb.velocity.y <= 0)
+        if (!baseState.isGrounded && rb.velocity.y <= 0)
         {
             animationHandler.SetFalling(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            isFastRunning = !isFastRunning; // 상태 토글
-            float newSpeed = isFastRunning ? 0.0f : 1.0f;
-            animationHandler.SetRunning(newSpeed);
-        }
+        // ========= 테스트 입니다.=========
 
-        if (Input.GetKeyDown(KeyCode.H) && !isHit)
+        if (Input.GetKeyDown(KeyCode.H) && !baseState.isHit)    // 데미지 테스트
         {
             TakeHit();
         }
 
-        if (Input.GetKeyDown(KeyCode.D))    // 테스트
+        if (Input.GetKeyDown(KeyCode.E))    // 빨리 달리기 테스트
+        {
+            SetRunningFast(itemTime);
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))    // 죽음 테스트
         {
             Die();
         }
 
-        if (Input.GetKeyDown(KeyCode.I))    // 테스트
+        if (Input.GetKeyDown(KeyCode.I))    // 무적 테스트
         {
-            StartInvincible();
+            baseState.StartInvincibility(invinvibleTime);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            SetBigger(itemTime); 
         }
     }
 
@@ -136,89 +134,157 @@ public class BaseController : MonoBehaviour
 
     protected virtual void Jump()
     {
-        if (isGrounded)
+        if (baseState.isGrounded)
         {
-            rb.velocity = new Vector2(0f, jumpForce);
-            isGrounded = false; 
-            isDoubleJump = true;
+            rb.velocity = Vector2.zero;
+            rb.velocity = new Vector2(0f, baseState.jumpForce);
+            baseState.isGrounded = false;
+            baseState.isDoubleJump = true;
             animationHandler.SetJumping();
         }
     }
 
     protected virtual void DoubleJump()
     {
-        if (!isDoubleJump) return;
+        if (!baseState.isDoubleJump) return;
 
-        rb.velocity = new Vector2(0f, jumpForce);
-        isDoubleJump = false; 
+        rb.velocity = new Vector2(0f, baseState.jumpForce);
+        baseState.isDoubleJump = false; 
         animationHandler.SetDoubleJump();
     }
 
     private void StartSlide()
     {
-        if (!isGrounded) return; // 공중에서 슬라이드 x
+        if (!baseState.isGrounded) return; // 공중에서 슬라이드 x
 
-        isSliding = true;
+        baseState.isSliding = true;
         animationHandler.SetSlide(true);
     }
 
     private void EndSlide()
     {
-        isSliding = false;
+        baseState.isSliding = false;
         animationHandler.SetSlide(false);
     }
 
+    private Coroutine runningFastCoroutine;
 
-    private void StartInvincible()
+    private void SetRunningFast(float itemTime)
     {
-        if (isInvincible) return;
-        Debug.Log("무적쿠키가 간다");
-        isInvincible = true;
-        StartCoroutine(BlinkEffect(invinvibleTime));
-        StartCoroutine(EndInvincible());    
-    }
 
-    private IEnumerator BlinkEffect(float BlinkTime)
-    {
-        float time = 0f;
-
-        while(time < BlinkTime)
+        if (baseState.isFastRunning)
         {
-            spriteRenderer.color = new Color(1, 1, 1, 0.5f);
-            yield return new WaitForSeconds(blinkIntervalTime);
-            spriteRenderer.color = new Color(1, 1, 1, 1.0f);
-            yield return new WaitForSeconds(blinkIntervalTime);
-            time += blinkIntervalTime * 2;
-
-
+            if (runningFastCoroutine != null) // 이미 켜져 있으면 끄고 다시 시작
+            {
+                StopCoroutine(runningFastCoroutine);
+            }
+            runningFastCoroutine = StartCoroutine(ResetRunningState(itemTime));
+            return;
         }
+
+        baseState.isFastRunning = true;
+        animationHandler.SetRunning(1.0f); // 빠르게 달리기 상태
+
+        runningFastCoroutine = StartCoroutine(ResetRunningState(itemTime));
     }
 
-    private IEnumerator EndInvincible()
+    private IEnumerator ResetRunningState(float itemTime)
+    {
+        yield return new WaitForSeconds(itemTime); // 주어진 시간 동안 대기
+
+        baseState.isFastRunning = false;
+        animationHandler.SetRunning(0.0f); // 원래 속도로 복귀
+    }
+
+    private Coroutine biggerCoroutine;
+
+    private void SetBigger(float itemTime)
     {
 
-        yield return new WaitForSeconds(invinvibleTime);
-        isInvincible = false;
-        spriteRenderer.color = new Color(1,1,1,1);
+        if (baseState.isBigger)
+        {
+            if(biggerCoroutine != null) // 이미 켜져 있으면 끄고 다시 시작
+            {
+                StopCoroutine(biggerCoroutine);
+            }
+            biggerCoroutine = StartCoroutine(ResetBigger(itemTime));
+            return;
+        }
+        baseState.isBigger = true;  
 
+        biggerCoroutine = StartCoroutine(GrowOverTime(itemTime));
     }
 
+    private IEnumerator ResetBigger(float itemTime)
+    {
+        yield return new WaitForSeconds(itemTime); // 주어진 시간 동안 대기
 
+        baseState.isBigger = false;
+        transform.localScale /= 2.0f;   // 원래 크기로 복귀 시킴
+    }
+
+    private IEnumerator GrowOverTime(float itemTime)
+    {
+        float duration = 0.5f;  // 크기가 커지는 데 걸리는 시간
+        float time = 0f;
+        Vector3 startScale = transform.localScale;
+        Vector3 targetScale = startScale * 2.0f;  // 2배 크기로 목표 설정
+
+
+        while (time < duration)
+        {
+            float t = time / duration;
+            transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localScale = targetScale;
+
+        yield return new WaitForSeconds(itemTime); // 유지 시간
+
+        yield return StartCoroutine(ShrinkOverTime()); // 점진적으로 원래 크기로 복귀
+    }
+
+    private IEnumerator ShrinkOverTime()
+    {
+        float duration = 0.5f; // 작아지는 시간
+        float time = 0f;
+        Vector3 startScale = transform.localScale;
+        Vector3 targetScale = startScale / 2.0f; // 원래 크기로 복귀
+
+
+        while (time < duration)
+        {
+            float t = time / duration;
+            transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localScale = targetScale;
+
+        baseState.isBigger = false;
+    }
 
     private void TakeHit()
     {
-        if (isHit || isInvincible) return;
+        if (baseState.isHit || baseState.isInvincible) return;
 
-        isHit = true;
+        baseState.isHit = true;
         animationHandler.SetHit(true);
 
+        baseState.StartInvincibility(invinvibleTime);
         StartCoroutine(ResetHitState());
 
     }
     private IEnumerator ResetHitState() // OnStateExit vs 코루틴 생각하다가 피격 애니메이션 1프레임 고정이라 코루틴 사용
     {
         yield return new WaitForSeconds(hitTime); // 피격 애니메이션 길이만큼 대기
-        isHit = false;
+        baseState.isHit = false;
 
         animationHandler.SetHit(false);
         animationHandler.SetRunning(1.0f);  // 다시 뛰는 애니메이션
@@ -226,9 +292,9 @@ public class BaseController : MonoBehaviour
 
     private void Die()
     {
-        isLive = false;
+        baseState.isLive = false;
 
-        if(!isLive)
+        if(!baseState.isLive)
             animationHandler.SetDie();
 
         else
@@ -242,7 +308,7 @@ public class BaseController : MonoBehaviour
     {
         Vector3 targetPos = new Vector3(transform.position.x, returnGroundY, transform.position.z);
         rb.gravityScale = 0.0f;
-        isRescue = true;
+        baseState.isRescue = true;
         animationHandler.SetRescue(true);
         StartCoroutine(LerpToRescuePoint(transform.position, targetPos));
 ;
@@ -260,21 +326,47 @@ public class BaseController : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
-        yield return new WaitForSeconds(rescueTime);
+        rb.velocity = Vector2.zero;
+        StartCoroutine(StayInAir(rescueTime));
+    }
+
+    private IEnumerator StayInAir(float time)
+    {
+        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(time); 
         StartCoroutine(RescueToLand());
     }
-
     private IEnumerator RescueToLand()
     {
-        if (isGrounded) yield return null;
-        isRescue = false;
+        if (baseState.isGrounded) yield return null;
+        baseState.isRescue = false;
         animationHandler.SetRescue(false);
         rb.gravityScale = 1.0f;
+        rb.velocity = Vector2.zero;
         Debug.Log("구해줬어요");
 
-        StartInvincible();
+        baseState.StartInvincibility(invinvibleTime);
         yield return null;
     }
+
+    public void StartBlinkEffect(float duration)
+    {
+        StartCoroutine(BlinkEffect(duration));
+    }
+    private IEnumerator BlinkEffect(float duration)
+    {
+        float time = 0f;
+        while (time < duration)
+        {
+            spriteRenderer.color = new Color(1, 1, 1, 0.5f); // 투명도 조절
+            yield return new WaitForSeconds(blinkIntervalTime);
+            spriteRenderer.color = new Color(1, 1, 1, 1.0f);
+            yield return new WaitForSeconds(blinkIntervalTime);
+            time += blinkIntervalTime * 2;
+        }
+        spriteRenderer.color = new Color(1, 1, 1, 1); // 원래 색으로 복구
+    }
+
 
     protected virtual void OnCollisionEnter2D(Collision2D other)
     {
@@ -287,8 +379,8 @@ public class BaseController : MonoBehaviour
         {
             animationHandler.SetLanding();
             Debug.Log("닿았다");
-            isGrounded = true;
-            isDoubleJump = false;
+            baseState.isGrounded = true;
+            baseState.isDoubleJump = false;
             animationHandler.SetRescue(false);
         }
 
@@ -298,7 +390,7 @@ public class BaseController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false;
+            baseState.isGrounded = false;
         }
     }
 }
