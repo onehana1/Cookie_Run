@@ -100,7 +100,7 @@ public class BaseController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && baseState.isGrounded)
+        if (Input.GetKey(KeyCode.LeftShift) && baseState.isGrounded)
         {
             StartSlide();
         }
@@ -181,7 +181,7 @@ public class BaseController : MonoBehaviour
 
     private void StartSlide()
     {
-        if (!baseState.isGrounded) return; // 공중에서 슬라이드 x
+        if (!baseState.isGrounded || baseState.isSliding) return; // 공중에서 슬라이드 x
 
         baseState.isSliding = true;
         animationHandler.SetSlide(true);
