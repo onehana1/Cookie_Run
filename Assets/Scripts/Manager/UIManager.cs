@@ -39,4 +39,8 @@ public class UIManager : MonoBehaviour
 
         scoreUI?.SetActive(currentState);
     }
+    public void OnClickExit()
+    {
+
+    }
 }
