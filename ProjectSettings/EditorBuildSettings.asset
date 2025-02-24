@@ -9,15 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/UIScene.unity
+    path: Assets/Scenes/UI/UIScene.unity
     guid: bf1670f5fa1c2d745a85ab2a74624102
   - enabled: 1
-    path: Assets/Scenes/StartScene.unity
+    path: Assets/Scenes/UI/01.StartScene.unity
     guid: 871c4cbfbd3eb0143948aa998245094f
   - enabled: 1
     path: Assets/Scenes/PHN_Scene.unity
     guid: 0ad42bc397ffc1f4ebddc6931f6fca4d
   - enabled: 1
-    path: Assets/Scenes/LobbyScene.unity
+    path: Assets/Scenes/UI/02.LobbyScene.unity
     guid: b0df5354167333f429070fc03e628599
   m_configObjects: {}
