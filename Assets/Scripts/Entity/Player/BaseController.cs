@@ -210,9 +210,9 @@ public class BaseController : MonoBehaviour
             biggerCoroutine = StartCoroutine(ResetBigger(itemTime));
             return;
         }
-        baseState.isBigger = true;
-        transform.localScale *= 2.0f;
-        biggerCoroutine = StartCoroutine(ResetBigger(itemTime));
+        baseState.isBigger = true;  
+
+        biggerCoroutine = StartCoroutine(GrowOverTime(itemTime));
     }
 
     private IEnumerator ResetBigger(float itemTime)
@@ -220,7 +220,54 @@ public class BaseController : MonoBehaviour
         yield return new WaitForSeconds(itemTime); // 주어진 시간 동안 대기
 
         baseState.isBigger = false;
-        transform.localScale /= 2.0f;
+        transform.localScale /= 2.0f;   // 원래 크기로 복귀 시킴
+    }
+
+    private IEnumerator GrowOverTime(float itemTime)
+    {
+        float duration = 0.5f;  // 크기가 커지는 데 걸리는 시간
+        float time = 0f;
+        Vector3 startScale = transform.localScale;
+        Vector3 targetScale = startScale * 2.0f;  // 2배 크기로 목표 설정
+
+
+        while (time < duration)
+        {
+            float t = time / duration;
+            transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localScale = targetScale;
+
+        yield return new WaitForSeconds(itemTime); // 유지 시간
+
+        yield return StartCoroutine(ShrinkOverTime()); // 점진적으로 원래 크기로 복귀
+    }
+
+    private IEnumerator ShrinkOverTime()
+    {
+        float duration = 0.5f; // 작아지는 시간
+        float time = 0f;
+        Vector3 startScale = transform.localScale;
+        Vector3 targetScale = startScale / 2.0f; // 원래 크기로 복귀
+
+
+        while (time < duration)
+        {
+            float t = time / duration;
+            transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localScale = targetScale;
+
+        baseState.isBigger = false;
     }
 
     private void TakeHit()
