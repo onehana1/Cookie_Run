@@ -16,7 +16,7 @@ public class BaseController : MonoBehaviour
     protected AnimationHandler animationHandler;
     protected SpriteRenderer spriteRenderer;
 
-    private BaseState baseState;
+    public BaseState baseState;
 
     [Header("Time")]
     [SerializeField] float hitTime = 0.5f;
@@ -26,13 +26,16 @@ public class BaseController : MonoBehaviour
     [SerializeField] float rescueLerpTime = 0.5f;
 
 
+
     [Header("Test")]
     [SerializeField] float groundY = -1.5f;
     [SerializeField] float returnGroundY = 2.0f;
+    [SerializeField] float itemTime = 3.0f;
 
 
 
-    protected bool isFastRunning = false;
+
+
 
     protected virtual void Start()
     {
@@ -94,26 +97,31 @@ public class BaseController : MonoBehaviour
             animationHandler.SetFalling(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            isFastRunning = !isFastRunning; // 상태 토글
-            float newSpeed = isFastRunning ? 0.0f : 1.0f;
-            animationHandler.SetRunning(newSpeed);
-        }
+        // ========= 테스트 입니다.=========
 
-        if (Input.GetKeyDown(KeyCode.H) && !baseState.isHit)
+        if (Input.GetKeyDown(KeyCode.H) && !baseState.isHit)    // 데미지 테스트
         {
             TakeHit();
         }
 
-        if (Input.GetKeyDown(KeyCode.D))    // 테스트
+        if (Input.GetKeyDown(KeyCode.E))    // 빨리 달리기 테스트
+        {
+            SetRunningFast(itemTime);
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))    // 죽음 테스트
         {
             Die();
         }
 
-        if (Input.GetKeyDown(KeyCode.I))    // 테스트
+        if (Input.GetKeyDown(KeyCode.I))    // 무적 테스트
         {
             baseState.StartInvincibility(invinvibleTime);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            SetBigger(itemTime); 
         }
     }
 
@@ -159,12 +167,61 @@ public class BaseController : MonoBehaviour
         animationHandler.SetSlide(false);
     }
 
+    private Coroutine runningFastCoroutine;
 
+    private void SetRunningFast(float itemTime)
+    {
 
+        if (baseState.isFastRunning)
+        {
+            if (runningFastCoroutine != null) // 이미 켜져 있으면 끄고 다시 시작
+            {
+                StopCoroutine(runningFastCoroutine);
+            }
+            runningFastCoroutine = StartCoroutine(ResetRunningState(itemTime));
+            return;
+        }
 
+        baseState.isFastRunning = true;
+        animationHandler.SetRunning(1.0f); // 빠르게 달리기 상태
 
+        runningFastCoroutine = StartCoroutine(ResetRunningState(itemTime));
+    }
 
+    private IEnumerator ResetRunningState(float itemTime)
+    {
+        yield return new WaitForSeconds(itemTime); // 주어진 시간 동안 대기
 
+        baseState.isFastRunning = false;
+        animationHandler.SetRunning(0.0f); // 원래 속도로 복귀
+    }
+
+    private Coroutine biggerCoroutine;
+
+    private void SetBigger(float itemTime)
+    {
+
+        if (baseState.isBigger)
+        {
+            if(biggerCoroutine != null) // 이미 켜져 있으면 끄고 다시 시작
+            {
+                StopCoroutine(biggerCoroutine);
+            }
+            biggerCoroutine = StartCoroutine(ResetBigger(itemTime));
+            return;
+        }
+        baseState.isBigger = true;
+        transform.localScale *= 2.0f;
+        biggerCoroutine = StartCoroutine(ResetBigger(itemTime));
+    }
+
+    private IEnumerator ResetBigger(float itemTime)
+    {
+        yield return new WaitForSeconds(itemTime); // 주어진 시간 동안 대기
+
+        baseState.isBigger = false;
+        transform.localScale /= 2.0f;
+    }
 
     private void TakeHit()
     {
@@ -173,6 +230,7 @@ public class BaseController : MonoBehaviour
         baseState.isHit = true;
         animationHandler.SetHit(true);
 
+        baseState.StartInvincibility(invinvibleTime);
         StartCoroutine(ResetHitState());
 
     }

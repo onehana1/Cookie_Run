@@ -10,15 +10,19 @@ public class BaseState : MonoBehaviour
     [SerializeField] public float moveSpeed = 10.0f;
     [SerializeField] public float jumpForce = 10.0f;
 
+    public bool isFastRunning = false;
+    public bool isBigger = false;
 
-    [Header("Test")]
-    [SerializeField] public bool isInvincible = false;
     public bool isGrounded = true;
     public bool isDoubleJump = false;
     public bool isSliding = false;
     public bool isHit = false;
     public bool isLive = true;
     public bool isRescue = false;
+
+    [Header("Test")]
+    [SerializeField] public bool isInvincible = false;
+
 
 
     private void Awake()
