@@ -83,7 +83,7 @@ public class BaseController : MonoBehaviour
     private void FixedUpdate()
     {
         OnGround();
-        transform.position = new Vector3(-7.4f, transform.position.y, 0);//플레이어 고정
+       // transform.position = new Vector3(-7.4f, transform.position.y, 0);//플레이어 고정
     }
 
     protected void HandleAction()
