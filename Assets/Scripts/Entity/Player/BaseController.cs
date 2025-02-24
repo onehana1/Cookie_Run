@@ -33,17 +33,23 @@ public class BaseController : MonoBehaviour
     [SerializeField] float itemTime = 3.0f;
 
 
-
-
+    [Header("Collider Size")]
+    private BoxCollider2D boxCollider;
+    private Vector2 originalColliderSize = new Vector2 (1.0f, 1.55f );
+    private Vector2 slideColliderSize = new Vector2(1.8f, 0.7f);
 
 
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         animationHandler = GetComponentInChildren<AnimationHandler>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         baseState = GetComponent<BaseState>();
+
+        slideColliderSize = new Vector2(originalColliderSize.x, originalColliderSize.y * 0.5f);
     }
+
 
     protected virtual void Update()
     {
@@ -159,12 +165,18 @@ public class BaseController : MonoBehaviour
 
         baseState.isSliding = true;
         animationHandler.SetSlide(true);
+
+        // 콜라이더 크기 변경
+        boxCollider.size = slideColliderSize;
     }
 
     private void EndSlide()
     {
         baseState.isSliding = false;
         animationHandler.SetSlide(false);
+
+        // 원래 크기로 복구
+        boxCollider.size = originalColliderSize;
     }
 
     private Coroutine runningFastCoroutine;
@@ -187,6 +199,9 @@ public class BaseController : MonoBehaviour
 
         runningFastCoroutine = StartCoroutine(ResetRunningState(itemTime));
     }
+
+
+
 
     private IEnumerator ResetRunningState(float itemTime)
     {
