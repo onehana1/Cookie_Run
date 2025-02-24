@@ -10,9 +10,13 @@ public class BaseJelly : MonoBehaviour
     {
         if (other.CompareTag("Player")) // 충돌한 객체가 Player인지 확인
         {
-            Debug.Log("냐미");
             GameManager.Instance.AddScore(scoreValue); // 점수 추가
             Destroy(gameObject); // 젤리 삭제
+        }
+
+        else if (other.CompareTag("Destroy"))
+        {
+            Destroy(gameObject);
         }
     }
 }

@@ -25,8 +25,8 @@ public class JellyMaker : MonoBehaviour
     Vector3 posA;
 
     float length = 1f;
-    float time = 0f;
 
+    [SerializeField] float t = 0.2f;
 
     private void Awake()
     {
@@ -66,7 +66,7 @@ public class JellyMaker : MonoBehaviour
         }
 
         //젤리의 y값 위치 수정
-        posA.y = Mathf.Lerp(posA.y, pivot.y, 0.1f);
+        posA.y = Mathf.Lerp(posA.y, pivot.y, t);
     }
 
 
@@ -75,7 +75,6 @@ public class JellyMaker : MonoBehaviour
     {
         if (collision.CompareTag("Obstacle"))
         {
-            Debug.Log(collision.name);
             pivot = collision.transform.Find("Pivot").transform.position;
             obstacleQueue.Enqueue(collision);
         }
