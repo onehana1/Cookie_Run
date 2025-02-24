@@ -24,6 +24,7 @@ public class BaseController : MonoBehaviour
     [SerializeField] float blinkIntervalTime = 0.5f;
     [SerializeField] float rescueTime = 2.0f;
     [SerializeField] float rescueLerpTime = 0.5f;
+    public float skillDuration = 5.0f;
 
 
 
@@ -32,6 +33,7 @@ public class BaseController : MonoBehaviour
     [SerializeField] float returnGroundY = 2.0f;
     [SerializeField] float itemTime = 3.0f;
     [SerializeField] float damage = 10.0f;
+
 
 
 
@@ -410,6 +412,22 @@ public class BaseController : MonoBehaviour
         spriteRenderer.color = new Color(1, 1, 1, 1); // 원래 색으로 복구
     }
 
+    private Coroutine skillCoroutine;
+    private void UseSkill(float skillDuration)
+    {
+        if (skillCoroutine != null)
+        {
+            StopCoroutine(skillCoroutine);
+        }
+        skillCoroutine = StartCoroutine(SkillAnimation(skillDuration));
+    }
+
+    private IEnumerator SkillAnimation(float duration)
+    {
+        animationHandler.SetSkill(true);
+        yield return new WaitForSeconds(duration);
+        animationHandler.SetSkill(false);
+    }
 
     protected virtual void OnCollisionEnter2D(Collision2D other)
     {

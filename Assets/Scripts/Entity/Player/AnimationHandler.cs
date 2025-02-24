@@ -62,4 +62,9 @@ public class AnimationHandler : MonoBehaviour
         animator.SetBool("isRescue", isRescue);
     }
 
+    public void SetSkill(bool isSkill)
+    {
+        animator.SetBool("isSkill", isSkill);
+    }
+
 }
