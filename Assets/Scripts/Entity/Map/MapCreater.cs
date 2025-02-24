@@ -9,7 +9,7 @@ public class MapCreater : MonoBehaviour
     public List <GameObject> maps;//생성된 맵들
     Transform firstEndAnchor = null;//첫번째 맵의 끝나는 지점
     Transform lastEndAnchor = null;//마지막 맵의 끝나는 지점
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +41,5 @@ public class MapCreater : MonoBehaviour
         go.transform.position = lastEndAnchor.position;
         lastEndAnchor = go.GetComponent<MapController>().endAnchor;
         maps.Add(go);
-
-        Debug.Log("맵 생성");
     }
 }

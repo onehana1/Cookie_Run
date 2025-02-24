@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class BaseObstacle : MonoBehaviour
 {
-    BaseState baseState;
+    protected BaseState baseState;
 
     float damage = 10f;
     protected void OnDamage()

@@ -426,7 +426,6 @@ public class BaseController : MonoBehaviour
         if (hit.collider != null)
         {
             animationHandler.SetLanding();
-            Debug.Log("닿았다");
             baseState.isGrounded = true;
             baseState.isDoubleJump = false;
             animationHandler.SetRescue(false);
