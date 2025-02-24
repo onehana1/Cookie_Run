@@ -6,9 +6,8 @@ public class FixObstacle : BaseObstacle
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("¾Æ¾ß!");
         collision.gameObject.TryGetComponent<BaseState>(out baseState);
-        if (baseState == null) return;
+        if (baseState == null) return; 
         this.OnDamage();
     }
 }
