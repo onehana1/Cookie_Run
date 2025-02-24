@@ -15,6 +15,7 @@ public class BaseState : MonoBehaviour
     public bool isBigger = false;
 
     public bool isGrounded = true;
+    public bool isJump = false;
     public bool isDoubleJump = false;
     public bool isSliding = false;
     public bool isHit = false;
@@ -41,7 +42,6 @@ public class BaseState : MonoBehaviour
         Debug.Log($"현재 체력: {hp}");
 
         OnTakeDamage?.Invoke(hp);
-
 
         if (hp <= 0)
         {

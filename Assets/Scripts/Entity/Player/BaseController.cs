@@ -21,7 +21,7 @@ public class BaseController : MonoBehaviour
     [Header("Time")]
     [SerializeField] float hitTime = 0.5f;
     [SerializeField] float invinvibleTime = 3.0f;
-    [SerializeField] float blinkIntervalTime = 0.5f;    
+    [SerializeField] float blinkIntervalTime = 0.5f;
     [SerializeField] float rescueTime = 2.0f;
     [SerializeField] float rescueLerpTime = 0.5f;
 
@@ -37,9 +37,12 @@ public class BaseController : MonoBehaviour
 
     [Header("Collider Size")]
     private BoxCollider2D boxCollider;
-    private Vector2 originalColliderSize = new Vector2 (1.0f, 1.55f );
+    private Vector2 originalColliderSize = new Vector2(1.0f, 1.55f);
     private Vector2 slideColliderSize = new Vector2(1.8f, 0.7f);
 
+    [Header("Raycast")]
+    public float rayDistance = 1f;
+    public LayerMask groundLayer;
 
     protected virtual void Start()
     {
@@ -67,7 +70,7 @@ public class BaseController : MonoBehaviour
 
         //}
 
-        if ( transform.position.y < groundY && baseState.isLive)
+        if (transform.position.y < groundY && baseState.isLive)
         {
             if (!baseState.isRescue)
             {
@@ -75,8 +78,12 @@ public class BaseController : MonoBehaviour
                 StartRescue();
             }
         }
+    }
 
-
+    private void FixedUpdate()
+    {
+        OnGround();
+       // transform.position = new Vector3(-7.4f, transform.position.y, 0);//플레이어 고정
     }
 
     protected void HandleAction()
@@ -132,7 +139,7 @@ public class BaseController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            SetBigger(itemTime); 
+            SetBigger(itemTime);
         }
     }
 
@@ -145,6 +152,13 @@ public class BaseController : MonoBehaviour
 
     protected virtual void Jump()
     {
+        baseState.isJump = true;
+
+        if (baseState.isSliding)
+        {
+            EndSlide();
+        }
+
         if (baseState.isGrounded)
         {
             rb.velocity = Vector2.zero;
@@ -160,7 +174,8 @@ public class BaseController : MonoBehaviour
         if (!baseState.isDoubleJump) return;
 
         rb.velocity = new Vector2(0f, baseState.jumpForce);
-        baseState.isDoubleJump = false; 
+        baseState.isDoubleJump = false;
+        baseState.isJump = false;
         animationHandler.SetDoubleJump();
     }
 
@@ -173,6 +188,7 @@ public class BaseController : MonoBehaviour
 
         // 콜라이더 크기 변경
         boxCollider.size = slideColliderSize;
+        transform.position += new Vector3(0, -0.4f, 0);
     }
 
     private void EndSlide()
@@ -182,6 +198,7 @@ public class BaseController : MonoBehaviour
 
         // 원래 크기로 복구
         boxCollider.size = originalColliderSize;
+        transform.position += new Vector3(0, 0.4f, 0);
     }
 
     private Coroutine runningFastCoroutine;
@@ -223,14 +240,14 @@ public class BaseController : MonoBehaviour
 
         if (baseState.isBigger)
         {
-            if(biggerCoroutine != null) // 이미 켜져 있으면 끄고 다시 시작
+            if (biggerCoroutine != null) // 이미 켜져 있으면 끄고 다시 시작
             {
                 StopCoroutine(biggerCoroutine);
             }
             biggerCoroutine = StartCoroutine(ResetBigger(itemTime));
             return;
         }
-        baseState.isBigger = true;  
+        baseState.isBigger = true;
 
         biggerCoroutine = StartCoroutine(GrowOverTime(itemTime));
     }
@@ -336,10 +353,10 @@ public class BaseController : MonoBehaviour
         baseState.isRescue = true;
         animationHandler.SetRescue(true);
         StartCoroutine(LerpToRescuePoint(transform.position, targetPos));
-;
+        ;
     }
 
-    private IEnumerator LerpToRescuePoint( Vector3 startPos, Vector3 targetPos)
+    private IEnumerator LerpToRescuePoint(Vector3 startPos, Vector3 targetPos)
     {
         float duration = rescueLerpTime;
         float time = 0f;
@@ -358,7 +375,7 @@ public class BaseController : MonoBehaviour
     private IEnumerator StayInAir(float time)
     {
         rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(time); 
+        yield return new WaitForSeconds(time);
         StartCoroutine(RescueToLand());
     }
     private IEnumerator RescueToLand()
@@ -399,8 +416,13 @@ public class BaseController : MonoBehaviour
         {
             baseState.TakeDamage(damage);
         }
+    }
 
-        if (other.gameObject.CompareTag("Ground"))
+    protected virtual void OnGround()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, rayDistance, groundLayer);
+
+        if (hit.collider != null)
         {
             animationHandler.SetLanding();
             Debug.Log("닿았다");
@@ -408,14 +430,15 @@ public class BaseController : MonoBehaviour
             baseState.isDoubleJump = false;
             animationHandler.SetRescue(false);
         }
-
-    }
-
-    protected virtual void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
+        else
         {
             baseState.isGrounded = false;
+            if(baseState.isJump == true)
+            {
+                baseState.isDoubleJump = true;
+            }
         }
+
+        Debug.DrawRay(transform.position, Vector2.down * rayDistance, Color.red);
     }
 }
