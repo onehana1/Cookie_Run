@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 29665309}
   m_Layer: 0
   m_Name: DestoryZone
-  m_TagString: Untagged
+  m_TagString: Destroy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3979,6 +3979,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JellyObject: {fileID: 1189102931}
   jellyPrefab: {fileID: 3353432929581710772, guid: b5f816331c7eade43992cfd65cb7bb24, type: 3}
+  t: 0.2
 --- !u!61 &2048332442
 BoxCollider2D:
   m_ObjectHideFlags: 0

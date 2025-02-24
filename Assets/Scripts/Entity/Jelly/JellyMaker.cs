@@ -26,6 +26,8 @@ public class JellyMaker : MonoBehaviour
 
     float length = 1f;
 
+    [SerializeField] float t = 0.2f;
+
     private void Awake()
     {
         pivot = groundVector;
@@ -64,7 +66,7 @@ public class JellyMaker : MonoBehaviour
         }
 
         //젤리의 y값 위치 수정
-        posA.y = Mathf.Lerp(posA.y, pivot.y, 0.01f);
+        posA.y = Mathf.Lerp(posA.y, pivot.y, t);
     }
 
 
