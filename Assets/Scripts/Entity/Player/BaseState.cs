@@ -42,7 +42,6 @@ public class BaseState : MonoBehaviour
 
         OnTakeDamage?.Invoke(hp);
 
-
         if (hp <= 0)
         {
             hp = 0;

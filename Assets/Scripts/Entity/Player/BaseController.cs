@@ -145,6 +145,12 @@ public class BaseController : MonoBehaviour
 
     protected virtual void Jump()
     {
+
+        if (baseState.isSliding) 
+        {
+            EndSlide();
+        }
+
         if (baseState.isGrounded)
         {
             rb.velocity = Vector2.zero;
