@@ -15,6 +15,7 @@ public class TopdownObstacle : BaseObstacle
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        baseState = collision.gameObject.GetComponent<BaseState>();
         animator.enabled = true;
         base.OnDamage();
     }

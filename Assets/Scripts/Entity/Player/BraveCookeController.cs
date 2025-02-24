@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BraveCookeController : BaseController
 {
-    [SerializeField] private float skillDurationTime;
     [SerializeField] private float skillCollTime;
 
 
@@ -12,6 +11,7 @@ public class BraveCookeController : BaseController
     protected override void Update()
     {
         base.Update();
+        HandleSkill();
     }
 
     private void HandleSkill()
@@ -25,12 +25,19 @@ public class BraveCookeController : BaseController
     private IEnumerator BraveSkill()
     {
         Debug.Log("스킬 사용");
-        float originalSpeed = baseState.moveSpeed;
-        baseState.moveSpeed *= 2;  // 2배 속도로 대시
+        baseState.isInvincible = true;
+        animationHandler.SetSkill(true);
 
-        yield return new WaitForSeconds(1.0f); // 1초 동안 지속
+        float duration = skillDuration;
 
-        baseState.moveSpeed = originalSpeed;  // 원래 속도로 복구
+        while (duration > 0)
+        {
+            duration -= Time.deltaTime;
+            yield return null;
+        }
+
+        animationHandler.SetSkill(false);
+        baseState.isInvincible = false;
     }
 
 
