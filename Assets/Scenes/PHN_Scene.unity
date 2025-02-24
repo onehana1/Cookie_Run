@@ -336,6 +336,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BraveCookie
       objectReference: {fileID: 0}
+    - target: {fileID: 4263156653250246002, guid: 04f47d59350ce5647be2be0acf0dd67c, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6600349042350563615, guid: 04f47d59350ce5647be2be0acf0dd67c, type: 3}
       propertyPath: groundY
       value: -3.5
@@ -762,6 +766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8abd187547771c0409e8271e78abfa36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
 --- !u!4 &452931290
 Transform:
   m_ObjectHideFlags: 0
@@ -3936,7 +3941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JellyObject: {fileID: 1712319636}
-  jellyPrefab: {fileID: 4152239093409816027, guid: 13c93bd56854aa548937c7d0ff53c9be, type: 3}
+  jellyPrefab: {fileID: 2727596286690318046, guid: a55e1d7aa5316cc499e5bde8dad9e55e, type: 3}
 --- !u!61 &2048332442
 BoxCollider2D:
   m_ObjectHideFlags: 0

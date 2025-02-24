@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     //Á¡¼ö
-    public int Score;
+    public int score;
 
     public static GameManager Instance
     {
@@ -24,6 +24,6 @@ public class GameManager : MonoBehaviour
 
     internal void AddScore(int scoreValue)
     {
-        Score += scoreValue;
+        score += scoreValue;
     }
 }
