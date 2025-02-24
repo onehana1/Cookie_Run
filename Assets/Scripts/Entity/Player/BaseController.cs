@@ -31,6 +31,8 @@ public class BaseController : MonoBehaviour
     [SerializeField] float groundY = -1.5f;
     [SerializeField] float returnGroundY = 2.0f;
     [SerializeField] float itemTime = 3.0f;
+    [SerializeField] float damage = 10.0f;
+
 
 
     [Header("Collider Size")]
@@ -107,7 +109,7 @@ public class BaseController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.H) && !baseState.isHit)    // 데미지 테스트
         {
-            TakeHit();
+            TakeHit(damage);
         }
 
         if (Input.GetKeyDown(KeyCode.E))    // 빨리 달리기 테스트
@@ -285,12 +287,14 @@ public class BaseController : MonoBehaviour
         baseState.isBigger = false;
     }
 
-    private void TakeHit()
+    private void TakeHit(float damage)
     {
         if (baseState.isHit || baseState.isInvincible) return;
 
         baseState.isHit = true;
         animationHandler.SetHit(true);
+
+        baseState.TakeDamage(damage);
 
         baseState.StartInvincibility(invinvibleTime);
         StartCoroutine(ResetHitState());
@@ -387,7 +391,7 @@ public class BaseController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            // 체력 감소 이벤트 넣기
+            TakeHit(damage);
         }
 
         if (other.gameObject.CompareTag("Ground"))
