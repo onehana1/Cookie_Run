@@ -193,6 +193,8 @@ public class BaseController : MonoBehaviour
 
     private void EndSlide()
     {
+        if (!baseState.isGrounded || !baseState.isSliding) return;
+
         baseState.isSliding = false;
         animationHandler.SetSlide(false);
 
@@ -353,7 +355,6 @@ public class BaseController : MonoBehaviour
         baseState.isRescue = true;
         animationHandler.SetRescue(true);
         StartCoroutine(LerpToRescuePoint(transform.position, targetPos));
-        ;
     }
 
     private IEnumerator LerpToRescuePoint(Vector3 startPos, Vector3 targetPos)
