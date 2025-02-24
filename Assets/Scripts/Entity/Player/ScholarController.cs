@@ -8,6 +8,12 @@ public class ScholarController : BaseController
     [SerializeField] private float skillCollTime;
 
 
+    protected override void Start()
+    {
+        base.Start();
+        originalColliderSize = new Vector2(0.6f, 0.82f);
+        slideColliderSize = new Vector2(originalColliderSize.x, 0.5f);
+    }
 
     protected override void Update()
     {

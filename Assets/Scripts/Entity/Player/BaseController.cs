@@ -39,8 +39,8 @@ public class BaseController : MonoBehaviour
 
     [Header("Collider Size")]
     private BoxCollider2D boxCollider;
-    private Vector2 originalColliderSize = new Vector2(1.0f, 1.55f);
-    private Vector2 slideColliderSize = new Vector2(1.8f, 0.7f);
+    public Vector2 originalColliderSize = new Vector2(1.0f, 1.55f);
+    public Vector2 slideColliderSize = new Vector2(1.8f, 0.7f);
 
     [Header("Raycast")]
     public float rayDistance = 1f;
@@ -344,6 +344,7 @@ public class BaseController : MonoBehaviour
     private void Die()
     {
         if (!baseState.isLive) return;
+        boxCollider.size = slideColliderSize;
 
         baseState.isLive = false;
         animationHandler.SetDie();
