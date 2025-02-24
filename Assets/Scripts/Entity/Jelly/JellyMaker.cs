@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -10,12 +12,9 @@ public class JellyMaker : MonoBehaviour
     //길이1번 길이 2번
     Vector2 posA;
     Vector2 posB;
+    Queue<Collider2D> obstacleQueue = new Queue<Collider2D>();
 
     float length = 1;
-
-
-
-    float time;
 
     public GameObject jelly;
     public GameObject JellyObject;
@@ -24,7 +23,6 @@ public class JellyMaker : MonoBehaviour
     {
         pivot = new Vector2(20f, -3f);
         position = transform.position;
-        time = 0;
         posA = transform.position;
     }
 
@@ -63,6 +61,7 @@ public class JellyMaker : MonoBehaviour
             MakeJelly(posB);
             posA =posB;
         }
+        
         position.y = Mathf.Lerp(position.y, pivot.y, 0.25f);
     }
 
@@ -70,13 +69,14 @@ public class JellyMaker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
         pivot = collision.transform.Find("Pivot").transform.position;
+        obstacleQueue.Enqueue(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        pivot = new Vector2(20f, -3f);
+        obstacleQueue.Dequeue();
+        if (obstacleQueue.Count == 0) pivot.y = -3f;
     }
 
     private void MakeJelly(Vector2 pos)
