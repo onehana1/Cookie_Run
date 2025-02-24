@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
+
+    //Á¡¼ö
+    public int Score;
 
     public static GameManager Instance
     {
@@ -18,15 +22,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    internal void AddScore(int scoreValue)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Score += scoreValue;
     }
 }
