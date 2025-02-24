@@ -24,6 +24,7 @@ public class BaseController : MonoBehaviour
     [SerializeField] float blinkIntervalTime = 0.5f;
     [SerializeField] float rescueTime = 2.0f;
     [SerializeField] float rescueLerpTime = 0.5f;
+    public float skillDuration = 5.0f;
 
 
 
@@ -35,10 +36,11 @@ public class BaseController : MonoBehaviour
 
 
 
+
     [Header("Collider Size")]
     private BoxCollider2D boxCollider;
-    private Vector2 originalColliderSize = new Vector2(1.0f, 1.55f);
-    private Vector2 slideColliderSize = new Vector2(1.8f, 0.7f);
+    public Vector2 originalColliderSize = new Vector2(1.0f, 1.55f);
+    public Vector2 slideColliderSize = new Vector2(1.8f, 0.7f);
 
     [Header("Raycast")]
     public float rayDistance = 1f;
@@ -309,7 +311,7 @@ public class BaseController : MonoBehaviour
         baseState.isBigger = false;
     }
 
-    private void HandleTakeDamage(float currentHp)
+    private void HandleTakeDamage(float maxhp, float currentHp)
     {
         Debug.Log($"체력 업데이트: {currentHp}");
         animationHandler.SetHit(true);
@@ -342,6 +344,7 @@ public class BaseController : MonoBehaviour
     private void Die()
     {
         if (!baseState.isLive) return;
+        boxCollider.size = slideColliderSize;
 
         baseState.isLive = false;
         animationHandler.SetDie();
@@ -410,6 +413,22 @@ public class BaseController : MonoBehaviour
         spriteRenderer.color = new Color(1, 1, 1, 1); // 원래 색으로 복구
     }
 
+    private Coroutine skillCoroutine;
+    private void UseSkill(float skillDuration)
+    {
+        if (skillCoroutine != null)
+        {
+            StopCoroutine(skillCoroutine);
+        }
+        skillCoroutine = StartCoroutine(SkillAnimation(skillDuration));
+    }
+
+    private IEnumerator SkillAnimation(float duration)
+    {
+        animationHandler.SetSkill(true);
+        yield return new WaitForSeconds(duration);
+        animationHandler.SetSkill(false);
+    }
 
     protected virtual void OnCollisionEnter2D(Collision2D other)
     {

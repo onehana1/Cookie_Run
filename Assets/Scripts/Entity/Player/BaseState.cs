@@ -27,7 +27,7 @@ public class BaseState : MonoBehaviour
 
 
 
-    public event Action<float> OnTakeDamage;
+    public event Action<float, float> OnTakeDamage;
     public event Action OnDie;
 
     private void Awake()
@@ -41,7 +41,7 @@ public class BaseState : MonoBehaviour
         hp -= damage;
         Debug.Log($"현재 체력: {hp}");
 
-        OnTakeDamage?.Invoke(hp);
+        OnTakeDamage?.Invoke(maxHp, hp);
 
         if (hp <= 0)
         {
