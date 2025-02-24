@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BraveCookeController : BaseController
 {
+    [SerializeField] private float skillDurationTime;
+    [SerializeField] private float skillCollTime;
+
+
 
     protected override void Update()
     {

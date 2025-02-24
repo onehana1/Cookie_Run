@@ -128,7 +128,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1556818694459815704}
+  - component: {fileID: 803093800591688447}
   - component: {fileID: 6600349042350563615}
+  - component: {fileID: 3277262001813064161}
   - component: {fileID: 2040109360458794497}
   - component: {fileID: 1702574133528421397}
   m_Layer: 0
@@ -154,6 +156,31 @@ Transform:
   - {fileID: 5997373099079053104}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &803093800591688447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4263156653250246002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4c7460987230c4380e7539f84db4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  hp: 0
+  moveSpeed: 10
+  jumpForce: 5
+  isFastRunning: 0
+  isBigger: 0
+  isGrounded: 1
+  isDoubleJump: 0
+  isSliding: 0
+  isHit: 0
+  isLive: 1
+  isRescue: 0
+  isInvincible: 0
 --- !u!114 &6600349042350563615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,10 +193,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28db5e15d4cd484458b98147e0c877d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  jumpForce: 5
+  baseState: {fileID: 0}
   hitTime: 0.5
   invinvibleTime: 2
+  blinkIntervalTime: 0.5
+  rescueTime: 3
+  rescueLerpTime: 0.5
+  groundY: -1.5
+  returnGroundY: 2
+  itemTime: 2
+--- !u!114 &3277262001813064161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4263156653250246002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10c039a8f458b149871cb0b86ac8080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &2040109360458794497
 Rigidbody2D:
   serializedVersion: 4
@@ -229,7 +273,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.7}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}

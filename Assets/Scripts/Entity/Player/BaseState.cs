@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class BaseState : MonoBehaviour
     public bool isBigger = false;
 
     public bool isGrounded = true;
+    public bool isJump = false;
     public bool isDoubleJump = false;
     public bool isSliding = false;
     public bool isHit = false;
@@ -25,6 +27,9 @@ public class BaseState : MonoBehaviour
 
 
 
+    public event Action<float> OnTakeDamage;
+    public event Action OnDie;
+
     private void Awake()
     {
         hp = maxHp;
@@ -34,11 +39,16 @@ public class BaseState : MonoBehaviour
         if (isInvincible || !isLive) return;
 
         hp -= damage;
+        Debug.Log($"현재 체력: {hp}");
+
+        OnTakeDamage?.Invoke(hp);
+
         if (hp <= 0)
         {
             hp = 0;
             isLive = false;
             Debug.Log("캐릭터 사망");
+            OnDie?.Invoke();
         }
     }
 
