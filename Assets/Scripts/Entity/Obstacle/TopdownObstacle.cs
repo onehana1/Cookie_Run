@@ -5,8 +5,6 @@ using UnityEngine;
 public class TopdownObstacle : BaseObstacle
 {
     protected Animator animator;
-    
-    public int damage;
 
     protected void Awake()
     {
