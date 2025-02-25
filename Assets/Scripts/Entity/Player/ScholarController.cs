@@ -39,4 +39,18 @@ public class ScholarController : BaseController
         baseState.moveSpeed = originalSpeed;  // 원래 속도로 복구
     }
 
+    public override void Jump()
+    {
+        base.Jump();
+    }
+
+    public override void DoubleJump()
+    {
+        base.DoubleJump();
+    }
+
+    public override void StartSlide()
+    {
+        base.StartSlide();
+    }
 }

@@ -152,7 +152,7 @@ public class BaseController : MonoBehaviour
 
     }
 
-    protected virtual void Jump()
+    public virtual void Jump()
     {
         baseState.isJump = true;
 
@@ -171,7 +171,7 @@ public class BaseController : MonoBehaviour
         }
     }
 
-    protected virtual void DoubleJump()
+    public virtual void DoubleJump()
     {
         if (!baseState.isDoubleJump) return;
 
@@ -181,7 +181,7 @@ public class BaseController : MonoBehaviour
         animationHandler.SetDoubleJump();
     }
 
-    private void StartSlide()
+    public virtual void StartSlide()
     {
         if (!baseState.isGrounded || baseState.isSliding) return; // 공중에서 슬라이드 x
 
@@ -193,7 +193,7 @@ public class BaseController : MonoBehaviour
         transform.position += new Vector3(0, -0.4f, 0);
     }
 
-    private void EndSlide()
+    public void EndSlide()
     {
         if (!baseState.isGrounded || !baseState.isSliding) return;
 
