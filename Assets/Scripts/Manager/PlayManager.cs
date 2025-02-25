@@ -7,6 +7,7 @@ public class PlayManager : MonoBehaviour
     public static PlayManager Instance;
 
     public BaseState playerState;
+    public BackGroundController backGroundController;
 
     //플레이 점수
     public int score;
@@ -40,11 +41,20 @@ public class PlayManager : MonoBehaviour
         maxHp = playerState.maxHp;
     }
 
+    private void Start()
+    {
+        backGroundController = FindObjectOfType<BackGroundController>();
+    }
+
     private void Update()
     {
         time = Time.deltaTime;
     }
 
+    private void FixedUpdate()
+    {
+        UpdateDifficult();
+    }
     //점수 더해주기
     public void AddScore(int scoreValue)
     {
@@ -61,5 +71,19 @@ public class PlayManager : MonoBehaviour
     {
         GameManager.Instance.Score.Add(score);
         GameManager.Instance.totalCoin += coin;
+    }
+
+    private void UpdateDifficult()
+    {
+        playTime += Time.unscaledDeltaTime;
+        if (playTime > 30)
+        {
+            playTime = 0;
+            backGroundController.currentTimeScale += 0.2f;
+            if (backGroundController.currentTimeScale > 3)
+            {
+                backGroundController.currentTimeScale = 3;
+            }
+        }
     }
 }
