@@ -26,7 +26,7 @@ public class BackGroundController : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 1.0f;//시간에 따라 증가
+        Time.timeScale = startTimeScale;//시간에 따라 증가
         SpriteRenderer spriteRenderer = backGroundImage.GetComponentInChildren<SpriteRenderer>();
         backGroundImageWidth = spriteRenderer.bounds.size.x;//배경 이미지의 폭
         spriteRenderer = backGroundLayer1.GetComponentInChildren<SpriteRenderer>();
