@@ -172,7 +172,7 @@ public class BaseController : MonoBehaviour
         }
     }
 
-    protected virtual void DoubleJump()
+    public virtual void DoubleJump()
     {        
         if (baseState.isDoubleJump || !baseState.isJump) return;
         animationHandler.SetFalling(false);

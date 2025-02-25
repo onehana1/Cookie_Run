@@ -10,9 +10,9 @@ public class JumpBotton : MonoBehaviour
 
     public void JumpBottonClick()
     {
-        if (baseController.baseState.isGrounded)
+        if (!baseController.baseState.isJump)
             baseController.Jump();
-        else if (baseController.baseState.isDoubleJump)
+        else if (!baseController.baseState.isDoubleJump)
             baseController.DoubleJump();
     }
 
