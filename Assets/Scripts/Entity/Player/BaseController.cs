@@ -88,21 +88,21 @@ public class BaseController : MonoBehaviour
         transform.position = new Vector3(-7.4f, transform.position.y, 0);//플레이어 고정
     }
 
-    protected void HandleAction()
+    protected virtual void HandleAction()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (baseState.isGrounded || !baseState.isJump)
+            if (!baseState.isJump)//baseState.isGrounded || 
             {
                 Jump(); // 첫 번째 점프
             }
-            else if (baseState.isDoubleJump)
+            else if (!baseState.isDoubleJump)
             {
                 DoubleJump(); // 공중에서 한 번만 더 점프 가능
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && baseState.isGrounded)
+        if (Input.GetKey(KeyCode.LeftShift) && baseState.isGrounded)
         {
             StartSlide();
         }
@@ -168,20 +168,18 @@ public class BaseController : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.velocity = new Vector2(0f, baseState.jumpForce);
             baseState.isGrounded = false;
-            baseState.isDoubleJump = true;
             animationHandler.SetJumping();
         }
     }
 
-    public virtual void DoubleJump()
-    {
-        if (!baseState.isDoubleJump) return;
+    protected virtual void DoubleJump()
+    {        
+        if (baseState.isDoubleJump || !baseState.isJump) return;
         animationHandler.SetFalling(false);
         animationHandler.SetDoubleJump();
 
         rb.velocity = new Vector2(0f, baseState.jumpForce);
-        baseState.isDoubleJump = false;
-        baseState.isJump = false; 
+        baseState.isDoubleJump = true;
     }
 
     public virtual void StartSlide()
@@ -452,6 +450,7 @@ public class BaseController : MonoBehaviour
                 animationHandler.SetFalling(false);
                 baseState.isJump = false;
                 baseState.isFall = false;
+                baseState.isDoubleJump = false;
                 baseState.isGrounded = true;
                 baseState.isRand = true;
                 animationHandler.SetLanding();

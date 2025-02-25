@@ -8,7 +8,7 @@ public class BackGroundController : MonoBehaviour
     const float BACKGOUND_OBJECT_PIVOT = -14.5f;//배경 이미지의 재조정 위치
     const float BACKGOUND_IMAGE_PIVOT = -23f;//
 
-    public float startTimeScale = 1.0f;
+    public float currentTimeScale = 1.0f;
     public float moveSpeed;//이동속도 배수
     public float backGroundImageMoveSpeed;//배경 이미지 이동속도
     public float backGroundLayer1MoveSpeed;//배경 오브젝트1 이동속도
@@ -26,7 +26,7 @@ public class BackGroundController : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 1.0f;//시간에 따라 증가
+        Time.timeScale = currentTimeScale;//시간에 따라 증가
         SpriteRenderer spriteRenderer = backGroundImage.GetComponentInChildren<SpriteRenderer>();
         backGroundImageWidth = spriteRenderer.bounds.size.x;//배경 이미지의 폭
         spriteRenderer = backGroundLayer1.GetComponentInChildren<SpriteRenderer>();
@@ -38,6 +38,7 @@ public class BackGroundController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Time.timeScale = currentTimeScale;
         MoveBackGround();//배경이동
     }
 

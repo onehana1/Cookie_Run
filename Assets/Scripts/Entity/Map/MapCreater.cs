@@ -6,14 +6,20 @@ using UnityEngine;
 public class MapCreater : MonoBehaviour
 {
     public GameObject[] mapPrefabs;//맵 프리팹
-    public List <GameObject> maps;//생성된 맵들
+    public Queue <GameObject> maps;//생성된 맵들
     Transform firstEndAnchor = null;//첫번째 맵의 끝나는 지점
     Transform lastEndAnchor = null;//마지막 맵의 끝나는 지점
     
-    // Start is called before the first frame update
     void Start()
     {
-        lastEndAnchor = firstEndAnchor = maps[0].GetComponent<MapController>().endAnchor;//기본적으로 깔려있는 땅의 값으로 초기화
+        GameObject go = transform.Find("Grounds").gameObject;
+        if (go == null)
+        {
+            Debug.LogError("Can not find Grounds");
+        }
+        maps = new Queue <GameObject>();
+        maps.Enqueue(go);
+        lastEndAnchor = firstEndAnchor = maps.Peek().GetComponent<MapController>().endAnchor;//기본적으로 깔려있는 땅의 값으로 초기화
         CreateMap();//맵생성
     }
 
@@ -21,9 +27,10 @@ public class MapCreater : MonoBehaviour
     {
         if(firstEndAnchor.transform.position.x <= -10)//맵 삭제
         {
-            Destroy(maps[0]);
-            maps.Remove(maps[0]);
-            firstEndAnchor = maps[0].GetComponent<MapController>().endAnchor;
+            GameObject go = maps.Peek();
+            maps.Dequeue();
+            Destroy(go);
+            firstEndAnchor = maps.Peek().GetComponent<MapController>().endAnchor;
         }
 
         if(lastEndAnchor.transform.position.x <= 15)//맵 \생성
@@ -40,6 +47,6 @@ public class MapCreater : MonoBehaviour
 
         go.transform.position = lastEndAnchor.position;
         lastEndAnchor = go.GetComponent<MapController>().endAnchor;
-        maps.Add(go);
+        maps.Enqueue(go);
     }
 }
