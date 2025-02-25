@@ -38,6 +38,7 @@ public class BraveCookeController : BaseController
 
         animationHandler.SetSkill(false);
         baseState.isInvincible = false;
+
     }
 
 

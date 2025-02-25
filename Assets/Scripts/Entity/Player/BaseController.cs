@@ -20,7 +20,7 @@ public class BaseController : MonoBehaviour
 
     [Header("Time")]
     [SerializeField] float hitTime = 0.5f;
-    [SerializeField] float invinvibleTime = 3.0f;
+    public float invinvibleTime = 3.0f;
     [SerializeField] float blinkIntervalTime = 0.5f;
     [SerializeField] float rescueTime = 2.0f;
     [SerializeField] float rescueLerpTime = 0.5f;
@@ -92,7 +92,7 @@ public class BaseController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (baseState.isGrounded)
+            if (baseState.isGrounded || !baseState.isJump)
             {
                 Jump(); // 첫 번째 점프
             }
@@ -162,7 +162,7 @@ public class BaseController : MonoBehaviour
             EndSlide();
         }
 
-        if (baseState.isGrounded)
+        if (baseState.isGrounded || !baseState.isJump)
         {
             baseState.isJump = true;
             rb.velocity = Vector2.zero;
@@ -450,6 +450,7 @@ public class BaseController : MonoBehaviour
             if (!baseState.isRand || baseState.isFall)
             {
                 animationHandler.SetFalling(false);
+                baseState.isJump = false;
                 baseState.isFall = false;
                 baseState.isGrounded = true;
                 baseState.isRand = true;
