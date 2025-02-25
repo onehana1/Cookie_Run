@@ -92,7 +92,7 @@ public class BaseController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (baseState.isGrounded)
+            if (baseState.isGrounded || !baseState.isJump)
             {
                 Jump(); // 첫 번째 점프
             }
@@ -160,7 +160,7 @@ public class BaseController : MonoBehaviour
             EndSlide();
         }
 
-        if (baseState.isGrounded)
+        if (baseState.isGrounded || !baseState.isJump)
         {
             baseState.isJump = true;
             rb.velocity = Vector2.zero;
@@ -448,6 +448,7 @@ public class BaseController : MonoBehaviour
             if (!baseState.isRand || baseState.isFall)
             {
                 animationHandler.SetFalling(false);
+                baseState.isJump = false;
                 baseState.isFall = false;
                 baseState.isGrounded = true;
                 baseState.isRand = true;
