@@ -40,6 +40,14 @@ public class ScholarController : BaseController
 
         HandleSkill();
     }
+
+    protected override void HandleAction()
+    {
+        if (isSkillActive) return; 
+
+        base.HandleAction(); 
+    }
+
     private IEnumerator DelayedAutoSkillStart()
     {
         yield return new WaitForSeconds(0.1f);
@@ -47,6 +55,7 @@ public class ScholarController : BaseController
     }
     private void HandleSkill()
     {
+       
         if (Input.GetKeyDown(KeyCode.F))  // 예: 스킬 키가 F
         {
             if (skillCooldown > 0) return;
