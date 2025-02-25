@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BackGroundController : MonoBehaviour
@@ -7,6 +8,7 @@ public class BackGroundController : MonoBehaviour
     const float BACKGOUND_OBJECT_PIVOT = -14.5f;//배경 이미지의 재조정 위치
     const float BACKGOUND_IMAGE_PIVOT = -23f;//
 
+    public float startTimeScale = 1.0f;
     public float moveSpeed;//이동속도 배수
     public float backGroundImageMoveSpeed;//배경 이미지 이동속도
     public float backGroundLayer1MoveSpeed;//배경 오브젝트1 이동속도
@@ -24,11 +26,14 @@ public class BackGroundController : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 1.0f;//시간에 따라 증가
+        Time.timeScale = startTimeScale;//시간에 따라 증가
         SpriteRenderer spriteRenderer = backGroundImage.GetComponentInChildren<SpriteRenderer>();
         backGroundImageWidth = spriteRenderer.bounds.size.x;//배경 이미지의 폭
         spriteRenderer = backGroundLayer1.GetComponentInChildren<SpriteRenderer>();
-        backGroundObjectWidth = spriteRenderer.bounds.size.x;//배경 오브젝트의 폭
+        if (spriteRenderer != null)
+        {
+            backGroundObjectWidth = spriteRenderer.bounds.size.x;//배경 오브젝트의 폭
+        }
     }
 
     private void FixedUpdate()
@@ -39,11 +44,19 @@ public class BackGroundController : MonoBehaviour
     private void MoveBackGround()
     {
         Move(backGroundImage, backGroundImageMoveSpeed, backGroundImageWidth, 0);//배경 이미지 이동
-        Move(backGroundLayer1, backGroundLayer1MoveSpeed, backGroundObjectWidth, 1);//배경 오브젝트1 이동
-        Move(backGroundLayer2, backGroundLayer2MoveSpeed, backGroundObjectWidth, 1);//배경 오브젝트2 이동
-        
-        land.transform.position -= new Vector3(landMoveSpeed * moveSpeed, 0, 0);//땅은 프리팹으로 관리예정이라 삭제 예정
-        jelly.transform.position -= new Vector3(landMoveSpeed * moveSpeed, 0, 0);//땅은 프리팹으로 관리예정이라 삭제 예정
+        if (backGroundLayer1 != null)
+        {
+            Move(backGroundLayer1, backGroundLayer1MoveSpeed, backGroundObjectWidth, 1);//배경 오브젝트1 이동
+        }
+        if (backGroundLayer2 != null)
+        {
+            Move(backGroundLayer2, backGroundLayer2MoveSpeed, backGroundObjectWidth, 1);//배경 오브젝트2 이동
+        }
+        land.transform.position -= new Vector3(landMoveSpeed * moveSpeed, 0, 0);//땅은 
+        if (jelly != null)
+        {
+            jelly.transform.position -= new Vector3(landMoveSpeed * moveSpeed, 0, 0);//땅은 프리팹으로 관리예정이라 삭제 예정
+        }
     }
 
     private void Move(GameObject gameObject, float speed, float width, int pivot)

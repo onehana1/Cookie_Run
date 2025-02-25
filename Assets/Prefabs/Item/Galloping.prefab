@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4703763783767757775}
   - component: {fileID: 4170091147967363187}
   - component: {fileID: 7757156744201887525}
-  - component: {fileID: 1911598879652140286}
+  - component: {fileID: 7866759533868609067}
   m_Layer: 0
   m_Name: Galloping
   m_TagString: Item
@@ -181,7 +181,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
---- !u!114 &1911598879652140286
+--- !u!114 &7866759533868609067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,4 +194,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostDuration: 2
-  speedMultiplier: 18
+  speedMultiplier: 2.5
