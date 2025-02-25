@@ -311,7 +311,7 @@ public class BaseController : MonoBehaviour
         baseState.isBigger = false;
     }
 
-    private void HandleTakeDamage(float currentHp)
+    private void HandleTakeDamage(float maxhp, float currentHp)
     {
         Debug.Log($"체력 업데이트: {currentHp}");
         animationHandler.SetHit(true);

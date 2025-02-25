@@ -5,20 +5,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    public static GameManager Instance;
 
     //Á¡¼ö
     public int score;
 
-    public static GameManager Instance
+    private void Awake()
     {
-        get
+        if (Instance == null)
         {
-            if (instance == null)
-            {
-                instance = new GameManager();
-            }
-            return instance;
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
