@@ -6,6 +6,9 @@ public class ScholarController : BaseController
 {
     [SerializeField] private float skillDurationTime;
     [SerializeField] private float skillCollTime;
+    [SerializeField] private GameObject skillEffect;
+    [SerializeField] private Animator skillAnimator;
+
 
 
     protected override void Start()
@@ -18,25 +21,37 @@ public class ScholarController : BaseController
     protected override void Update()
     {
         base.Update();
+        HandleSkill();
     }
 
     private void HandleSkill()
     {
         if (Input.GetKeyDown(KeyCode.F))  // 예: 스킬 키가 F
         {
-            StartCoroutine(BraveSkill());
+            StartCoroutine(Skill());
         }
     }
 
-    private IEnumerator BraveSkill()
+    private IEnumerator Skill()
     {
         Debug.Log("스킬 사용");
-        float originalSpeed = baseState.moveSpeed;
-        baseState.moveSpeed *= 2;  // 2배 속도로 대시
+        baseState.isInvincible = true;
+        animationHandler.SetSkill(true);
+        skillEffect.SetActive(true);
 
-        yield return new WaitForSeconds(1.0f); // 1초 동안 지속
+        float animationLength = skillAnimator.GetCurrentAnimatorStateInfo(0).length;
+        skillAnimator.speed = animationLength / skillDuration;
 
-        baseState.moveSpeed = originalSpeed;  // 원래 속도로 복구
+        yield return new WaitForSeconds(skillDuration);
+
+        animationHandler.SetSkill(false);
+        baseState.isInvincible = false;
+        skillEffect.SetActive(false);
+
+        skillAnimator.speed = 1.0f;
+        baseState.StartInvincibility(invinvibleTime);
+        StartBlinkEffect(invinvibleTime);
+
     }
 
 }

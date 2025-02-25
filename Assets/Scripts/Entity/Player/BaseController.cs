@@ -20,7 +20,7 @@ public class BaseController : MonoBehaviour
 
     [Header("Time")]
     [SerializeField] float hitTime = 0.5f;
-    [SerializeField] float invinvibleTime = 3.0f;
+    public float invinvibleTime = 3.0f;
     [SerializeField] float blinkIntervalTime = 0.5f;
     [SerializeField] float rescueTime = 2.0f;
     [SerializeField] float rescueLerpTime = 0.5f;

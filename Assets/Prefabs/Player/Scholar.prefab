@@ -51,7 +51,7 @@ MonoBehaviour:
   maxHp: 100
   hp: 0
   moveSpeed: 10
-  jumpForce: 5
+  jumpForce: 6
   isFastRunning: 0
   isBigger: 0
   isGrounded: 1
@@ -61,6 +61,8 @@ MonoBehaviour:
   isHit: 0
   isLive: 1
   isRescue: 0
+  isRand: 0
+  isFall: 0
   isInvincible: 0
 --- !u!114 &4094375965541245188
 MonoBehaviour:
@@ -81,13 +83,13 @@ MonoBehaviour:
   rescueTime: 2
   rescueLerpTime: 0.5
   skillDuration: 5
-  groundY: -1.5
+  groundY: -3.5
   returnGroundY: 2
   itemTime: 3
   damage: 10
   originalColliderSize: {x: 1, y: 1.55}
   slideColliderSize: {x: 1.8, y: 0.7}
-  rayDistance: 1
+  rayDistance: 0.8
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -239,7 +241,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 200
   m_Sprite: {fileID: 21300000, guid: 1d19db0dde8ff124e908814ce8131df1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
