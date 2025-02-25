@@ -1,32 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    public static GameManager Instance;
 
-    public static GameManager Instance
+    //Á¡¼ö
+    public int score;
+
+    private void Awake()
     {
-        get
+        if (Instance == null)
         {
-            if (instance == null)
-            {
-                instance = new GameManager();
-            }
-            return instance;
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    internal void AddScore(int scoreValue)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        score += scoreValue;
     }
 }

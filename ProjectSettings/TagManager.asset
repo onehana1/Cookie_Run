@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Item
   - Platform
+  - HealPack
+  - Destroy
   layers:
   - Default
   - TransparentFX

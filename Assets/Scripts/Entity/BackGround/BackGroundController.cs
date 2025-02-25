@@ -20,6 +20,7 @@ public class BackGroundController : MonoBehaviour
     public GameObject backGroundLayer1;
     public GameObject backGroundLayer2;
     public GameObject land;
+    public GameObject jelly;
 
     void Start()
     {
@@ -40,7 +41,9 @@ public class BackGroundController : MonoBehaviour
         Move(backGroundImage, backGroundImageMoveSpeed, backGroundImageWidth, 0);//배경 이미지 이동
         Move(backGroundLayer1, backGroundLayer1MoveSpeed, backGroundObjectWidth, 1);//배경 오브젝트1 이동
         Move(backGroundLayer2, backGroundLayer2MoveSpeed, backGroundObjectWidth, 1);//배경 오브젝트2 이동
+        
         land.transform.position -= new Vector3(landMoveSpeed * moveSpeed, 0, 0);//땅은 프리팹으로 관리예정이라 삭제 예정
+        jelly.transform.position -= new Vector3(landMoveSpeed * moveSpeed, 0, 0);//땅은 프리팹으로 관리예정이라 삭제 예정
     }
 
     private void Move(GameObject gameObject, float speed, float width, int pivot)

@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class FixObstacle : BaseObstacle
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        base.OnDamage();
+        collision.gameObject.TryGetComponent<BaseState>(out baseState);
+        if (baseState == null) return; 
+        this.OnDamage();
     }
 }
