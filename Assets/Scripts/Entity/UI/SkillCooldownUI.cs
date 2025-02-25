@@ -7,6 +7,8 @@ public class SkillCooldownUI : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] private Image cooldownImage;
+    [SerializeField] private Image background;
+
     [SerializeField] private ScholarController player;
     [SerializeField] private Transform playerTransform;
 
@@ -52,10 +54,14 @@ public class SkillCooldownUI : MonoBehaviour
             if (isSkillActive)
             {
                 cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 0f); // 투명화
+                background.color = new Color(0, 0, 0, 0.5f);
+
             }
             else if (player.IsSkillOnCooldown())
             {
                 cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 1f); // 다시 보이기
+                background.color = new Color(0, 0, 0, 0f); // 다시 보이기
+
                 elapsedTime += Time.deltaTime;
                 cooldownImage.fillAmount = elapsedTime / cooldownTime; // 0 → 1로 게이지 증가
             }
@@ -78,6 +84,8 @@ public class SkillCooldownUI : MonoBehaviour
     private IEnumerator HideCooldownUI(float duration)
     {
         cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 0f); // 투명화
+        background.color = new Color(0, 0, 0, 0f); // 투명화
+
         yield return new WaitForSeconds(duration); // 스킬 지속 시간 동안 대기
         isSkillActive = false;
     }
