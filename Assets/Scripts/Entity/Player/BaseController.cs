@@ -102,7 +102,7 @@ public class BaseController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && baseState.isGrounded)
+        if (Input.GetKey(KeyCode.LeftShift) && baseState.isGrounded)
         {
             StartSlide();
         }

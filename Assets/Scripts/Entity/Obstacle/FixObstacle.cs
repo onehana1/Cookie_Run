@@ -6,6 +6,7 @@ public class FixObstacle : BaseObstacle
 {
     public Animator animator;
     public bool isMove;
+
     private void Awake()
     {
         isMove = false;
