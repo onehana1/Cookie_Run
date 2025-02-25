@@ -21,8 +21,7 @@ public class BaseState : MonoBehaviour
     public bool isHit = false;
     public bool isLive = true;
     public bool isRescue = false;
-    public bool isRand = false;
-    public bool isFall = false;
+
 
     [Header("Test")]
     [SerializeField] public bool isInvincible = false;
@@ -67,8 +66,12 @@ public class BaseState : MonoBehaviour
         isInvincible = false;
     }
 
+
+
     public void SetMoveSpeed(float speed)
     {
         moveSpeed = speed;
     }
+
+
 }

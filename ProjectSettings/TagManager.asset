@@ -7,7 +7,6 @@ TagManager:
   - Obstacle
   - Ground
   - Item
-  - Platform
   - HealPack
   - Destroy
   layers:

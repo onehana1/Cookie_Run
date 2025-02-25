@@ -4,45 +4,68 @@ using UnityEngine;
 
 public class PlayerGalloping : MonoBehaviour
 {
-    private BaseState baseState; // 플레이어의 이동 속도를 관리하는 BaseState
-    private BackGroundController background; // 배경 속도를 제어하는 컨트롤러
-    private bool isInvincible = false; // 무적 상태 여부 (질주 중 무적)
+    private BackGroundController background; // 배경 속도 컨트롤러
+    private Invincibility invincibility; // 무적 상태 관리 클래스
+    private BaseState baseState; // 체력 및 캐릭터 상태 관리 클래스
+    private float originalBGSpeed; // 원래 배경 속도 저장
+
+    public float dashMultiplier = 2f; // 질주 시 배경 속도 배율 (기본 2배)
+    public float dashDuration = 7f; // 질주 지속 시간 (초)
 
     private void Start()
     {
-        // BaseState 가져오기 (플레이어 이동 속도를 제어)
-        baseState = GetComponent<BaseState>();
+        // 해당 오브젝트에서 필요한 컴포넌트들을 가져옴
+        background = FindObjectOfType<BackGroundController>(); // 배경 속도 제어
+        invincibility = GetComponent<Invincibility>(); // 무적 관리
+        baseState = GetComponent<BaseState>(); // 캐릭터 상태 관리
 
-        // 씬에서 BackGroundController 찾기 (배경 속도를 조절하기 위함)
-        background = FindObjectOfType<BackGroundController>();
+        // 현재 배경 속도 저장
+        originalBGSpeed = background.moveSpeed;
     }
 
-    /// <summary>
-    /// 질주 모드 활성화: 일정 시간 동안 속도를 증가시키고 무적 상태 적용
-    /// </summary>
-    /// <param name="duration">질주 지속 시간</param>
-    /// <param name="multiplier">속도 증가 배율</param>
-    public IEnumerator ActivateSpeedBoost(float duration, float multiplier)
+    // 질주(대시) 시작 함수
+    public void ActivateSpeedBoost()
+    {
+        StartCoroutine(SpeedBoostCoroutine());
+    }
+
+    // 질주 지속 효과 코루틴
+    private IEnumerator SpeedBoostCoroutine()
     {
         Debug.Log("질주 시작!");
 
-        
-        float originalSpeed = baseState.moveSpeed; // 현재 속도 저장 (질주 끝난후 원래 속도 저장)
-        float originalBGSpeed = background.moveSpeed; // 기존 배경 속도 저장
+        // 배경 속도 증가 및 무적 상태 활성화
+        background.moveSpeed *= dashMultiplier;
+        invincibility.StartInvincibility(dashDuration); // 일정 시간 동안 무적
 
-        // 이동 속도 및 배경 속도 증가
-        baseState.moveSpeed *= multiplier;
-        background.moveSpeed *= multiplier;
-        isInvincible = true; // 무적 상태 활성화
+        // 질주 지속 시간 동안 대기
+        yield return new WaitForSeconds(dashDuration);
 
-        // 지정된 시간(duration)만큼 대기
-        yield return new WaitForSeconds(duration);
-
-        // 속도 및 배경 속도를 원래대로 복구
-        baseState.moveSpeed = originalSpeed;
+        // 배경 속도를 원래대로 복구
         background.moveSpeed = originalBGSpeed;
-        isInvincible = false; // 무적 상태 해제
 
         Debug.Log("질주 종료");
+    }
+
+    // 무적 상태에서 장애물 파괴
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // 무적 상태일 때만 장애물 파괴
+        if (invincibility.IsInvincible && other.CompareTag("Obstacle"))
+        {
+            Destroy(other.gameObject);
+            
+        }
+    }
+
+    // 충돌 감지 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 무적 상태일 경우 피격 로직 무시
+        if (invincibility.IsInvincible)
+        {
+            Debug.Log("무적 상태이므로 데미지를 받지 않음");
+            return;
+        }
     }
 }
