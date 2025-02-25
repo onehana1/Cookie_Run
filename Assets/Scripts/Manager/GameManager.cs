@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
 
     public int totalCoin;
     public List<int> Score;
-    public float playTime = 0;
 
     public BackGroundController backGroundController;
 
