@@ -21,8 +21,9 @@ public class MapCreater : MonoBehaviour
     {
         if(firstEndAnchor.transform.position.x <= -10)//¸Ê »èÁ¦
         {
-            Destroy(maps[0]);
+            GameObject go = maps[0];
             maps.Remove(maps[0]);
+            Destroy(go);
             firstEndAnchor = maps[0].GetComponent<MapController>().endAnchor;
         }
 
