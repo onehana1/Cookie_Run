@@ -85,7 +85,7 @@ public class BaseController : MonoBehaviour
     private void FixedUpdate()
     {
         OnGround();
-       // transform.position = new Vector3(-7.4f, transform.position.y, 0);//플레이어 고정
+        transform.position = new Vector3(-7.4f, transform.position.y, 0);//플레이어 고정
     }
 
     protected void HandleAction()
@@ -102,7 +102,7 @@ public class BaseController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && baseState.isGrounded)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && baseState.isGrounded)
         {
             StartSlide();
         }
@@ -112,9 +112,10 @@ public class BaseController : MonoBehaviour
             EndSlide();
         }
 
-        if (!baseState.isGrounded && rb.velocity.y <= 0)
+        if (!baseState.isGrounded && rb.velocity.y < 0)
         {
             animationHandler.SetFalling(true);
+            baseState.isFall = true;
         }
 
         // ========= 테스트 입니다.=========
@@ -163,6 +164,7 @@ public class BaseController : MonoBehaviour
 
         if (baseState.isGrounded)
         {
+            baseState.isJump = true;
             rb.velocity = Vector2.zero;
             rb.velocity = new Vector2(0f, baseState.jumpForce);
             baseState.isGrounded = false;
@@ -174,11 +176,12 @@ public class BaseController : MonoBehaviour
     public virtual void DoubleJump()
     {
         if (!baseState.isDoubleJump) return;
+        animationHandler.SetFalling(false);
+        animationHandler.SetDoubleJump();
 
         rb.velocity = new Vector2(0f, baseState.jumpForce);
         baseState.isDoubleJump = false;
-        baseState.isJump = false;
-        animationHandler.SetDoubleJump();
+        baseState.isJump = false; 
     }
 
     public virtual void StartSlide()
@@ -444,18 +447,24 @@ public class BaseController : MonoBehaviour
 
         if (hit.collider != null)
         {
-            animationHandler.SetLanding();
-            baseState.isGrounded = true;
-            baseState.isDoubleJump = false;
-            animationHandler.SetRescue(false);
+            if (!baseState.isRand || baseState.isFall)
+            {
+                animationHandler.SetFalling(false);
+                baseState.isFall = false;
+                baseState.isGrounded = true;
+                baseState.isRand = true;
+                animationHandler.SetLanding();
+                animationHandler.SetRescue(false);
+                Debug.Log("닿았다");
+            }
         }
         else
         {
-            baseState.isGrounded = false;
-            if(baseState.isJump == true)
+            if (baseState.isRand)
             {
-                baseState.isDoubleJump = true;
+                baseState.isRand = false;
             }
+            baseState.isGrounded = false;
         }
 
         Debug.DrawRay(transform.position, Vector2.down * rayDistance, Color.red);
