@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 1556818694459815704}
   - component: {fileID: 803093800591688447}
   - component: {fileID: 6600349042350563615}
-  - component: {fileID: 3277262001813064161}
   - component: {fileID: 2040109360458794497}
   - component: {fileID: 1702574133528421397}
   m_Layer: 0
@@ -175,6 +174,7 @@ MonoBehaviour:
   isFastRunning: 0
   isBigger: 0
   isGrounded: 1
+  isJump: 0
   isDoubleJump: 0
   isSliding: 0
   isHit: 0
@@ -202,18 +202,13 @@ MonoBehaviour:
   groundY: -1.5
   returnGroundY: 2
   itemTime: 2
---- !u!114 &3277262001813064161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4263156653250246002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d10c039a8f458b149871cb0b86ac8080, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  damage: 10
+  rayDistance: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  skillDurationTime: 0
+  skillCollTime: 0
 --- !u!50 &2040109360458794497
 Rigidbody2D:
   serializedVersion: 4
