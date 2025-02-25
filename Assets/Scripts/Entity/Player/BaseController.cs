@@ -88,7 +88,7 @@ public class BaseController : MonoBehaviour
         transform.position = new Vector3(-7.4f, transform.position.y, 0);//플레이어 고정
     }
 
-    protected void HandleAction()
+    protected virtual void HandleAction()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
