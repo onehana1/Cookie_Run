@@ -22,6 +22,7 @@ public class BaseState : MonoBehaviour
     public bool isLive = true;
     public bool isRescue = false;
 
+
     [Header("Test")]
     [SerializeField] public bool isInvincible = false;
 
