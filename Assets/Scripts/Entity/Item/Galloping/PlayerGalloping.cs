@@ -47,6 +47,7 @@ public class PlayerGalloping : MonoBehaviour
             Destroy(other.gameObject); // 장애물 제거
             //ScoreManager.Instance.AddScore(100); // 점수 추가
             //Debug.Log("장애물 파괴! +100점");
+
         }
     }
 }

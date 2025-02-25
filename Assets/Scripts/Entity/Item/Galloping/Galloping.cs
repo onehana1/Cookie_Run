@@ -15,6 +15,7 @@ public class Galloping : MonoBehaviour
             }
 
             Destroy(gameObject); // 아이템 제거
+
         }
     }
 }
