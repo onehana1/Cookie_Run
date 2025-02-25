@@ -717,7 +717,6 @@ MonoBehaviour:
   - {fileID: 7732014552764844455, guid: 0e54d811df77a114b9d1395ec02b046c, type: 3}
   - {fileID: 2106889640280601970, guid: ad443065518b7514db027c4065c4e31e, type: 3}
   - {fileID: 3438986870123902487, guid: f587a22b7b573b84bb99ae0f89443247, type: 3}
-  go: {fileID: 0}
 --- !u!4 &414698421
 Transform:
   m_ObjectHideFlags: 0
@@ -1825,6 +1824,10 @@ PrefabInstance:
     - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
       propertyPath: jumpForce
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
+      propertyPath: isInvincible
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4094375965541245188, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
       propertyPath: groundY
