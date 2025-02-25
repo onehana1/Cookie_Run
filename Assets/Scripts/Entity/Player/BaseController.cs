@@ -193,7 +193,7 @@ public class BaseController : MonoBehaviour
 
         // 콜라이더 크기 변경
         boxCollider.size = slideColliderSize;
-        transform.position += new Vector3(0, -0.4f, 0);
+        transform.position -= new Vector3(0, originalColliderSize.y - slideColliderSize.y - 0.1f, 0);
     }
 
     public void EndSlide()
@@ -205,7 +205,7 @@ public class BaseController : MonoBehaviour
 
         // 원래 크기로 복구
         boxCollider.size = originalColliderSize;
-        transform.position += new Vector3(0, 0.4f, 0);
+        transform.position += new Vector3(0, originalColliderSize.y - slideColliderSize.y - 0.1f, 0);
     }
 
     private Coroutine runningFastCoroutine;
