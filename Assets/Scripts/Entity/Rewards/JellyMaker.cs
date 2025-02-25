@@ -10,8 +10,21 @@ public class JellyMaker : MonoBehaviour
 
     //젤리 부모오브젝트
     public GameObject JellyObject; 
-    //생성되는 젤리 프리펩
-    public GameObject jellyPrefab;
+
+    //생성되는 젤리 프리펩 종류
+    public GameObject jellyPrefab1;
+    public GameObject jellyPrefab2;
+    public GameObject jellyPrefab3;
+
+    //생성되는 코인 프리펩 종류
+    public GameObject coinPrefab1;
+    public GameObject coinPrefab2;
+    public GameObject coinPrefab3;
+
+    //생성할 오브젝트
+    private GameObject jellyObj;
+    private GameObject coinObj;
+
     //이전에 설치된 젤리 오브젝트
     private GameObject preJelly;
 
@@ -32,43 +45,33 @@ public class JellyMaker : MonoBehaviour
     {
         pivot = groundVector;
         posA = transform.position;
+
+        jellyObj = jellyPrefab1;
+        coinObj = coinPrefab1;
+
         MakeJelly(posA);
+        MakeCoin(posA);
     }
 
-    ////1초에 50번 생성
-    //private void FixedUpdate()
-    //{
-    //    //일정 시간간격으로 젤리를 생성함
-    //    time += Time.fixedDeltaTime;
-    //    posB = transform.position;
-    //    if (time >= 0.2f)
-    //    {
-    //        time = 0;
-    //        MakeJelly(position);
-    //    }
 
-    //    if ((posB - posA).magnitude >= length)
-    //    {
-    //        MakeJelly(posB);
-    //        posA = posB;
-    //    }
-
-    //    //피벗 값 받아서 러프 적용?
-    //    position.y = Mathf.Lerp(position.y, pivot.y, 0.25f);
-    //}
 
     private void Update()
     {
         //일정 간격으로 젤리를 생성하기
         if ((preJelly.transform.position - posA).magnitude >= length)
         {
-            MakeJelly(posA);
+
+            if (Random.Range(0, 100) < 30)
+            {
+                MakeJelly(posA);
+                return;
+            }
+            MakeCoin(posA);
         }
 
-        //젤리의 y값 위치 수정
+        //젤리, 코인의 y값 위치 수정하는 처리
         posA.y = Mathf.Lerp(posA.y, pivot.y, t);
     }
-
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -77,6 +80,8 @@ public class JellyMaker : MonoBehaviour
         {
             pivot = collision.transform.Find("Pivot").transform.position;
             obstacleQueue.Enqueue(collision);
+            coinObj = coinPrefab2;
+            jellyObj = jellyPrefab2;
         }
     }
 
@@ -86,11 +91,40 @@ public class JellyMaker : MonoBehaviour
         {
             obstacleQueue.Dequeue();
             if (obstacleQueue.Count == 0) pivot.y = -3f;
+
+            jellyObj = jellyPrefab3;
+            coinObj = coinPrefab3;
         }
     }
 
     private void MakeJelly(Vector2 pos)
     {
-        preJelly = Instantiate(jellyPrefab, pos, Quaternion.identity, JellyObject.transform);
+        preJelly = Instantiate(jellyObj, pos, Quaternion.identity, JellyObject.transform);
+    }
+
+    private void MakeCoin(Vector2 pos)
+    {
+        preJelly = Instantiate(coinObj, pos, Quaternion.identity, JellyObject.transform);
     }
 }
+////1초에 50번 생성
+//private void FixedUpdate()
+//{
+//    //일정 시간간격으로 젤리를 생성함
+//    time += Time.fixedDeltaTime;
+//    posB = transform.position;
+//    if (time >= 0.2f)
+//    {
+//        time = 0;
+//        MakeJelly(position);
+//    }
+
+//    if ((posB - posA).magnitude >= length)
+//    {
+//        MakeJelly(posB);
+//        posA = posB;
+//    }
+
+//    //피벗 값 받아서 러프 적용?
+//    position.y = Mathf.Lerp(position.y, pivot.y, 0.25f);
+//}
