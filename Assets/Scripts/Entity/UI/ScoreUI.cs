@@ -6,6 +6,7 @@ public class ScoreUI : BaseUI
 {
     TextMeshProUGUI currentScoreText;
     TextMeshProUGUI bestScoreText;
+    PlayManager playManager;
 
     protected override UIState GetUIState()
     {
@@ -20,9 +21,10 @@ public class ScoreUI : BaseUI
         bestScoreText = transform.Find("BestScoreText").GetComponent<TextMeshProUGUI>();
     }
 
-    public void SetUI(int currentScore,int bestScore)
+    public void SetUI(int currentScore, int bestScore)
     {
-        currentScoreText.text = currentScore.ToString();
+        playManager.AddScore(currentScore);
+        currentScoreText.text = playManager.score.ToString();
         bestScoreText.text = bestScore.ToString();
     }
 }
