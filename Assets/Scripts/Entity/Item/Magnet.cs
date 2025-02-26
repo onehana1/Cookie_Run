@@ -25,9 +25,9 @@ public class Magnet : MonoBehaviour
             magnet = player.AddComponent<MagnetEffect>(); // 플레이어에게 MagnetEffect 추가
         }
 
-        magnet.EnableMagnet(magnetRange, attractionSpeed); // 자석 효과 적용
+        magnet.EnableMagnet(magnetRange, attractionSpeed, magnetDuration); // 자석 효과 적용
         yield return new WaitForSeconds(magnetDuration); // 5초 후
-        magnet.DisableMagnet(); // 자석 효과 해제
+        //magnet.DisableMagnet(); // 자석 효과 해제
     }
 
 

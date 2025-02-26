@@ -8,16 +8,17 @@ public class MagnetEffect : MonoBehaviour
     private float speed; // 빨려오는 속도
     private bool isMagnetActive = false; // 자석 효과 켜짐 여부
 
-    public void EnableMagnet(float magnetRange, float attractionSpeed)
+    public void EnableMagnet(float magnetRange, float attractionSpeed, float duration)
     {
         range = magnetRange; // 자석 범위 설정
         speed = attractionSpeed; // 빨려오는 속도 설정
         isMagnetActive = true; // 자석 활성화
+        StartCoroutine(DisableMagnet(duration));    
     }
-    public void DisableMagnet()
-    {
-        isMagnetActive = false; // 자석 효과 비활성화
-    }
+    //public void DisableMagnet()
+    //{
+    //    isMagnetActive = false; // 자석 효과 비활성화
+    //}
     private void Update()
     {
         if (!isMagnetActive) return; // 자석이 활성화되지 않았다면 아무것도 안 함
@@ -31,5 +32,11 @@ public class MagnetEffect : MonoBehaviour
                 item.transform.position = Vector2.Lerp(item.transform.position, transform.position, speed * Time.deltaTime);
             }
         }
+    }
+
+    IEnumerator DisableMagnet(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isMagnetActive = false;
     }
 }

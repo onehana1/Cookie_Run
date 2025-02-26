@@ -75,6 +75,10 @@ public class JellyMaker : MonoBehaviour
     {
         if (collision.CompareTag("Pivot"))
         {
+            if(collision.name == "EndPivot")
+            {
+                this.gameObject.SetActive(false);
+            }
             coinObj = coinPrefab2;
             jellyObj = jellyPrefab2;
             pivot = collision.transform.position;

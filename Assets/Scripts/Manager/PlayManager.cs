@@ -9,26 +9,32 @@ public class PlayManager : MonoBehaviour
 
     public BaseState playerState;
     public BackGroundController backGroundController;
+    public GameManager gameManager;
+    public FadeContrller fadeContrller;
 
-    //ÇÃ·¹ÀÌ Á¡¼ö
+    //í”Œë ˆì´ ì ìˆ˜
     public int score;
 
-    //ÃÖ°í Á¡¼ö
+    //ìµœê³  ì ìˆ˜
     public int bestScore;
 
-    //È¹µæ ÄÚÀÎ
+    //íšë“ ì½”ì¸
     public int coin;
 
-    //´©Àû ÄÚÀÎ
+    //ë³´ìœ  ì½”ì¸
     public int totalCoin;
 
-    //ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â
+    //í”Œë ˆì´ì–´ì˜ ì²´ë ¥
     public float maxHp;
     public float hp;
 
-    //ÇÃ·¹ÀÌ Å¸ÀÓ
+    //í”Œë ˆì´ íƒ€ì„
+    public float time = 0;
+    public float endTime = 180;
+
     public float playTime = 0;
 
+    public bool isEnd = false;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI bestScoreText;
@@ -48,10 +54,12 @@ public class PlayManager : MonoBehaviour
         }
 
         playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
+        fadeContrller = GetComponent<FadeContrller>();
+
         hp = playerState.hp;
         maxHp = playerState.maxHp;
 
-        // Ã¼·Â º¯È­ ÀÌº¥Æ® ±¸µ¶
+        // ì²´ë ¥ ë³€í™” ì´ë²¤íŠ¸ êµ¬ë…
         playerState.OnHpChanged += UpdateHp;
         playerState.OnDie += GameOver;
 
@@ -72,10 +80,20 @@ public class PlayManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        playTime += Time.unscaledDeltaTime;
+        time += Time.unscaledDeltaTime;
+        if (time >= endTime && !isEnd) 
+        { 
+            isEnd = true;
+            Time.timeScale = 1.0f;
+            backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
+            fadeContrller.OnFadaOutandIn();
+        }
+
         UpdateDifficult();
     }
 
-    //Á¡¼ö ´õÇØÁÖ±â
+    //ì ìˆ˜ ì§€ì†ì ìœ¼ë¡œ ë”í•´ì£¼ê¸°
     public void AddScore(int scoreValue)
     {
         score += scoreValue;
@@ -86,7 +104,7 @@ public class PlayManager : MonoBehaviour
         }
     }
 
-    //ÄÚÀÎ ´õÇØÁÖ±â
+    //ì½”ì¸ ì§€ì†ì ìœ¼ë¡œ ë”í•´ì£¼ê¸°
     public void AddCoin(int CoinValue)
     {
         coin += CoinValue;
@@ -98,20 +116,21 @@ public class PlayManager : MonoBehaviour
         SaveTotalCoin();
     }
 
+    //ì²´ë ¥ ê°±ì‹ 
     private void UpdateHp(float maxHp, float currentHp)
     {
         this.hp = currentHp;
     }
 
 
-    //°ÔÀÓ ¿À¹ö½Ã ÄÚÀÎ°ú Á¡¼ö¸¦ °ÔÀÓ¸Å´ÏÀú ÀÎ½ºÅÏ½º¿¡ ÀúÀåÇØÁÜ
+    //ê²Œì„ ì˜¤ë²„ì‹œ ì½”ì¸ê³¼ ì ìˆ˜ë¥¼ ê²Œì„ë§¤ë‹ˆì € ì¸ìŠ¤í„´ìŠ¤ì— ì €ì¥í•´ì¤Œ
     public void GameOver()
     {
         GameManager.Instance.Score.Add(score);
         GameManager.Instance.totalCoin += coin;
     }
 
-    //³­ÀÌµµ Áõ°¡
+    //ë‚œì´ë„ ì¦ê°€
     private void UpdateDifficult()
     {
         //playTime += Time.unscaledDeltaTime;
@@ -126,7 +145,6 @@ public class PlayManager : MonoBehaviour
         }
     }
 
-    //ÃÖ°í Á¡¼ö ÀúÀå
     private void SaveBestScore()
     {
         PlayerPrefs.SetInt("BestScore", bestScore);
@@ -144,7 +162,6 @@ public class PlayManager : MonoBehaviour
         totalCoin = PlayerPrefs.GetInt("TotalCoin", 0);
     }
 
-    //ÃÖ°í Á¡¼ö ºÒ·¯¿À±â
     private void LoadBestScore()
     {
         bestScore = PlayerPrefs.GetInt("BestScore", 0);
