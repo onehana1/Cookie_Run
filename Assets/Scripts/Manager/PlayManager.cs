@@ -15,9 +15,6 @@ public class PlayManager : MonoBehaviour
     //획득 코인
     public int coin;
 
-    //플레이 시간
-    public float time;
-
     //플레이어의 체력
     public float maxHp;
     public float hp;
@@ -52,13 +49,14 @@ public class PlayManager : MonoBehaviour
 
     private void Update()
     {
-        time = Time.deltaTime;
+        playTime = Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
         UpdateDifficult();
     }
+
     //점수 더해주기
     public void AddScore(int scoreValue)
     {
