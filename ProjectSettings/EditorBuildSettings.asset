@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/UI/CHB_Scene.unity
     guid: f755dacfbc309de42bbed991d76ef993
   - enabled: 1
+    path: Assets/Scenes/ChoiceScene.unity
+    guid: 65760642ca006284489ac23f1b8735ef
+  - enabled: 1
     path: Assets/Scenes/UI/trash/ScoreScene.unity
     guid: 2a88c9ac4a7d99242b0f8fe72de841cb
   - enabled: 1
