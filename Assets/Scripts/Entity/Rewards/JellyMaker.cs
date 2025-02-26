@@ -60,7 +60,7 @@ public class JellyMaker : MonoBehaviour
         if ((preObj.transform.position - posA).magnitude >= length)
         {
 
-            if (Random.Range(0, 100) < 30)
+            if (Random.Range(0, 100) < 50)
             {
                 MakeJelly(posA);
                 return;
@@ -80,18 +80,6 @@ public class JellyMaker : MonoBehaviour
             obstacleQueue.Enqueue(collision);
             coinObj = coinPrefab2;
             jellyObj = jellyPrefab2;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Obstacle") || collision.CompareTag("Platform"))
-        {
-            obstacleQueue.Dequeue();
-            if (obstacleQueue.Count == 0) pivot.y = -3f;
-
-            jellyObj = jellyPrefab3;
-            coinObj = coinPrefab3;
         }
     }
 
