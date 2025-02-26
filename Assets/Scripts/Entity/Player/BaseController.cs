@@ -15,6 +15,7 @@ public class BaseController : MonoBehaviour
     protected Rigidbody2D rb;
     protected AnimationHandler animationHandler;
     protected SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject jumpEffect;
 
     public BaseState baseState;
 
@@ -55,6 +56,11 @@ public class BaseController : MonoBehaviour
         baseState = GetComponent<BaseState>();
 
         slideColliderSize = new Vector2(originalColliderSize.x, originalColliderSize.y * 0.5f);
+
+        if (jumpEffect != null)
+        {
+            jumpEffect.SetActive(false); 
+        }
 
         baseState.OnTakeDamage += HandleTakeDamage;
         baseState.OnDie += Die;
@@ -324,7 +330,7 @@ public class BaseController : MonoBehaviour
 
     private void TakeHit(float damage)
     {
-        if (baseState.isHit || baseState.isInvincible) return;
+        if (baseState.isHit || baseState.isInvincible || baseState.isDead) return;
 
         baseState.isHit = true;
         baseState.TakeDamage(damage);
@@ -347,6 +353,7 @@ public class BaseController : MonoBehaviour
         if (baseState.isLive) return;
         baseState.Die();
         boxCollider.size = slideColliderSize;
+        animationHandler.SetHit(false);
         animationHandler.SetDie();
     }
 
@@ -430,12 +437,32 @@ public class BaseController : MonoBehaviour
         animationHandler.SetSkill(false);
     }
 
+    private void PlayJumpEffect()
+    {
+        if(jumpEffect != null)
+        {
+            jumpEffect.SetActive(true);
+            StartCoroutine(DisableJumpEffect());
+        }
+    }
+    private IEnumerator DisableJumpEffect()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (jumpEffect != null)
+        {
+            jumpEffect.SetActive(false);
+        }
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Debug.Log("충돌");
             baseState.TakeDamage(damage);
+
+            if (!baseState.isLive)
+                Die();
         }
     }
 
@@ -447,6 +474,7 @@ public class BaseController : MonoBehaviour
 
         if (hit.collider != null)
         {
+            if (!baseState.isGrounded) PlayJumpEffect();
             if (!baseState.isRand || baseState.isFall)
             {
                 animationHandler.SetFalling(false);

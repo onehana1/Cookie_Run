@@ -70,7 +70,8 @@ public class BaseState : MonoBehaviour
             hp = 0;
             isLive = false;
             Debug.Log("Ä³¸¯ÅÍ »ç¸Á");
-            OnDie?.Invoke();
+            PlayManager.Instance.GameOver();
+            Die();
         }
     }
 
