@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCD95\uD558\n\uD569\uB2C8\uB2E4\uC694~"
+  m_text: "\uC7A5\uD558\uAD70"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 66dc9d0c012025d4980ca247dfc2173d, type: 2}
   m_sharedMaterial: {fileID: -3232862998002638176, guid: 66dc9d0c012025d4980ca247dfc2173d, type: 2}
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCD95\uD558\uD574\uC694!"
+  m_text: "\uB300\uB2E8\uD558\uAD6C\uB9CC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 66dc9d0c012025d4980ca247dfc2173d, type: 2}
   m_sharedMaterial: {fileID: -3232862998002638176, guid: 66dc9d0c012025d4980ca247dfc2173d, type: 2}
@@ -341,8 +341,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2.5
-  m_fontSizeBase: 2.5
+  m_fontSize: 2
+  m_fontSizeBase: 2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB300\uB2E8\uD558\uAD6C\uB9CC"
+  m_text: "\uCD95\uD558\n\uD569\uB2C8\uB2E4\uC694~"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 66dc9d0c012025d4980ca247dfc2173d, type: 2}
   m_sharedMaterial: {fileID: -3232862998002638176, guid: 66dc9d0c012025d4980ca247dfc2173d, type: 2}
@@ -743,7 +743,7 @@ Transform:
   m_GameObject: {fileID: 814102754}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.7, y: 32.4, z: -3708}
+  m_LocalPosition: {x: -60.9, y: 14.8, z: -3708}
   m_LocalScale: {x: 35, y: 35, z: 41.2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -762,6 +762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8d3f6f9776ac24d98a729bb4c1023d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speechText: {fileID: 2033192714}
+  characterName: Sul
+  textChangeInterval: 1
 --- !u!212 &814102757
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -805,7 +808,7 @@ SpriteRenderer:
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: c9a5b65ef37f5354eb1d2dfcf2ab7358, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.6, y: 0.47}
@@ -943,7 +946,7 @@ Transform:
   m_GameObject: {fileID: 1072787614}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.5, y: 11, z: -3708}
+  m_LocalPosition: {x: 13.7, y: 13.7, z: -3708}
   m_LocalScale: {x: 35, y: 35, z: 41.2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1014,6 +1017,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8d3f6f9776ac24d98a729bb4c1023d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speechText: {fileID: 194627693}
+  characterName: Chill
+  textChangeInterval: 1.4
 --- !u!1 &1151444487
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,7 +1079,7 @@ Transform:
   m_GameObject: {fileID: 1241423324}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.93, y: -2.04, z: -0.11233989}
+  m_LocalPosition: {x: 4, y: -2.04, z: -0.11233989}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1282,7 +1288,7 @@ Transform:
   m_GameObject: {fileID: 1322667081}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.79, y: -1.95, z: -0.11233989}
+  m_LocalPosition: {x: 6.15, y: -1.95, z: -0.11233989}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1597,7 +1603,7 @@ Transform:
   m_GameObject: {fileID: 1754272452}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.2, y: 16.9, z: -3708}
+  m_LocalPosition: {x: 17.1, y: 14.2, z: -3708}
   m_LocalScale: {x: 35, y: 35, z: 41.2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1616,6 +1622,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8d3f6f9776ac24d98a729bb4c1023d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speechText: {fileID: 648049880}
+  characterName: Rock
+  textChangeInterval: 1.3
 --- !u!212 &1754272455
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1659,7 +1668,7 @@ SpriteRenderer:
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: c9a5b65ef37f5354eb1d2dfcf2ab7358, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.6, y: 0.47}
@@ -1695,7 +1704,7 @@ Transform:
   m_GameObject: {fileID: 1864274602}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.03, y: -2.19, z: -0.11233989}
+  m_LocalPosition: {x: 2.15, y: -2.19, z: -0.11233989}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1830,8 +1839,6 @@ PlayableDirector:
     value: {fileID: 1151444489}
   - key: {fileID: 4986126142854982642, guid: 439e4f9678690fe4fa5e69f19002636c, type: 2}
     value: {fileID: 1658672998}
-  - key: {fileID: -5567964450111836065, guid: 439e4f9678690fe4fa5e69f19002636c, type: 2}
-    value: {fileID: 0}
   - key: {fileID: 7664188991344354326, guid: 439e4f9678690fe4fa5e69f19002636c, type: 2}
     value: {fileID: 1151444489}
   m_ExposedReferences:
@@ -1972,7 +1979,7 @@ Transform:
   m_GameObject: {fileID: 1898568350}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.9, y: 16.9, z: -3708}
+  m_LocalPosition: {x: 7.8, y: 29.7, z: -3708}
   m_LocalScale: {x: 35, y: 35, z: 41.2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1991,6 +1998,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8d3f6f9776ac24d98a729bb4c1023d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speechText: {fileID: 135843036}
+  characterName: Sato
+  textChangeInterval: 1.2
 --- !u!212 &1898568353
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2100,7 +2110,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC7A5\uD558\uAD70!"
+  m_text: "\uBA4B\uC838\uC694!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 66dc9d0c012025d4980ca247dfc2173d, type: 2}
   m_sharedMaterial: {fileID: -3232862998002638176, guid: 66dc9d0c012025d4980ca247dfc2173d, type: 2}
@@ -2204,7 +2214,7 @@ Transform:
   m_GameObject: {fileID: 2094196089}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.18, y: -1.74, z: -0.11233989}
+  m_LocalPosition: {x: 8.24, y: -1.74, z: -0.11233989}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
