@@ -19,6 +19,10 @@ public class FixObstacle : BaseObstacle
             isMove = true;
             animator.SetTrigger("Move");
         } 
+        else if(transform.position.x < -13)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
