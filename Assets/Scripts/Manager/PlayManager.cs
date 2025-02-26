@@ -39,6 +39,10 @@ public class PlayManager : MonoBehaviour
         playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
         hp = playerState.hp;
         maxHp = playerState.maxHp;
+
+        // 체력 변화 이벤트 구독
+        playerState.OnTakeDamage += UpdateHp;
+        playerState.OnDie += GameOver;
     }
 
     private void Start()
@@ -66,8 +70,14 @@ public class PlayManager : MonoBehaviour
         coin += CoinValue;
     }
 
+    private void UpdateHp(float maxHp, float currentHp)
+    {
+        this.hp = currentHp;
+    }
+
+
     //게임 오버시 코인과 점수를 게임매니저 인스턴스에 저장해줌
-    public void gameOver()
+    public void GameOver()
     {
         GameManager.Instance.Score.Add(score);
         GameManager.Instance.totalCoin += coin;
