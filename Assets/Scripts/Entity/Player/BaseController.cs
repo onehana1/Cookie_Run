@@ -330,7 +330,7 @@ public class BaseController : MonoBehaviour
 
     private void TakeHit(float damage)
     {
-        if (baseState.isHit || baseState.isInvincible) return;
+        if (baseState.isHit || baseState.isInvincible || baseState.isDead) return;
 
         baseState.isHit = true;
         baseState.TakeDamage(damage);
@@ -353,6 +353,7 @@ public class BaseController : MonoBehaviour
         if (baseState.isLive) return;
         baseState.Die();
         boxCollider.size = slideColliderSize;
+        animationHandler.SetHit(false);
         animationHandler.SetDie();
     }
 
@@ -459,6 +460,9 @@ public class BaseController : MonoBehaviour
         {
             Debug.Log("충돌");
             baseState.TakeDamage(damage);
+
+            if (!baseState.isLive)
+                Die();
         }
     }
 
