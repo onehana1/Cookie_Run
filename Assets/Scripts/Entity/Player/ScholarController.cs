@@ -7,15 +7,30 @@ public class ScholarController : BaseController
     [Header("Scholar")]
     [SerializeField] private float skillCollTime; // 스킬 쿨타임
     [SerializeField] private float skillDurationTime = 5;
+    [SerializeField] private float quizCooldownTime = 10f;  // ox
+
+
+
 
     [SerializeField] private GameObject skillEffect;
     [SerializeField] private Animator skillAnimator;
     [SerializeField] private bool isAutoSkillActive = true;
 
+    [SerializeField] private StudySkill studySkill;
+
+
     private float skillCooldown = 5;
+    private float quizCooldown = 0; // ox
+
     private bool isSkillActive = false;
+ 
+
 
     public event System.Action<float> OnSkillUsed;  // 스킬 이벤트
+    public event System.Action<float> OnQuizUsed;  // 스킬 이벤트
+
+
+
     private void Awake()
     {
         skillDuration = skillDurationTime;
@@ -26,6 +41,7 @@ public class ScholarController : BaseController
         originalColliderSize = new Vector2(0.6f, 0.82f);
         slideColliderSize = new Vector2(originalColliderSize.x, 0.5f);
         skillCooldown = skillCollTime;
+        quizCooldown = 0;
 
         StartCoroutine(DelayedAutoSkillStart());
     }
@@ -37,12 +53,16 @@ public class ScholarController : BaseController
         {
             skillCooldown -= Time.deltaTime;
         }
+
+        if (!studySkill.isQuizActive && quizCooldown > 0)
+            quizCooldown -= Time.deltaTime;
+
         AddHandleAction();
     }
 
     protected void AddHandleAction()
     {
-        if (isSkillActive) return;
+        if (isSkillActive || studySkill.isQuizActive) return;
         if(!baseState.isDead)  HandleSkill();
     }
 
@@ -61,13 +81,10 @@ public class ScholarController : BaseController
             StartCoroutine(Skill());
         }
 
-
-    }
-    public void UseSkill()
-    {
-        if (skillCooldown <= 0)
+        if (Input.GetKeyDown(KeyCode.G))  // ox
         {
-            StartCoroutine(Skill());
+            if (quizCooldown > 0) return;
+            StartCoroutine(OXQuizSkill());
         }
     }
 
@@ -118,13 +135,48 @@ public class ScholarController : BaseController
 
     }
 
+    private IEnumerator OXQuizSkill()
+    {
+        if (baseState.isDead || studySkill.isQuizActive) yield break;
+
+        Debug.Log("OX 퀴즈 시작!");
+        quizCooldown = quizCooldownTime;
+
+        UIManager.Instance.SetQuizMode(true);
+
+        yield return StartCoroutine(studySkill.StartQuiz(studySkill.quizDuration));
+
+        Debug.Log("코루틴 이후");
+
+        OnQuizUsed?.Invoke(quizCooldownTime);
+
+        yield return new WaitForSeconds(studySkill.quizDuration);
+
+        studySkill.isQuizActive = false;
+        UIManager.Instance.SetQuizMode(false); // ui 원래대로
+
+        Debug.Log("OX 퀴즈 종료!");
+    }
+
+
+
     public float GetSkillCooldownTime()
     {
         return skillCollTime;
     }
+
+    public float GetQuizCooldownTime()
+    {
+        return quizCooldownTime;
+    }
+
     public bool IsSkillOnCooldown()
     {
         return skillCooldown > 0;
+    }
+    public bool IsQuizOnCooldown()
+    {
+        return quizCooldown > 0;
     }
 
     public override void Jump()

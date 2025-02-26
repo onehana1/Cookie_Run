@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 822847879871993258}
   - component: {fileID: 4984453742264115228}
   - component: {fileID: 4791874716766190613}
-  - component: {fileID: 4233330385935654085}
   - component: {fileID: 5551092013048470502}
   m_Layer: 5
   m_Name: Slide1
@@ -134,19 +133,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4233330385935654085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163778941416020134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a701063ce1c07b488986697327a24d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseController: {fileID: 0}
 --- !u!114 &5551092013048470502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +150,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4233330385935654085}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: JumpBotton, Assembly-CSharp
           m_MethodName: OnPointerUp
           m_Mode: 1
@@ -180,7 +166,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4233330385935654085}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: JumpBotton, Assembly-CSharp
           m_MethodName: OnPointerDown
           m_Mode: 1
