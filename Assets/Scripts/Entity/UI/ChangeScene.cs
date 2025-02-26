@@ -8,14 +8,22 @@ public class ChangeScene : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("CHB_Scene"); 
     }
+    
     public void ChangeLobbyScene()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("LobbyScene");
     }
+    
     public void ChangeScoreScene()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("ScoreScene");
+    }
+
+    public void ChangeResultScene()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("ResultScene");
     }
 }
