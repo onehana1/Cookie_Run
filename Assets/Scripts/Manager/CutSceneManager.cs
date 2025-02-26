@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CutSceneManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    ChangeScene _changeScene;
+
+    private void Start()
     {
-        
+        _changeScene = new ChangeScene();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKey(KeyCode.Return))
+        {
+            _changeScene.ChangeResultScene();
+        }
     }
 }

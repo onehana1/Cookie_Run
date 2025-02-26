@@ -93,7 +93,6 @@ public class PlayManager : MonoBehaviour
         if (time >= endTime && !isEnd) 
         { 
             isEnd = true;
-            Debug.Log("게임 오버 시켜줘");
             GameOver();
         }
 
@@ -122,7 +121,6 @@ public class PlayManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("해드렸습니다.");
         Time.timeScale = 1.0f;
 
         gameManager.Score.Add(score);

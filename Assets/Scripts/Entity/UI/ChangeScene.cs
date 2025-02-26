@@ -36,4 +36,9 @@ public class ChangeScene : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene(6);
     }
+    public void ChangeResultScene()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("ResultScene");
+    }
 }
