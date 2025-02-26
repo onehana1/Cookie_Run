@@ -29,10 +29,10 @@ public class PlayManager : MonoBehaviour
     public float hp;
 
     //플레이 타임
-    public float time = 0;
-    public float endTime = 180;
+    private float time = 0;
+    private float endTime = 180;
 
-    public float playTime = 0;
+    private float playTime = 0;
 
     public bool isEnd = false;
 
@@ -176,16 +176,23 @@ public class PlayManager : MonoBehaviour
         }
     }
 
+    private void SetTimeToStringPretty()
+    {
+        int minutes = (int)(time / 60);
+        int seconds = (int)(time % 60);
+        playTimeText.text = $"{minutes:D2}:{seconds:D2}";
+    }
+
     private void UpdateUI()
     {
         if (playTimeText != null)
-            playTimeText.text = playTime.ToString("N0");
+            SetTimeToStringPretty();
 
         if (coinText != null)
             coinText.text = coin.ToString();
 
         if (scoreText != null)
-            scoreText.text = "Score: " + score.ToString("N0");
+            scoreText.text = score.ToString("N0");
 
         if (bestScoreText != null)
             bestScoreText.text = gameManager.bestScore.ToString();
