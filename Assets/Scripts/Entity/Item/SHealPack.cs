@@ -6,30 +6,20 @@ public class SHealPack : MonoBehaviour
 {
     public float healAmount = 20f; // 회복량
 
-    private void OnTriggerEnter2D(Collider2D other) // 플레이어가 충돌하면
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) // 태그 "Player"
+        if (other.CompareTag("Player")) // 플레이어와 충돌했을 때
         {
-            BaseState baseState = other.GetComponent<BaseState>(); // 플레이어의 체력 스크립트 가져오기
+            BaseState baseState = other.GetComponent<BaseState>(); // 플레이어의 BaseState 가져오기
+
             if (baseState != null)
             {
-                //baseState.hp(healAmount); // 체력 회복
+                baseState.Heal(healAmount); // 체력 회복
+                Debug.Log("체력 회복: " + healAmount);
             }
 
-            Destroy(gameObject); // 힐팩 아이템 삭제
+            Destroy(gameObject); // 아이템 삭제
         }
     }
-    
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
