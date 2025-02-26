@@ -54,6 +54,4 @@ public class GameManager : MonoBehaviour
     {
         totalCoin = PlayerPrefs.GetInt("TotalCoin", 0);
     }
-
-
 }
