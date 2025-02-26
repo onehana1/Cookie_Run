@@ -90,8 +90,6 @@ public class PlayManager : MonoBehaviour
 
         UpdateDifficult();
     }
-        UpdateDifficult();
-
 
     //점수 지속적으로 더해주기
     public void AddScore(int scoreValue)
