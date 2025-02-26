@@ -21,6 +21,11 @@ public class ChangeScene : MonoBehaviour
         SceneManager.LoadScene("ScoreScene");
     }
 
+    public void ChangeChoiceScene()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("ChoiceScene");
+    }
     public void ChangeResultGoodScene()
     {
         Time.timeScale = 1;
@@ -30,10 +35,5 @@ public class ChangeScene : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(6);
-    }
-    public void ChangeChoiceScene()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene("ChoiceScene");
     }
 }
