@@ -2,6 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using System.Collections;
+
 
 public class PlayManager : MonoBehaviour
 {
@@ -12,23 +14,20 @@ public class PlayManager : MonoBehaviour
     public FadeContrller fadeContrller;
     public BaseState playerState;
 
-    //��ǥġ(���� Ȥ�� Ÿ��)
+    //목표치(점수 혹은 타임)
     private float goal;
 
-    //?�레???�수
+    //플레이 점수
     public int score;
 
-    //최고 ?�수
-    public int bestScore;
-
-    //?�득 코인
+    //획득 코인
     public int coin;
 
-    //?�레?�어??체력
+    //플레이어의 체력
     public float maxHp;
     public float hp;
 
-    //?�레???�??
+    //플레이 타
     public float time = 0;
     public float endTime = 180;
 
@@ -59,7 +58,7 @@ public class PlayManager : MonoBehaviour
         hp = playerState.hp;
         maxHp = playerState.maxHp;
 
-        // 체력 변???�벤??구독
+        // 체력 변화 이벤트 구독
         playerState.OnHpChanged += UpdateHp;
         playerState.OnDie += GameOver;
 
@@ -92,65 +91,62 @@ public class PlayManager : MonoBehaviour
         UpdateDifficult();
     }
         UpdateDifficult();
-    }
 
-    //���� ���������� �����ֱ�
+
+    //점수 지속적으로 더해주기
     public void AddScore(int scoreValue)
     {
         score += scoreValue;
     }
 
-    //코인 지?�적?�로 ?�해주기
+    //코인 지속적으로 더해주기
     public void AddCoin(int CoinValue)
     {
         coin += CoinValue;
     }
 
-    public void AddTotalCoin()
-    {
-        totalCoin += coin;
-        SaveTotalCoin();
-    }
-
-    //ü�� ����
+    //체력 갱신
     private void UpdateHp(float maxHp, float currentHp)
     {
         this.hp = currentHp;
     }
 
-    //���� ������ ���ΰ� ������ ���ӸŴ��� �ν��Ͻ��� ��������
+    //게임 오버시 코인과 점수를 게임매니저 인스턴스에 저장해줌
+
     public void GameOver()
     {
         gameManager.Score.Add(score);
         gameManager.totalCoin += coin;
+
         gameManager.bestScore = score > gameManager.bestScore ? score : gameManager.bestScore;
         Time.timeScale = 0f;
 
-        ////���ھ ��ǥġ�� �޼�������
+        ////스코어가 목표치를 달성했을때
         //if (score >= goal)
         //{
         //    SceneManager.LoadScene("ResultScene");
         //}
-        ////���ھ ��ǥġ �޼��� ���������� 
+        ////스코어가 목표치 달성을 실패했을때 
         //else
         //{
         //    SceneManager.LoadScene("ResultScene");
         //}
 
-        ////�÷��� �ð��� ��ǥġ�� �޼�������
+        ////플레이 시간이 목표치를 달성했을때
         //if (score >= time)
         //{
         //    SceneManager.LoadScene("ResultScene");
         //}
-        ////�÷��� �ð��� ��ǥġ �޼��� ���������� 
+        ////플레이 시간이 목표치 달성을 실패했을때 
         //else
         //{
         //    SceneManager.LoadScene("ResultScene");
         //}
 
-        //�������ְ� �ϴ°� �ʿ�
+        //딜레이주고 하는거 필요
     }
-    //���̵� ����
+
+    //난이도 증가
     private void UpdateDifficult()
     {
         if (playTime > 30)
@@ -167,7 +163,7 @@ public class PlayManager : MonoBehaviour
     private void UpdateUI()
     {
         if (playTimeText != null)
-            playTimeText.text = FormatTime(time);
+            playTimeText.text = playTime.ToString("N0");
 
         if (coinText != null)
             coinText.text = coin.ToString();
@@ -180,11 +176,5 @@ public class PlayManager : MonoBehaviour
 
         if (totalCoinText != null)
             totalCoinText.text = gameManager.totalCoin.ToString();
-    }
-
-    private string FormatTime(float timeInSeconds)
-    {
-        System.TimeSpan timeSpan = System.TimeSpan.FromSeconds(timeInSeconds);
-        return string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds);
     }
 }

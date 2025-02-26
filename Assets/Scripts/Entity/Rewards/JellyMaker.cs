@@ -6,40 +6,40 @@ using UnityEngine.Rendering;
 
 public class JellyMaker : MonoBehaviour
 {
-    //���� �θ������Ʈ
-    public GameObject JellyObject; 
+    //젤리 부모오브젝트
+    public GameObject JellyObject;
 
-    //�����Ǵ� ���� ������ ����
+    //생성되는 젤리 프리펩 종류
     public GameObject jellyPrefab1;
     public GameObject jellyPrefab2;
     public GameObject jellyPrefab3;
 
-    //�����Ǵ� ���� ������ ����
+    //생성되는 코인 프리펩 종류
     public GameObject coinPrefab1;
     public GameObject coinPrefab2;
     public GameObject coinPrefab3;
 
-    //������ ������Ʈ
+    //생성할 오브젝트
     private GameObject jellyObj;
     private GameObject coinObj;
 
-    //������ ��ġ�� ������Ʈ(��ġ ������)
+    //이전에 설치된 오브젝트(위치 포착용)
     private GameObject preObj;
 
-    //������ �����ؾ��ϴ� y��
+    //젤리가 도달해야하는 y값
     Vector2 pivot;
 
-    //�׶����� �⺻ pivot��
+    //그라운드의 기본 pivot값
     Vector2 groundVector = new Vector2(20f, -3f);
 
-    //���̿� ���̸� ������ ���� posA
+    //길이와 길이를 측정할 벡터 posA
     Vector3 posA; 
     float length = 1f;
 
-    //���� ���� ����? �װ�
+    //러프 보간 비율? 그것
     float t = 0.2f;
 
-    //����/���� Ÿ��& ��� ����
+    //젤리/코인 타입& 출력 갯수
     int type;
     int typeCount;
 
@@ -71,7 +71,7 @@ public class JellyMaker : MonoBehaviour
             typeCount = Random.Range(5, 10);
         }
 
-        //���� �������� ������ �����ϱ�
+        //일정 간격으로 젤리를 생성하기
         if ((preObj.transform.position - posA).magnitude >= length)
         {
             if (type < 50)
@@ -82,7 +82,7 @@ public class JellyMaker : MonoBehaviour
             MakeCoin(posA);
         }
 
-        //����, ������ y�� ��ġ �����ϴ� ó��
+        //젤리, 코인의 y값 위치 수정하는 처리
         posA.y = Mathf.Lerp(posA.y, pivot.y, t);
     }
 
@@ -100,7 +100,7 @@ public class JellyMaker : MonoBehaviour
         }
     }
 
-    //���� ��������
+    //젤리 생성로직
     private void MakeJelly(Vector2 pos)
     {
         switch (type)
@@ -120,7 +120,7 @@ public class JellyMaker : MonoBehaviour
         typeCount--;
     }
 
-    //���� ��������
+    //코인 생성로직
     private void MakeCoin(Vector2 pos)
     {
         switch (type)
