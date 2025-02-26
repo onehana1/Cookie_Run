@@ -33,7 +33,12 @@ public class BaseState : MonoBehaviour
     [SerializeField] private float healthDecayInterval = 5.0f; // 몇 초마다 감소할 것인지
 
 
+    public enum HPReduceType { Damage, Normal }
+
     public event Action<float, float> OnTakeDamage;
+    public event Action<float, float> OnHpChanged;
+
+
     public event Action OnDie;
 
     private void Awake()
@@ -45,14 +50,17 @@ public class BaseState : MonoBehaviour
         StartCoroutine(HealthDecayRoutine());
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, HPReduceType hPReduceType = HPReduceType.Damage)
     {
         if (isInvincible || !isLive) return;
 
         hp -= damage;
         Debug.Log($"현재 체력: {hp}");
 
-        OnTakeDamage?.Invoke(maxHp, hp);
+        OnHpChanged?.Invoke(maxHp, hp);
+
+        if (hPReduceType== HPReduceType.Damage)
+            OnTakeDamage?.Invoke(maxHp, hp);
 
         if (hp <= 0)
         {
@@ -79,7 +87,7 @@ public class BaseState : MonoBehaviour
         while (isLive)
         {
             yield return new WaitForSeconds(healthDecayInterval);
-            TakeDamage(healthDecayRate);
+            TakeDamage(healthDecayRate, HPReduceType.Normal);
         }
     }
 
