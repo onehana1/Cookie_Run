@@ -57,7 +57,6 @@ public class JellyMaker : MonoBehaviour
         //일정 간격으로 젤리를 생성하기
         if ((preObj.transform.position - posA).magnitude >= length)
         {
-
             if (Random.Range(0, 100) < 50)
             {
                 MakeJelly(posA);

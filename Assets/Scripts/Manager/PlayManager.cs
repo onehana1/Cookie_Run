@@ -7,28 +7,26 @@ public class PlayManager : MonoBehaviour
 {
     public static PlayManager Instance;
 
-    public BaseState playerState;
     public BackGroundController backGroundController;
+    public BaseState playerState;
+    private GameManager gameManager;
+
 
     //플레이 점수
     public int score;
 
-    //최고 점수
-    public int bestScore;
-
     //획득 코인
     public int coin;
-
-    //누적 코인
-    public int totalCoin;
 
     //플레이어의 체력
     public float maxHp;
     public float hp;
 
     //플레이 타임
-    public float playTime = 0;
+    public float time = 0;
 
+    //난이도 조절 타임
+    private float playTime = 0;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI bestScoreText;
@@ -47,16 +45,16 @@ public class PlayManager : MonoBehaviour
             Destroy(this);
         }
 
+        //필드 연결작업
+        gameManager = GameManager.Instance;
         playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
+
         hp = playerState.hp;
         maxHp = playerState.maxHp;
 
         // 체력 변화 이벤트 구독
         playerState.OnHpChanged += UpdateHp;
         playerState.OnDie += GameOver;
-
-        LoadBestScore();
-        LoadTotalCoin();
     }
 
     private void Start()
@@ -66,38 +64,29 @@ public class PlayManager : MonoBehaviour
 
     private void Update()
     {
-        playTime += Time.deltaTime;
         UpdateUI();
     }
 
     private void FixedUpdate()
     {
+        playTime += Time.unscaledDeltaTime;
+        time += Time.unscaledDeltaTime;
         UpdateDifficult();
     }
 
-    //점수 더해주기
+    //점수 지속적으로 더해주기
     public void AddScore(int scoreValue)
     {
         score += scoreValue;
-        if (score > bestScore)
-        {
-            bestScore = score;
-            SaveBestScore();
-        }
     }
 
-    //코인 더해주기
+    //코인 지속적으로 더해주기
     public void AddCoin(int CoinValue)
     {
         coin += CoinValue;
     }
 
-    public void AddTotalCoin()
-    {
-        totalCoin += coin;
-        SaveTotalCoin();
-    }
-
+    //체력 갱신
     private void UpdateHp(float maxHp, float currentHp)
     {
         this.hp = currentHp;
@@ -107,14 +96,15 @@ public class PlayManager : MonoBehaviour
     //게임 오버시 코인과 점수를 게임매니저 인스턴스에 저장해줌
     public void GameOver()
     {
-        GameManager.Instance.Score.Add(score);
-        GameManager.Instance.totalCoin += coin;
+        gameManager.Score.Add(score);
+        gameManager.totalCoin += coin;
+
+        gameManager.bestScore = score > gameManager.bestScore ? score : gameManager.bestScore;
     }
 
     //난이도 증가
     private void UpdateDifficult()
     {
-        //playTime += Time.unscaledDeltaTime;
         if (playTime > 30)
         {
             playTime = 0;
@@ -124,30 +114,6 @@ public class PlayManager : MonoBehaviour
                 backGroundController.currentTimeScale = 3;
             }
         }
-    }
-
-    //최고 점수 저장
-    private void SaveBestScore()
-    {
-        PlayerPrefs.SetInt("BestScore", bestScore);
-        PlayerPrefs.Save();
-    }
-
-    private void SaveTotalCoin()
-    {
-        PlayerPrefs.SetInt("TotalCoin", totalCoin);
-        PlayerPrefs.Save();
-    }
-
-    private void LoadTotalCoin()
-    {
-        totalCoin = PlayerPrefs.GetInt("TotalCoin", 0);
-    }
-
-    //최고 점수 불러오기
-    private void LoadBestScore()
-    {
-        bestScore = PlayerPrefs.GetInt("BestScore", 0);
     }
 
     private void UpdateUI()
@@ -162,9 +128,9 @@ public class PlayManager : MonoBehaviour
             scoreText.text = "Score: " + score;
 
         if (bestScoreText != null)
-            bestScoreText.text = "Best Score: " + bestScore;
+            bestScoreText.text = "Best Score: " + gameManager.bestScore;
 
         if (totalCoinText != null)
-            totalCoinText.text = "Total Coin: " + totalCoin;
+            totalCoinText.text = "Total Coin: " + gameManager.totalCoin;
     }
 }
