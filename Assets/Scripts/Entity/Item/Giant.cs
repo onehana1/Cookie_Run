@@ -10,7 +10,7 @@ public class Giant : MonoBehaviour
     {
         if (other.CompareTag("Player")) // 플레이어가 아이템을 먹으면
         {
-            BaseController playerController = other.GetComponent<BaseController>();
+            BaseController playerController = other.GetComponent<BaseController>(); // BaseController 스크립 불러옴
 
             if (playerController != null)
             {
