@@ -38,8 +38,6 @@ public class ScholarController : BaseController
             skillCooldown -= Time.deltaTime;
         }
         AddHandleAction();
-
-
     }
 
     protected void AddHandleAction()

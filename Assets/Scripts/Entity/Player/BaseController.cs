@@ -63,7 +63,7 @@ public class BaseController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (baseState.isHit || baseState.isDead) return;
+        if (baseState.isDead) return;
         HandleAction();
 
         //if (isInvincible)   // 무적시간동안 안떨어지게..
@@ -71,7 +71,6 @@ public class BaseController : MonoBehaviour
         //    transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 
         //}
-
         if (transform.position.y < groundY && baseState.isLive)
         {
             if (!baseState.isRescue)
@@ -90,6 +89,7 @@ public class BaseController : MonoBehaviour
 
     protected virtual void HandleAction()
     {
+        Debug.Log("ㅇㅇ");
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!baseState.isJump)//baseState.isGrounded || 
