@@ -43,7 +43,7 @@ public class ScholarController : BaseController
     protected void AddHandleAction()
     {
         if (isSkillActive) return;
-        HandleSkill();
+        if(!baseState.isDead)  HandleSkill();
     }
 
     private IEnumerator DelayedAutoSkillStart()
