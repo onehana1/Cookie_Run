@@ -139,6 +139,9 @@ public class ScholarController : BaseController
     {
         if (baseState.isDead || studySkill.isQuizActive) yield break;
 
+        baseState.StartInvincibility(invinvibleTime);
+        StartBlinkEffect(invinvibleTime);
+
         Debug.Log("OX 퀴즈 시작!");
         quizCooldown = quizCooldownTime;
 
@@ -154,6 +157,9 @@ public class ScholarController : BaseController
 
         studySkill.isQuizActive = false;
         UIManager.Instance.SetQuizMode(false); // ui 원래대로
+
+        baseState.StartInvincibility(invinvibleTime);
+        StartBlinkEffect(invinvibleTime);
 
         Debug.Log("OX 퀴즈 종료!");
     }

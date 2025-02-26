@@ -141,7 +141,8 @@ public class BaseController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D))    // 죽음 테스트
         {
-            Die();
+            baseState.Die();
+            Debug.Log("죽니?");
         }
 
         if (Input.GetKeyDown(KeyCode.I))    // 무적 테스트
@@ -344,7 +345,7 @@ public class BaseController : MonoBehaviour
     private void Die()
     {
         if (baseState.isLive) return;
-        baseState.Die();
+        baseState.TakeDamage(1000);
         boxCollider.size = slideColliderSize;
         animationHandler.SetHit(false);
         animationHandler.SetDie();
@@ -455,7 +456,7 @@ public class BaseController : MonoBehaviour
             baseState.TakeDamage(damage);
 
             if (!baseState.isLive)
-                Die();
+                baseState.Die();
         }
     }
 
