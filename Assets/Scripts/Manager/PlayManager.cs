@@ -143,7 +143,7 @@ public class PlayManager : MonoBehaviour
     private void UpdateUI()
     {
         if (playTimeText != null)
-            playTimeText.text = playTime.ToString("N0");
+            playTimeText.text = FormatTime(playTime);
 
         if (coinText != null)
             coinText.text = coin.ToString();
@@ -156,5 +156,11 @@ public class PlayManager : MonoBehaviour
 
         if (totalCoinText != null)
             totalCoinText.text = gameManager.totalCoin.ToString();
+    }
+
+    private string FormatTime(float timeInSeconds)
+    {
+        System.TimeSpan timeSpan = System.TimeSpan.FromSeconds(timeInSeconds);
+        return string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds);
     }
 }
