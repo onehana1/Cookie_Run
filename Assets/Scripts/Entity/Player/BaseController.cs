@@ -431,13 +431,15 @@ public class BaseController : MonoBehaviour
         animationHandler.SetSkill(false);
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Obstacle"))
         {
             baseState.TakeDamage(damage);
         }
     }
+
+
 
     protected virtual void OnGround()
     {

@@ -52,7 +52,7 @@ public class PlayManager : MonoBehaviour
         maxHp = playerState.maxHp;
 
         // 체력 변화 이벤트 구독
-        playerState.OnTakeDamage += UpdateHp;
+        playerState.OnHpChanged += UpdateHp;
         playerState.OnDie += GameOver;
 
         LoadBestScore();

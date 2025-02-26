@@ -6,8 +6,6 @@ using UnityEngine.Rendering;
 
 public class JellyMaker : MonoBehaviour
 {
-    Queue<Collider2D> obstacleQueue = new Queue<Collider2D>();
-
     //젤리 부모오브젝트
     public GameObject JellyObject; 
 
@@ -77,19 +75,45 @@ public class JellyMaker : MonoBehaviour
     {
         if (collision.CompareTag("Pivot"))
         {
-            obstacleQueue.Enqueue(collision);
             coinObj = coinPrefab2;
             jellyObj = jellyPrefab2;
+            pivot = collision.transform.position;
         }
     }
 
     private void MakeJelly(Vector2 pos)
     {
+        //switch (Random.Range(0, 100))
+        //{
+        //    case < 20:
+        //        jellyObj = jellyPrefab3;
+        //        break;
+        //    case < 50:
+        //        jellyObj = jellyPrefab2;
+        //        break;
+        //    default:
+        //        jellyObj = jellyPrefab1;
+        //        break;
+        //}
+
         preObj = Instantiate(jellyObj, pos, Quaternion.identity, JellyObject.transform);
     }
 
     private void MakeCoin(Vector2 pos)
     {
+        //switch (Random.Range(0, 100))
+        //{
+        //    case < 20:
+        //        coinObj = coinPrefab3;
+        //        break;
+        //    case < 50:
+        //        coinObj = coinPrefab2;
+        //        break;
+        //    default:
+        //        coinObj = coinPrefab1;
+        //        break;
+        //}
+
         preObj = Instantiate(coinObj, pos, Quaternion.identity, JellyObject.transform);
     }
 }

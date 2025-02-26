@@ -28,22 +28,39 @@ public class BaseState : MonoBehaviour
     [SerializeField] public bool isInvincible = false;
 
 
+    [Header("Health Decay")]
+    [SerializeField] private float healthDecayRate = 1.0f; // 초당 감소할 체력량
+    [SerializeField] private float healthDecayInterval = 5.0f; // 몇 초마다 감소할 것인지
+
+
+    public enum HPReduceType { Damage, Normal }
 
     public event Action<float, float> OnTakeDamage;
+    public event Action<float, float> OnHpChanged;
+
+
     public event Action OnDie;
 
     private void Awake()
     {
         hp = maxHp;
     }
-    public void TakeDamage(float damage)
+    private void Start()
+    {
+        StartCoroutine(HealthDecayRoutine());
+    }
+
+    public void TakeDamage(float damage, HPReduceType hPReduceType = HPReduceType.Damage)
     {
         if (isInvincible || !isLive) return;
 
         hp -= damage;
         Debug.Log($"현재 체력: {hp}");
 
-        OnTakeDamage?.Invoke(maxHp, hp);
+        OnHpChanged?.Invoke(maxHp, hp);
+
+        if (hPReduceType== HPReduceType.Damage)
+            OnTakeDamage?.Invoke(maxHp, hp);
 
         if (hp <= 0)
         {
@@ -51,6 +68,26 @@ public class BaseState : MonoBehaviour
             isLive = false;
             Debug.Log("캐릭터 사망");
             OnDie?.Invoke();
+        }
+    }
+
+    public void Heal(float amount)
+    {
+        if (!isLive) return;
+
+        hp += amount;
+        if (hp > maxHp) hp = maxHp; 
+
+        OnTakeDamage?.Invoke(maxHp, hp); 
+    }
+
+
+    private IEnumerator HealthDecayRoutine()
+    {
+        while (isLive)
+        {
+            yield return new WaitForSeconds(healthDecayInterval);
+            TakeDamage(healthDecayRate, HPReduceType.Normal);
         }
     }
 

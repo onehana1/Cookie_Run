@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4170091147967363187}
   - component: {fileID: 7757156744201887525}
   - component: {fileID: 7866759533868609067}
+  - component: {fileID: -3673137743755885599}
   m_Layer: 0
   m_Name: Galloping
   m_TagString: Item
@@ -194,4 +195,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostDuration: 2
-  speedMultiplier: 2.5
+  speedMultiplier: 7
+--- !u!114 &-3673137743755885599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269302443467969637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78a592b074ec52b49911b2a0d5ff79cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
