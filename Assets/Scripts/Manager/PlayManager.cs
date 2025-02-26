@@ -66,6 +66,7 @@ public class PlayManager : MonoBehaviour
 
     private void Update()
     {
+        playTime += Time.deltaTime;
         UpdateUI();
     }
 
@@ -113,7 +114,7 @@ public class PlayManager : MonoBehaviour
     //난이도 증가
     private void UpdateDifficult()
     {
-        playTime += Time.unscaledDeltaTime;
+        //playTime += Time.unscaledDeltaTime;
         if (playTime > 30)
         {
             playTime = 0;
