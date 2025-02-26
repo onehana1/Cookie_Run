@@ -28,6 +28,10 @@ public class BaseState : MonoBehaviour
     [SerializeField] public bool isInvincible = false;
 
 
+    [Header("Health Decay")]
+    [SerializeField] private float healthDecayRate = 1.0f; // 초당 감소할 체력량
+    [SerializeField] private float healthDecayInterval = 5.0f; // 몇 초마다 감소할 것인지
+
 
     public event Action<float, float> OnTakeDamage;
     public event Action OnDie;
@@ -36,6 +40,11 @@ public class BaseState : MonoBehaviour
     {
         hp = maxHp;
     }
+    private void Start()
+    {
+        StartCoroutine(HealthDecayRoutine());
+    }
+
     public void TakeDamage(float damage)
     {
         if (isInvincible || !isLive) return;
@@ -51,6 +60,15 @@ public class BaseState : MonoBehaviour
             isLive = false;
             Debug.Log("캐릭터 사망");
             OnDie?.Invoke();
+        }
+    }
+
+    private IEnumerator HealthDecayRoutine()
+    {
+        while (isLive)
+        {
+            yield return new WaitForSeconds(healthDecayInterval);
+            TakeDamage(healthDecayRate);
         }
     }
 

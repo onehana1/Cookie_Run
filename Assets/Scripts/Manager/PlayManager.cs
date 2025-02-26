@@ -15,9 +15,6 @@ public class PlayManager : MonoBehaviour
     //획득 코인
     public int coin;
 
-    //플레이 시간
-    public float time;
-
     //플레이어의 체력
     public float maxHp;
     public float hp;
@@ -39,6 +36,10 @@ public class PlayManager : MonoBehaviour
         playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
         hp = playerState.hp;
         maxHp = playerState.maxHp;
+
+        // 체력 변화 이벤트 구독
+        playerState.OnTakeDamage += UpdateHp;
+        playerState.OnDie += GameOver;
     }
 
     private void Start()
@@ -48,13 +49,14 @@ public class PlayManager : MonoBehaviour
 
     private void Update()
     {
-        time = Time.deltaTime;
+        playTime = Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
         UpdateDifficult();
     }
+
     //점수 더해주기
     public void AddScore(int scoreValue)
     {
@@ -66,8 +68,14 @@ public class PlayManager : MonoBehaviour
         coin += CoinValue;
     }
 
+    private void UpdateHp(float maxHp, float currentHp)
+    {
+        this.hp = currentHp;
+    }
+
+
     //게임 오버시 코인과 점수를 게임매니저 인스턴스에 저장해줌
-    public void gameOver()
+    public void GameOver()
     {
         GameManager.Instance.Score.Add(score);
         GameManager.Instance.totalCoin += coin;
