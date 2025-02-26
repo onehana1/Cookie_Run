@@ -319,6 +319,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 662154301}
+    - target: {fileID: 5768546627468222385, guid: 4dc669dbde634534db500da821935b03, type: 3}
+      propertyPath: xOffset
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7292416867816802428, guid: 4dc669dbde634534db500da821935b03, type: 3}
       propertyPath: m_Name
       value: Pet

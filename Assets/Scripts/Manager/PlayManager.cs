@@ -143,7 +143,7 @@ public class PlayManager : MonoBehaviour
     private void UpdateUI()
     {
         if (playTimeText != null)
-            playTimeText.text = FormatTime(playTime);
+            playTimeText.text = FormatTime(time);
 
         if (coinText != null)
             coinText.text = coin.ToString();
