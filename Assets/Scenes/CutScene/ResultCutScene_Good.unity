@@ -1794,6 +1794,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1868702898}
   - component: {fileID: 1868702899}
+  - component: {fileID: 1868702900}
   m_Layer: 0
   m_Name: CutSceneManager
   m_TagString: Untagged
@@ -1850,6 +1851,18 @@ PlayableDirector:
     - 96affcebc8180d74ba5b486e2d2ddba2: {fileID: 1151444487}
     - b1b0e76cff4737740b5dd2868fc4a29b: {fileID: 1151444489}
     - 05c318c55435c1c419e9d8a58ac68983: {fileID: 696920634}
+--- !u!114 &1868702900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868702897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae2803dae74be547bde9996f1a038de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1894362481
 GameObject:
   m_ObjectHideFlags: 0
