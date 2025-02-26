@@ -37,6 +37,12 @@ public class JellyMaker : MonoBehaviour
 
     float length = 1f;
 
+    //타입
+    int type;
+
+    //타입 카운트;
+    int typeCount;
+
     [SerializeField] float t = 0.2f;
 
     private void Awake()
@@ -44,20 +50,26 @@ public class JellyMaker : MonoBehaviour
         pivot = groundVector;
         posA = transform.position;
 
-        jellyObj = jellyPrefab1;
-        coinObj = coinPrefab1;
-
         MakeJelly(posA);
+
+        type = Random.Range(0, 100);
+        typeCount = Random.Range(5, 10);
     }
 
 
 
     private void Update()
     {
+        if (typeCount == 0)
+        {
+            type = Random.Range(0, 100);
+            typeCount = Random.Range(5, 10);
+        }
+
         //일정 간격으로 젤리를 생성하기
         if ((preObj.transform.position - posA).magnitude >= length)
         {
-            if (Random.Range(0, 100) < 50)
+            if (type < 50)
             {
                 MakeJelly(posA);
                 return;
@@ -74,66 +86,45 @@ public class JellyMaker : MonoBehaviour
     {
         if (collision.CompareTag("Pivot"))
         {
-            coinObj = coinPrefab2;
-            jellyObj = jellyPrefab2;
             pivot = collision.transform.position;
         }
     }
 
     private void MakeJelly(Vector2 pos)
     {
-        //switch (Random.Range(0, 100))
-        //{
-        //    case < 20:
-        //        jellyObj = jellyPrefab3;
-        //        break;
-        //    case < 50:
-        //        jellyObj = jellyPrefab2;
-        //        break;
-        //    default:
-        //        jellyObj = jellyPrefab1;
-        //        break;
-        //}
+        switch (type)
+        {
+            case < 20:
+                jellyObj = jellyPrefab3;
+                break;
+            case < 50:
+                jellyObj = jellyPrefab2;
+                break;
+            default:
+                jellyObj = jellyPrefab1;
+                break;
+        }
 
         preObj = Instantiate(jellyObj, pos, Quaternion.identity, JellyObject.transform);
+        typeCount--;
     }
 
     private void MakeCoin(Vector2 pos)
     {
-        //switch (Random.Range(0, 100))
-        //{
-        //    case < 20:
-        //        coinObj = coinPrefab3;
-        //        break;
-        //    case < 50:
-        //        coinObj = coinPrefab2;
-        //        break;
-        //    default:
-        //        coinObj = coinPrefab1;
-        //        break;
-        //}
+        switch (type)
+        {
+            case < 20:
+                coinObj = coinPrefab3;
+                break;
+            case < 50:
+                coinObj = coinPrefab2;
+                break;
+            default:
+                coinObj = coinPrefab1;
+                break;
+        }
 
         preObj = Instantiate(coinObj, pos, Quaternion.identity, JellyObject.transform);
+        typeCount--;
     }
 }
-////1초에 50번 생성
-//private void FixedUpdate()
-//{
-//    //일정 시간간격으로 젤리를 생성함
-//    time += Time.fixedDeltaTime;
-//    posB = transform.position;
-//    if (time >= 0.2f)
-//    {
-//        time = 0;
-//        MakeJelly(position);
-//    }
-
-//    if ((posB - posA).magnitude >= length)
-//    {
-//        MakeJelly(posB);
-//        posA = posB;
-//    }
-
-//    //피벗 값 받아서 러프 적용?
-//    position.y = Mathf.Lerp(position.y, pivot.y, 0.25f);
-//}
