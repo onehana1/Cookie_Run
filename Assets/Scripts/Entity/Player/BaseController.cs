@@ -99,7 +99,6 @@ public class BaseController : MonoBehaviour
 
     protected virtual void HandleAction()
     {
-        Debug.Log("ㅇㅇ");
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!baseState.isJump)//baseState.isGrounded || 
@@ -333,17 +332,6 @@ public class BaseController : MonoBehaviour
     }
 
 
-    private void TakeHit(float damage)
-    {
-        if (baseState.isHit || baseState.isInvincible || baseState.isDead) return;
-
-        baseState.isHit = true;
-        baseState.TakeDamage(damage);
-
-        baseState.StartInvincibility(invinvibleTime);
-        StartCoroutine(ResetHitState());
-
-    }
     private IEnumerator ResetHitState() // OnStateExit vs 코루틴 생각하다가 피격 애니메이션 1프레임 고정이라 코루틴 사용
     {
         yield return new WaitForSeconds(hitTime); // 피격 애니메이션 길이만큼 대기
