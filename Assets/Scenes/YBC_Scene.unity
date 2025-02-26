@@ -709,14 +709,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapPrefabs:
   - {fileID: 7488753902501392141, guid: 2e527182ab4333e42a27444086f24f69, type: 3}
-  - {fileID: 1524149671222099233, guid: 78e3dee4547a17446bd4b4e8bbea558a, type: 3}
-  - {fileID: 7089209602675354278, guid: 5356f75044219604cb98a90c74d6fe72, type: 3}
-  - {fileID: 3689166995530090111, guid: 5ac5ef49d982e984ba8202d029818178, type: 3}
-  - {fileID: 6877641345999142321, guid: 3434926fdd47c674cabf800793ab88bf, type: 3}
-  - {fileID: 8966794463776112932, guid: b5e5432080f02694fb845e7f8024d7b8, type: 3}
-  - {fileID: 7732014552764844455, guid: 0e54d811df77a114b9d1395ec02b046c, type: 3}
-  - {fileID: 2106889640280601970, guid: ad443065518b7514db027c4065c4e31e, type: 3}
-  - {fileID: 3438986870123902487, guid: f587a22b7b573b84bb99ae0f89443247, type: 3}
 --- !u!4 &414698421
 Transform:
   m_ObjectHideFlags: 0
@@ -1018,8 +1010,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalCoin: 0
   Score: 
-  playTime: 0
-  backGroundController: {fileID: 0}
 --- !u!4 &747415032
 Transform:
   m_ObjectHideFlags: 0
@@ -1047,8 +1037,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerState: {fileID: 0}
+  backGroundController: {fileID: 0}
   score: 0
   coin: 0
+  maxHp: 0
+  hp: 0
+  playTime: 0
 --- !u!1 &827139165
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ TagManager:
   - Platform
   - HealPack
   - Destroy
+  - Pivot
   layers:
   - Default
   - TransparentFX
