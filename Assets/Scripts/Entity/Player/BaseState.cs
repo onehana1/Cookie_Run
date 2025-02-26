@@ -63,6 +63,17 @@ public class BaseState : MonoBehaviour
         }
     }
 
+    public void Heal(float amount)
+    {
+        if (!isLive) return;
+
+        hp += amount;
+        if (hp > maxHp) hp = maxHp; 
+
+        OnTakeDamage?.Invoke(maxHp, hp); 
+    }
+
+
     private IEnumerator HealthDecayRoutine()
     {
         while (isLive)
