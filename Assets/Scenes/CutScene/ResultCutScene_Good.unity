@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 644034479}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: -2.65, z: 0}
+  m_LocalPosition: {x: -4.01, y: -2.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -271,7 +271,7 @@ Transform:
   m_GameObject: {fileID: 1151444487}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9, y: -2.43, z: 0}
+  m_LocalPosition: {x: -11, y: -2.43, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -533,7 +533,7 @@ Animator:
   m_GameObject: {fileID: 1658672996}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d50e1802c935a7245a1ae09b1e935f5d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7256598b0eb08d4448c74a03a5647ff0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -756,7 +756,7 @@ PlayableDirector:
   - key: {fileID: 7664188991344354326, guid: 0e3c2be6c9f75b7448bdd969e1d2d637, type: 2}
     value: {fileID: 1151444489}
   - key: {fileID: 4986126142854982642, guid: 439e4f9678690fe4fa5e69f19002636c, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1658672998}
   - key: {fileID: -5567964450111836065, guid: 439e4f9678690fe4fa5e69f19002636c, type: 2}
     value: {fileID: 0}
   - key: {fileID: 7664188991344354326, guid: 439e4f9678690fe4fa5e69f19002636c, type: 2}
