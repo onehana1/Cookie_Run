@@ -50,6 +50,7 @@ public class AnimationHandler : MonoBehaviour
 
     public void SetDie()    
     {
+        Debug.Log("¼Â ´ÙÀÌ");
         animator.SetTrigger("isDie");
     }
     public void ResetDie()

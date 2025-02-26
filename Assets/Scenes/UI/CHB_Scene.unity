@@ -1221,7 +1221,7 @@ GameObject:
   - component: {fileID: 314334418}
   - component: {fileID: 314334417}
   m_Layer: 8
-  m_Name: Ground
+  m_Name: Grounds
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9467,14 +9467,6 @@ PrefabInstance:
       value: Scholar
       objectReference: {fileID: 0}
     - target: {fileID: 3108476621616843934, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3108476621616843934, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3108476621616843934, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.77
       objectReference: {fileID: 0}
@@ -9515,32 +9507,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: jumpForce
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4094375965541245188, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: groundY
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4094375965541245188, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: rayDistance
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4094375965541245188, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: isAutoSkillActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4096843300203995399, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4096843300203995399, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5056583052580884687, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: m_SortingOrder
-      value: 200
+      propertyPath: healthDecayInterval
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9644,6 +9612,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 314334416}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1839543786 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
+  m_PrefabInstance: {fileID: 1742915095}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4c7460987230c4380e7539f84db4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1883435433
 GameObject:
   m_ObjectHideFlags: 0
@@ -10540,7 +10519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: {fileID: 0}
+  playerState: {fileID: 1839543786}
   backGroundController: {fileID: 0}
   score: 0
   bestScore: 0
@@ -11351,7 +11330,7 @@ PrefabInstance:
     - target: {fileID: 36492505321375140, guid: 0cb04ef4318ede54c915158ed1121a1e, type: 3}
       propertyPath: playerState
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1839543786}
     - target: {fileID: 307580536548141547, guid: 0cb04ef4318ede54c915158ed1121a1e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -10,6 +10,7 @@ public class JumpBotton : MonoBehaviour
 
     public void JumpBottonClick()
     {
+        if (baseController.baseState.isDead) return;
         if (!baseController.baseState.isJump)
             baseController.Jump();
         else if (!baseController.baseState.isDoubleJump)
@@ -18,18 +19,24 @@ public class JumpBotton : MonoBehaviour
 
     public void SlideBottonDown()
     {
+        if (baseController.baseState.isDead) return;
+
         if (baseController.baseState.isGrounded)
             baseController.StartSlide();
     }
 
     public void OnPointerUp()
     {
+        if (baseController.baseState.isDead) return;
+
         Debug.Log("OnPointerUp");
         baseController.EndSlide();
     }
 
     public void OnPointerDown()
     {
+        if (baseController.baseState.isDead) return;
+
         Debug.Log("OnPointerDown");
         if (baseController.baseState.isGrounded)
             baseController.StartSlide();
