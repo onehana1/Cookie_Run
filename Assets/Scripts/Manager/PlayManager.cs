@@ -1,13 +1,7 @@
+using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-using TMPro;
-
-public enum Goal 
-{
-    Score,
-    Time
-}
-
 
 public class PlayManager : MonoBehaviour
 {
@@ -60,11 +54,6 @@ public class PlayManager : MonoBehaviour
         playerState.OnHpChanged += UpdateHp;
         playerState.OnDie += GameOver;
 
-        ////목표치 설정
-        //if (Random.Range(0, 2) <1)
-        //{
-            
-        //}
     }
 
     private void Start()
@@ -134,6 +123,8 @@ public class PlayManager : MonoBehaviour
         //{
         //    SceneManager.LoadScene("ResultScene");
         //}
+
+        //딜레이주고 하는거 필요
     }
     //난이도 증가
     private void UpdateDifficult()
@@ -152,13 +143,13 @@ public class PlayManager : MonoBehaviour
     private void UpdateUI()
     {
         if (playTimeText != null)
-            playTimeText.text = playTime.ToString("N2");
+            playTimeText.text = playTime.ToString("N0");
 
         if (coinText != null)
             coinText.text = coin.ToString();
 
         if (scoreText != null)
-            scoreText.text = "Score: " + score.ToString("N2");
+            scoreText.text = "Score: " + score.ToString("N0");
 
         if (bestScoreText != null)
             bestScoreText.text = gameManager.bestScore.ToString();
