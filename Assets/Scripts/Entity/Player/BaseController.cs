@@ -40,8 +40,12 @@ public class BaseController : MonoBehaviour
 
     [Header("Collider Size")]
     private BoxCollider2D boxCollider;
-    public Vector2 originalColliderSize = new Vector2(1.0f, 1.55f);
-    public Vector2 slideColliderSize = new Vector2(1.8f, 0.7f);
+    public Vector2 originalColliderSize = new Vector2(0.3f, 0.6f);
+    public Vector2 originalColliderOffset = new Vector2(0.0f, -0.07f);
+
+    public Vector2 slideColliderSize = new Vector2(0.5f, 0.4f);
+    public Vector2 slideColliderOffset = new Vector2(0.0f, -0.01f);
+
 
     [Header("Raycast")]
     public float rayDistance = 1f;
@@ -197,6 +201,7 @@ public class BaseController : MonoBehaviour
 
         // 콜라이더 크기 변경
         boxCollider.size = slideColliderSize;
+        boxCollider.offset = slideColliderOffset;
         transform.position -= new Vector3(0, originalColliderSize.y - slideColliderSize.y - 0.1f, 0);
     }
 
