@@ -15,7 +15,8 @@ public class PlayManager : MonoBehaviour
     public BaseState playerState;
 
     //목표치(점수 혹은 타임)
-    private float goal;
+    private float goalTime;
+    private float goalScore;
 
     //플레이 점수
     public int score;
@@ -27,7 +28,7 @@ public class PlayManager : MonoBehaviour
     public float maxHp;
     public float hp;
 
-    //플레이 타
+    //플레이 타임
     public float time = 0;
     public float endTime = 180;
 
@@ -61,7 +62,10 @@ public class PlayManager : MonoBehaviour
         // 체력 변화 이벤트 구독
         playerState.OnHpChanged += UpdateHp;
         playerState.OnDie += GameOver;
-
+        
+        //목표 시간 설정
+        goalTime = 360;
+        goalScore = 30000;
     }
 
     private void Start()
@@ -74,6 +78,12 @@ public class PlayManager : MonoBehaviour
     private void Update()
     {
         UpdateUI();
+
+        if (isEnd)
+        {
+            backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
+            fadeContrller.OnFadaOutandIn();
+        }
     }
 
     private void FixedUpdate()
@@ -83,9 +93,8 @@ public class PlayManager : MonoBehaviour
         if (time >= endTime && !isEnd) 
         { 
             isEnd = true;
-            Time.timeScale = 1.0f;
-            backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
-            fadeContrller.OnFadaOutandIn();
+            Debug.Log("게임 오버 시켜줘");
+            GameOver();
         }
 
         UpdateDifficult();
@@ -113,35 +122,44 @@ public class PlayManager : MonoBehaviour
 
     public void GameOver()
     {
+        Debug.Log("해드렸습니다.");
+        Time.timeScale = 1.0f;
+
         gameManager.Score.Add(score);
         gameManager.totalCoin += coin;
 
         gameManager.bestScore = score > gameManager.bestScore ? score : gameManager.bestScore;
-        Time.timeScale = 0f;
 
-        ////스코어가 목표치를 달성했을때
-        //if (score >= goal)
-        //{
-        //    SceneManager.LoadScene("ResultScene");
-        //}
-        ////스코어가 목표치 달성을 실패했을때 
-        //else
-        //{
-        //    SceneManager.LoadScene("ResultScene");
-        //}
+        ChangeScene _changeScene = new ChangeScene();
 
-        ////플레이 시간이 목표치를 달성했을때
-        //if (score >= time)
-        //{
-        //    SceneManager.LoadScene("ResultScene");
-        //}
-        ////플레이 시간이 목표치 달성을 실패했을때 
-        //else
-        //{
-        //    SceneManager.LoadScene("ResultScene");
-        //}
+        //목표시간에 달성하지 않았을 때
+        if (time < goalTime)
+        {
+            StartCoroutine(GivemeDelay(1f));
 
-        //딜레이주고 하는거 필요
+            _changeScene.ChangeResultBadScene();
+        }
+
+        //스코어가 목표치 달성을 실패했을때 
+        else if (score < goalScore)
+        {
+            StartCoroutine(GivemeDelay(1f));
+            _changeScene.ChangeResultBadScene();
+        }
+
+        //스코어가 목표치를 달성했을 때
+        else
+        {
+            StartCoroutine(GivemeDelay(1f));
+            _changeScene.ChangeResultGoodScene();
+        }
+    }
+
+    IEnumerator GivemeDelay(float second)
+    {
+        yield return new WaitForSeconds(second);
+        backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
+        fadeContrller.OnFadaOutandIn();
     }
 
     //난이도 증가
