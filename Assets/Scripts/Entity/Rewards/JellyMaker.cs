@@ -52,6 +52,17 @@ public class JellyMaker : MonoBehaviour
         type = Random.Range(0, 100);
         typeCount = Random.Range(5, 10);
     }
+
+    private void Start()
+    {
+        if (type < 50)
+        {
+            MakeJelly(posA);
+            return;
+        }
+        MakeCoin(posA);
+    }
+
     private void Update()
     {
         if (typeCount == 0)
