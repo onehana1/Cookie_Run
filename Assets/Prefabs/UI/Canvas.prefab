@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 8964999259904138998}
   - component: {fileID: 8811466096820256967}
   - component: {fileID: 8611683254984533539}
-  - component: {fileID: 978275789053393256}
-  - component: {fileID: 4847471885527311050}
   m_Layer: 5
   m_Name: TotalCoin
   m_TagString: Untagged
@@ -136,46 +134,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &978275789053393256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909590548407336193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerState: {fileID: 0}
-  backGroundController: {fileID: 0}
-  score: 0
-  bestScore: 0
-  coin: 0
-  totalCoin: 0
-  maxHp: 0
-  hp: 0
-  playTime: 0
-  scoreText: {fileID: 8464214150335659506}
-  bestScoreText: {fileID: 2888393447457569803}
-  coinText: {fileID: 2801106953553322419}
-  totalCoinText: {fileID: 8611683254984533539}
-  playTimeText: {fileID: 2589739598704780145}
---- !u!114 &4847471885527311050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909590548407336193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8abd187547771c0409e8271e78abfa36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalCoin: 0
-  Score: 
 --- !u!1 &2864050892302187489
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,15 +281,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: {fileID: 0}
   backGroundController: {fileID: 0}
+  playerState: {fileID: 0}
   score: 0
-  bestScore: 0
   coin: 0
-  totalCoin: 0
   maxHp: 0
   hp: 0
-  playTime: 0
+  time: 0
   scoreText: {fileID: 0}
   bestScoreText: {fileID: 0}
   coinText: {fileID: 0}
@@ -590,15 +546,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: {fileID: 0}
   backGroundController: {fileID: 0}
+  playerState: {fileID: 0}
   score: 0
-  bestScore: 0
   coin: 0
-  totalCoin: 0
   maxHp: 0
   hp: 0
-  playTime: 0
+  time: 0
   scoreText: {fileID: 0}
   bestScoreText: {fileID: 0}
   coinText: {fileID: 2801106953553322419}
@@ -751,15 +705,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: {fileID: 0}
   backGroundController: {fileID: 0}
+  playerState: {fileID: 0}
   score: 0
-  bestScore: 0
   coin: 0
-  totalCoin: 0
   maxHp: 0
   hp: 0
-  playTime: 0
+  time: 0
   scoreText: {fileID: 8464214150335659506}
   bestScoreText: {fileID: 0}
   coinText: {fileID: 2801106953553322419}
@@ -912,15 +864,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: {fileID: 0}
   backGroundController: {fileID: 0}
+  playerState: {fileID: 0}
   score: 0
-  bestScore: 0
   coin: 0
-  totalCoin: 0
   maxHp: 0
   hp: 0
-  playTime: 0
+  time: 0
   scoreText: {fileID: 8464214150335659506}
   bestScoreText: {fileID: 2888393447457569803}
   coinText: {fileID: 2801106953553322419}

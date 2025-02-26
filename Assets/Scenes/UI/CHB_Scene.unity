@@ -453,6 +453,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pet
       objectReference: {fileID: 0}
+    - target: {fileID: 9086344455660717043, guid: 4dc669dbde634534db500da821935b03, type: 3}
+      propertyPath: m_SortingOrder
+      value: 200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1944,7 +1948,6 @@ GameObject:
   - component: {fileID: 478617560}
   - component: {fileID: 478617563}
   - component: {fileID: 478617562}
-  - component: {fileID: 478617561}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -1971,32 +1974,6 @@ RectTransform:
   m_AnchoredPosition: {x: 18, y: -63}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &478617561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 478617559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerState: {fileID: 0}
-  backGroundController: {fileID: 0}
-  score: 0
-  bestScore: 0
-  coin: 0
-  totalCoin: 0
-  maxHp: 0
-  hp: 0
-  playTime: 0
-  scoreText: {fileID: 0}
-  bestScoreText: {fileID: 0}
-  coinText: {fileID: 0}
-  totalCoinText: {fileID: 0}
-  playTimeText: {fileID: 0}
 --- !u!114 &478617562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2984,6 +2961,62 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5476649087974449171, guid: bcfd41ec6ad6f354c90f426f9ce9c8af, type: 3}
   m_PrefabInstance: {fileID: 1134882865}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &638934652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 638934653}
+  - component: {fileID: 638934654}
+  m_Layer: 0
+  m_Name: PlayManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &638934653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638934652}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.0614245, y: 0.9294318, z: -0.13014667}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &638934654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638934652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backGroundController: {fileID: 0}
+  playerState: {fileID: 1839543786}
+  score: 0
+  coin: 0
+  maxHp: 0
+  hp: 0
+  time: 0
+  scoreText: {fileID: 1973931380}
+  bestScoreText: {fileID: 1292964799}
+  coinText: {fileID: 250925925}
+  totalCoinText: {fileID: 130541882}
+  playTimeText: {fileID: 700488095}
 --- !u!1 &641565697
 GameObject:
   m_ObjectHideFlags: 0
@@ -7912,7 +7945,6 @@ GameObject:
   - component: {fileID: 1412594071}
   - component: {fileID: 1412594074}
   - component: {fileID: 1412594073}
-  - component: {fileID: 1412594072}
   m_Layer: 5
   m_Name: Coin
   m_TagString: Untagged
@@ -7939,32 +7971,6 @@ RectTransform:
   m_AnchoredPosition: {x: -305.47, y: -27.813}
   m_SizeDelta: {x: 189.0617, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1412594072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1412594070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerState: {fileID: 0}
-  backGroundController: {fileID: 0}
-  score: 0
-  bestScore: 0
-  coin: 0
-  totalCoin: 0
-  maxHp: 0
-  hp: 0
-  playTime: 0
-  scoreText: {fileID: 0}
-  bestScoreText: {fileID: 0}
-  coinText: {fileID: 1412594073}
-  totalCoinText: {fileID: 0}
-  playTimeText: {fileID: 0}
 --- !u!114 &1412594073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10082,7 +10088,6 @@ GameObject:
   - component: {fileID: 1938277392}
   - component: {fileID: 1938277395}
   - component: {fileID: 1938277394}
-  - component: {fileID: 1938277393}
   m_Layer: 5
   m_Name: BestScore
   m_TagString: Untagged
@@ -10109,32 +10114,6 @@ RectTransform:
   m_AnchoredPosition: {x: 18.00002, y: -113}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1938277393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1938277391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerState: {fileID: 0}
-  backGroundController: {fileID: 0}
-  score: 0
-  bestScore: 0
-  coin: 0
-  totalCoin: 0
-  maxHp: 0
-  hp: 0
-  playTime: 0
-  scoreText: {fileID: 478617562}
-  bestScoreText: {fileID: 1938277394}
-  coinText: {fileID: 0}
-  totalCoinText: {fileID: 0}
-  playTimeText: {fileID: 0}
 --- !u!114 &1938277394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10499,7 +10478,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2031033433}
   - component: {fileID: 2031033432}
-  - component: {fileID: 2031033431}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -10507,32 +10485,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2031033431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031033430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerState: {fileID: 1839543786}
-  backGroundController: {fileID: 0}
-  score: 0
-  bestScore: 0
-  coin: 0
-  totalCoin: 0
-  maxHp: 0
-  hp: 0
-  playTime: 0
-  scoreText: {fileID: 1973931380}
-  bestScoreText: {fileID: 1292964799}
-  coinText: {fileID: 250925925}
-  totalCoinText: {fileID: 130541882}
-  playTimeText: {fileID: 700488095}
 --- !u!114 &2031033432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10546,6 +10498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalCoin: 0
+  bestScore: 0
   Score: 
 --- !u!4 &2031033433
 Transform:
@@ -11512,7 +11465,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5491705214118481641, guid: 61cfaf4071324a748a0888a4ca01a6ff, type: 3}
+    - {fileID: 4013398219426605000, guid: 61cfaf4071324a748a0888a4ca01a6ff, type: 3}
+    - {fileID: 6698816128812396469, guid: 61cfaf4071324a748a0888a4ca01a6ff, type: 3}
+    - {fileID: 4468930113834095720, guid: 61cfaf4071324a748a0888a4ca01a6ff, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -11634,3 +11591,4 @@ SceneRoots:
   - {fileID: 1517400603}
   - {fileID: 1901500946}
   - {fileID: 2031033433}
+  - {fileID: 638934653}
