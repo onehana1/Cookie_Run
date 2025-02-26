@@ -128,28 +128,26 @@ public class PlayManager : MonoBehaviour
 
         gameManager.bestScore = score > gameManager.bestScore ? score : gameManager.bestScore;
 
-        ChangeScene _changeScene = new ChangeScene();
-
         //목표시간에 달성하지 않았을 때
         if (time < goalTime)
         {
             StartCoroutine(GivemeDelay(1f));
 
-            _changeScene.ChangeResultBadScene();
+            ChangeScene.ChangeResultBadScene();
         }
 
         //스코어가 목표치 달성을 실패했을때 
         else if (score < goalScore)
         {
             StartCoroutine(GivemeDelay(1f));
-            _changeScene.ChangeResultBadScene();
+            ChangeScene.ChangeResultBadScene();
         }
 
         //스코어가 목표치를 달성했을 때
         else
         {
             StartCoroutine(GivemeDelay(1f));
-            _changeScene.ChangeResultGoodScene();
+            ChangeScene.ChangeResultGoodScene();
         }
     }
 

@@ -6,30 +6,30 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/PersonalScene/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/UI/01.StartScene.unity
+    path: Assets/Scenes/MainScene/01.StartScene.unity
     guid: 871c4cbfbd3eb0143948aa998245094f
   - enabled: 1
-    path: Assets/Scenes/UI/CHB_Scene.unity
+    path: Assets/Scenes/MainScene/04.GameScene.unity
     guid: f755dacfbc309de42bbed991d76ef993
   - enabled: 1
-    path: Assets/Scenes/ChoiceScene.unity
+    path: Assets/Scenes/MainScene/03.StageScene.unity
     guid: 65760642ca006284489ac23f1b8735ef
   - enabled: 1
-    path: Assets/Scenes/UI/trash/ScoreScene.unity
+    path: Assets/Scenes/MainScene/UI/trash/ScoreScene.unity
     guid: 2a88c9ac4a7d99242b0f8fe72de841cb
   - enabled: 1
-    path: Assets/Scenes/UI/LobbyScene.unity
+    path: Assets/Scenes/MainScene/02.LobbyScene.unity
     guid: d13205e52ca792a4cb197e3918fc39f3
   - enabled: 1
-    path: Assets/Scenes/CutScene/ResultCutScene.unity
+    path: Assets/Scenes/MainScene/CutScene/ResultCutScene.unity
     guid: 5a044e7877e97ed4493c50866f7a87d4
   - enabled: 1
-    path: Assets/Scenes/CutScene/ResultCutScene_Good.unity
+    path: Assets/Scenes/MainScene/CutScene/ResultCutScene_Good.unity
     guid: b39801b07b6011c43b774e2ef0204515
   - enabled: 1
-    path: Assets/Scenes/UI/ResultScene.unity
+    path: Assets/Scenes/MainScene/05.ResultScene.unity
     guid: 6506a6ef87128c943b1614373cf1908c
   m_configObjects: {}
