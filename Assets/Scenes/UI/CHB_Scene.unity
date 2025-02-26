@@ -9467,14 +9467,6 @@ PrefabInstance:
       value: Scholar
       objectReference: {fileID: 0}
     - target: {fileID: 3108476621616843934, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3108476621616843934, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3108476621616843934, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.77
       objectReference: {fileID: 0}
@@ -9515,52 +9507,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: isDead
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: isFall
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: jumpForce
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: isInvincible
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: healthDecayRate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
       propertyPath: healthDecayInterval
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4094375965541245188, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: groundY
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4094375965541245188, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: rayDistance
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4094375965541245188, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: isAutoSkillActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4096843300203995399, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4096843300203995399, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5056583052580884687, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: m_SortingOrder
-      value: 200
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

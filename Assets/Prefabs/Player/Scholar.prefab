@@ -63,10 +63,13 @@ MonoBehaviour:
   isSliding: 0
   isHit: 0
   isLive: 1
+  isDead: 0
   isRescue: 0
   isRand: 0
-  isFall: 0
-  isInvincible: 1
+  isFall: 1
+  isInvincible: 0
+  healthDecayRate: 1
+  healthDecayInterval: 5
 --- !u!114 &4094375965541245188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 986d9c837c25e014384f16e0ca970099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashMultiplier: 2
+  dashDuration: 5
 --- !u!1 &3183362461961238118
 GameObject:
   m_ObjectHideFlags: 0
