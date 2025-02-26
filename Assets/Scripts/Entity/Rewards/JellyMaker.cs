@@ -23,7 +23,7 @@ public class JellyMaker : MonoBehaviour
     private GameObject jellyObj;
     private GameObject coinObj;
 
-    //이전에 설치된 젤리 오브젝트
+    //이전에 설치된 오브젝트(위치 포착용)
     private GameObject preObj;
 
     //젤리가 도달해야하는 y값
@@ -32,31 +32,36 @@ public class JellyMaker : MonoBehaviour
     //그라운드의 기본 pivot값
     Vector2 groundVector = new Vector2(20f, -3f);
 
-    //길이를 구하는 벡터 posA가 메이커의 벡터
-    Vector3 posA;
-
+    //길이와 길이를 측정할 벡터 posA
+    Vector3 posA; 
     float length = 1f;
 
-    //타입
-    int type;
+    //러프 보간 비율? 그것
+    float t = 0.2f;
 
-    //타입 카운트;
+    //젤리/코인 타입& 출력 갯수
+    int type;
     int typeCount;
 
-    [SerializeField] float t = 0.2f;
 
     private void Awake()
     {
         pivot = groundVector;
         posA = transform.position;
 
-        MakeJelly(posA);
-
         type = Random.Range(0, 100);
         typeCount = Random.Range(5, 10);
     }
 
-
+    private void Start()
+    {
+        if (type < 50)
+        {
+            MakeJelly(posA);
+            return;
+        }
+        MakeCoin(posA);
+    }
 
     private void Update()
     {
@@ -81,7 +86,6 @@ public class JellyMaker : MonoBehaviour
         posA.y = Mathf.Lerp(posA.y, pivot.y, t);
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Pivot"))
@@ -90,6 +94,7 @@ public class JellyMaker : MonoBehaviour
         }
     }
 
+    //젤리 생성로직
     private void MakeJelly(Vector2 pos)
     {
         switch (type)
@@ -109,6 +114,7 @@ public class JellyMaker : MonoBehaviour
         typeCount--;
     }
 
+    //코인 생성로직
     private void MakeCoin(Vector2 pos)
     {
         switch (type)
