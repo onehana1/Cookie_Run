@@ -53,7 +53,7 @@ public class BaseState : MonoBehaviour
 
     public void TakeDamage(float damage, HPReduceType hPReduceType = HPReduceType.Damage)
     {
-        if (!isLive) return;
+        if (isInvincible || !isLive) return;
 
         hp -= damage;
         Debug.Log($"현재 체력: {hp}");
