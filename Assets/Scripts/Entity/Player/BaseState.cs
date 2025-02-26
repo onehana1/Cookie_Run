@@ -70,6 +70,7 @@ public class BaseState : MonoBehaviour
             hp = 0;
             isLive = false;
             Debug.Log("캐릭터 사망");
+            PlayManager.Instance.GameOver();
             Die();
         }
     }
