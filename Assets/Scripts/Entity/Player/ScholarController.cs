@@ -37,15 +37,13 @@ public class ScholarController : BaseController
         {
             skillCooldown -= Time.deltaTime;
         }
-
-        HandleSkill();
+        AddHandleAction();
     }
 
-    protected override void HandleAction()
+    protected void AddHandleAction()
     {
-        if (isSkillActive) return; 
-
-        base.HandleAction(); 
+        if (isSkillActive) return;
+        if(!baseState.isDead)  HandleSkill();
     }
 
     private IEnumerator DelayedAutoSkillStart()
@@ -78,6 +76,8 @@ public class ScholarController : BaseController
         Debug.Log("AutoSkill 시작");
         while (isAutoSkillActive)
         {
+            if (baseState.isDead) yield break;
+
             if (skillCooldown <= 0)
             {
                 Debug.Log("AutoSkill");
@@ -90,6 +90,8 @@ public class ScholarController : BaseController
 
     private IEnumerator Skill()
     {
+        if (baseState.isDead) yield break;
+
         Debug.Log("스킬 사용");
         baseState.isInvincible = true;
         animationHandler.SetSkill(true);

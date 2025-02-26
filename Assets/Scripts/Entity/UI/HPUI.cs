@@ -11,6 +11,8 @@ public class HPUI : MonoBehaviour
     void Start()
     {
         playerState.OnTakeDamage += UpdateHpBar;
+        playerState.OnHpChanged += UpdateHpBar;
+
     }
 
     private void UpdateHpBar(float MaxHp, float currentHp)

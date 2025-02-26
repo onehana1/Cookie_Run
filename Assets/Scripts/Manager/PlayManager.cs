@@ -1,34 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class PlayManager : MonoBehaviour
 {
     public static PlayManager Instance;
 
-    public BaseState playerState;
     public BackGroundController backGroundController;
     public GameManager gameManager;
     public FadeContrller fadeContrller;
+    public BaseState playerState;
 
-    //플레이 점수
+    //��ǥġ(���� Ȥ�� Ÿ��)
+    private float goal;
+
+    //?�레???�수
     public int score;
 
-    //최고 점수
+    //최고 ?�수
     public int bestScore;
 
-    //획득 코인
+    //?�득 코인
     public int coin;
 
-    //보유 코인
-    public int totalCoin;
-
-    //플레이어의 체력
+    //?�레?�어??체력
     public float maxHp;
     public float hp;
 
-    //플레이 타임
+    //?�레???�??
     public float time = 0;
     public float endTime = 180;
 
@@ -59,22 +59,21 @@ public class PlayManager : MonoBehaviour
         hp = playerState.hp;
         maxHp = playerState.maxHp;
 
-        // 체력 변화 이벤트 구독
+        // 체력 변???�벤??구독
         playerState.OnHpChanged += UpdateHp;
         playerState.OnDie += GameOver;
 
-        LoadBestScore();
-        LoadTotalCoin();
     }
 
     private void Start()
     {
         backGroundController = FindObjectOfType<BackGroundController>();
+        gameManager = GameManager.Instance;
+        playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
     }
 
     private void Update()
     {
-        playTime += Time.deltaTime;
         UpdateUI();
     }
 
@@ -92,19 +91,16 @@ public class PlayManager : MonoBehaviour
 
         UpdateDifficult();
     }
+        UpdateDifficult();
+    }
 
-    //점수 지속적으로 더해주기
+    //���� ���������� �����ֱ�
     public void AddScore(int scoreValue)
     {
         score += scoreValue;
-        if (score > bestScore)
-        {
-            bestScore = score;
-            SaveBestScore();
-        }
     }
 
-    //코인 지속적으로 더해주기
+    //코인 지?�적?�로 ?�해주기
     public void AddCoin(int CoinValue)
     {
         coin += CoinValue;
@@ -116,24 +112,47 @@ public class PlayManager : MonoBehaviour
         SaveTotalCoin();
     }
 
-    //체력 갱신
+    //ü�� ����
     private void UpdateHp(float maxHp, float currentHp)
     {
         this.hp = currentHp;
     }
 
-
-    //게임 오버시 코인과 점수를 게임매니저 인스턴스에 저장해줌
+    //���� ������ ���ΰ� ������ ���ӸŴ��� �ν��Ͻ��� ��������
     public void GameOver()
     {
-        GameManager.Instance.Score.Add(score);
-        GameManager.Instance.totalCoin += coin;
-    }
+        gameManager.Score.Add(score);
+        gameManager.totalCoin += coin;
+        gameManager.bestScore = score > gameManager.bestScore ? score : gameManager.bestScore;
+        Time.timeScale = 0f;
 
-    //난이도 증가
+        ////���ھ ��ǥġ�� �޼�������
+        //if (score >= goal)
+        //{
+        //    SceneManager.LoadScene("ResultScene");
+        //}
+        ////���ھ ��ǥġ �޼��� ���������� 
+        //else
+        //{
+        //    SceneManager.LoadScene("ResultScene");
+        //}
+
+        ////�÷��� �ð��� ��ǥġ�� �޼�������
+        //if (score >= time)
+        //{
+        //    SceneManager.LoadScene("ResultScene");
+        //}
+        ////�÷��� �ð��� ��ǥġ �޼��� ���������� 
+        //else
+        //{
+        //    SceneManager.LoadScene("ResultScene");
+        //}
+
+        //�������ְ� �ϴ°� �ʿ�
+    }
+    //���̵� ����
     private void UpdateDifficult()
     {
-        //playTime += Time.unscaledDeltaTime;
         if (playTime > 30)
         {
             playTime = 0;
@@ -145,43 +164,27 @@ public class PlayManager : MonoBehaviour
         }
     }
 
-    private void SaveBestScore()
-    {
-        PlayerPrefs.SetInt("BestScore", bestScore);
-        PlayerPrefs.Save();
-    }
-
-    private void SaveTotalCoin()
-    {
-        PlayerPrefs.SetInt("TotalCoin", totalCoin);
-        PlayerPrefs.Save();
-    }
-
-    private void LoadTotalCoin()
-    {
-        totalCoin = PlayerPrefs.GetInt("TotalCoin", 0);
-    }
-
-    private void LoadBestScore()
-    {
-        bestScore = PlayerPrefs.GetInt("BestScore", 0);
-    }
-
     private void UpdateUI()
     {
         if (playTimeText != null)
-            playTimeText.text = "Time: " + (int)playTime;
+            playTimeText.text = FormatTime(time);
 
         if (coinText != null)
-            coinText.text = "Coin: " + coin;
+            coinText.text = coin.ToString();
 
         if (scoreText != null)
-            scoreText.text = "Score: " + score;
+            scoreText.text = "Score: " + score.ToString("N0");
 
         if (bestScoreText != null)
-            bestScoreText.text = "Best Score: " + bestScore;
+            bestScoreText.text = gameManager.bestScore.ToString();
 
         if (totalCoinText != null)
-            totalCoinText.text = "Total Coin: " + totalCoin;
+            totalCoinText.text = gameManager.totalCoin.ToString();
+    }
+
+    private string FormatTime(float timeInSeconds)
+    {
+        System.TimeSpan timeSpan = System.TimeSpan.FromSeconds(timeInSeconds);
+        return string.Format("{0:00}:{1:00}", timeSpan.Minutes, timeSpan.Seconds);
     }
 }

@@ -595,10 +595,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
-      propertyPath: isDoubleJump
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5943790457044685669, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
       propertyPath: m_Camera
       value: 

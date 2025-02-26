@@ -20,6 +20,7 @@ public class BaseState : MonoBehaviour
     public bool isSliding = false;
     public bool isHit = false;
     public bool isLive = true;
+    public bool isDead = false;
     public bool isRescue = false;
     public bool isRand = false;
     public bool isFall = false;
@@ -59,15 +60,18 @@ public class BaseState : MonoBehaviour
 
         OnHpChanged?.Invoke(maxHp, hp);
 
-        if (hPReduceType== HPReduceType.Damage)
+        if (hPReduceType == HPReduceType.Damage)
+        {
             OnTakeDamage?.Invoke(maxHp, hp);
+        }
 
         if (hp <= 0)
         {
             hp = 0;
             isLive = false;
             Debug.Log("캐릭터 사망");
-            OnDie?.Invoke();
+            PlayManager.Instance.GameOver();
+            Die();
         }
     }
 
@@ -81,6 +85,17 @@ public class BaseState : MonoBehaviour
         OnTakeDamage?.Invoke(maxHp, hp); 
     }
 
+
+    public void Die()
+    {
+        if (!isLive) return;
+
+        isLive = false;
+        isDead = true;  // 사망 상태 활성화
+
+        Debug.Log("캐릭터 사망");
+        OnDie?.Invoke();
+    }
 
     private IEnumerator HealthDecayRoutine()
     {
