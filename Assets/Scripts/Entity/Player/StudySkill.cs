@@ -10,6 +10,8 @@ public class StudySkill : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] private GameObject roll; // 두루마기 이미지
+    [SerializeField] private GameObject background; // 두루마기 이미지
+
     [SerializeField] private TMP_Text questionText; // OX 퀴즈 텍스트
 
     [SerializeField] private Button oButton;  
@@ -42,6 +44,8 @@ public class StudySkill : MonoBehaviour
     private void Start()
     {
         roll.SetActive(false);
+        background.SetActive(false);
+
         UIManager.Instance.OnOXSelected += CheckAnswer;
     }
 
@@ -75,6 +79,8 @@ public class StudySkill : MonoBehaviour
         currentQuestionCount = 0;
 
         roll.SetActive(true);
+        background.SetActive(true);
+
         UIManager.Instance.SetQuizMode(true);
         SelectRandomQuestion(); // 첫 번째 문제 즉시 표시
 
@@ -96,6 +102,8 @@ public class StudySkill : MonoBehaviour
 
             isAnswerSelected = false;
             roll.SetActive(true);
+            background.SetActive(true);
+
 
             SelectRandomQuestion(); // 퀴즈 선택 후 UI 업데이트
 
@@ -151,6 +159,8 @@ public class StudySkill : MonoBehaviour
     {
         isQuizActive = false;
         roll.SetActive(false);
+        background.SetActive(false);
+
         UIManager.Instance.SetQuizMode(false); // UI 복구
         Debug.Log("OX 퀴즈 종료!");
     }
