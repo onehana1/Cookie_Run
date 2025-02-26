@@ -37,15 +37,15 @@ public class ScholarController : BaseController
         {
             skillCooldown -= Time.deltaTime;
         }
+        AddHandleAction();
 
-        HandleSkill();
+
     }
 
-    protected override void HandleAction()
+    protected void AddHandleAction()
     {
-        if (isSkillActive) return; 
-
-        base.HandleAction(); 
+        if (isSkillActive) return;
+        HandleSkill();
     }
 
     private IEnumerator DelayedAutoSkillStart()

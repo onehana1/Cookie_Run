@@ -63,7 +63,7 @@ public class BaseController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (baseState.isHit) return;
+        if (baseState.isHit || baseState.isDead) return;
         HandleAction();
 
         //if (isInvincible)   // 무적시간동안 안떨어지게..
@@ -344,10 +344,9 @@ public class BaseController : MonoBehaviour
 
     private void Die()
     {
-        if (!baseState.isLive) return;
+        if (baseState.isLive) return;
+        baseState.Die();
         boxCollider.size = slideColliderSize;
-
-        baseState.isLive = false;
         animationHandler.SetDie();
     }
 
@@ -435,6 +434,7 @@ public class BaseController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            Debug.Log("충돌");
             baseState.TakeDamage(damage);
         }
     }
