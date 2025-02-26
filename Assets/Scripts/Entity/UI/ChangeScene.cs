@@ -11,7 +11,7 @@ public class ChangeScene : MonoBehaviour
     public void ChangeLobbyScene()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("02.LobbyScene");
+        SceneManager.LoadScene("LobbyScene");
     }
     public void ChangeScoreScene()
     {
