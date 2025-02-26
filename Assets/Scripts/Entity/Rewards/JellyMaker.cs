@@ -6,40 +6,40 @@ using UnityEngine.Rendering;
 
 public class JellyMaker : MonoBehaviour
 {
-    //Á©¸® ºÎ¸ð¿ÀºêÁ§Æ®
-    public GameObject JellyObject; 
+    //ì ¤ë¦¬ ë¶€ëª¨ì˜¤ë¸Œì íŠ¸
+    public GameObject JellyObject;
 
-    //»ý¼ºµÇ´Â Á©¸® ÇÁ¸®Æé Á¾·ù
+    //ìƒì„±ë˜ëŠ” ì ¤ë¦¬ í”„ë¦¬íŽ© ì¢…ë¥˜
     public GameObject jellyPrefab1;
     public GameObject jellyPrefab2;
     public GameObject jellyPrefab3;
 
-    //»ý¼ºµÇ´Â ÄÚÀÎ ÇÁ¸®Æé Á¾·ù
+    //ìƒì„±ë˜ëŠ” ì½”ì¸ í”„ë¦¬íŽ© ì¢…ë¥˜
     public GameObject coinPrefab1;
     public GameObject coinPrefab2;
     public GameObject coinPrefab3;
 
-    //»ý¼ºÇÒ ¿ÀºêÁ§Æ®
+    //ìƒì„±í•  ì˜¤ë¸Œì íŠ¸
     private GameObject jellyObj;
     private GameObject coinObj;
 
-    //ÀÌÀü¿¡ ¼³Ä¡µÈ ¿ÀºêÁ§Æ®(À§Ä¡ Æ÷Âø¿ë)
+    //ì´ì „ì— ì„¤ì¹˜ëœ ì˜¤ë¸Œì íŠ¸(ìœ„ì¹˜ í¬ì°©ìš©)
     private GameObject preObj;
 
-    //Á©¸®°¡ µµ´ÞÇØ¾ßÇÏ´Â y°ª
+    //ì ¤ë¦¬ê°€ ë„ë‹¬í•´ì•¼í•˜ëŠ” yê°’
     Vector2 pivot;
 
-    //±×¶ó¿îµåÀÇ ±âº» pivot°ª
+    //ê·¸ë¼ìš´ë“œì˜ ê¸°ë³¸ pivotê°’
     Vector2 groundVector = new Vector2(20f, -3f);
 
-    //±æÀÌ¿Í ±æÀÌ¸¦ ÃøÁ¤ÇÒ º¤ÅÍ posA
+    //ê¸¸ì´ì™€ ê¸¸ì´ë¥¼ ì¸¡ì •í•  ë²¡í„° posA
     Vector3 posA; 
     float length = 1f;
 
-    //·¯ÇÁ º¸°£ ºñÀ²? ±×°Í
+    //ëŸ¬í”„ ë³´ê°„ ë¹„ìœ¨? ê·¸ê²ƒ
     float t = 0.2f;
 
-    //Á©¸®/ÄÚÀÎ Å¸ÀÔ& Ãâ·Â °¹¼ö
+    //ì ¤ë¦¬/ì½”ì¸ íƒ€ìž…& ì¶œë ¥ ê°¯ìˆ˜
     int type;
     int typeCount;
 
@@ -71,7 +71,7 @@ public class JellyMaker : MonoBehaviour
             typeCount = Random.Range(5, 10);
         }
 
-        //ÀÏÁ¤ °£°ÝÀ¸·Î Á©¸®¸¦ »ý¼ºÇÏ±â
+        //ì¼ì • ê°„ê²©ìœ¼ë¡œ ì ¤ë¦¬ë¥¼ ìƒì„±í•˜ê¸°
         if ((preObj.transform.position - posA).magnitude >= length)
         {
             if (type < 50)
@@ -82,7 +82,7 @@ public class JellyMaker : MonoBehaviour
             MakeCoin(posA);
         }
 
-        //Á©¸®, ÄÚÀÎÀÇ y°ª À§Ä¡ ¼öÁ¤ÇÏ´Â Ã³¸®
+        //ì ¤ë¦¬, ì½”ì¸ì˜ yê°’ ìœ„ì¹˜ ìˆ˜ì •í•˜ëŠ” ì²˜ë¦¬
         posA.y = Mathf.Lerp(posA.y, pivot.y, t);
     }
 
@@ -90,11 +90,17 @@ public class JellyMaker : MonoBehaviour
     {
         if (collision.CompareTag("Pivot"))
         {
+            if(collision.name == "EndPivot")
+            {
+                this.gameObject.SetActive(false);
+            }
+            coinObj = coinPrefab2;
+            jellyObj = jellyPrefab2;
             pivot = collision.transform.position;
         }
     }
 
-    //Á©¸® »ý¼º·ÎÁ÷
+    //ì ¤ë¦¬ ìƒì„±ë¡œì§
     private void MakeJelly(Vector2 pos)
     {
         switch (type)
@@ -114,7 +120,7 @@ public class JellyMaker : MonoBehaviour
         typeCount--;
     }
 
-    //ÄÚÀÎ »ý¼º·ÎÁ÷
+    //ì½”ì¸ ìƒì„±ë¡œì§
     private void MakeCoin(Vector2 pos)
     {
         switch (type)

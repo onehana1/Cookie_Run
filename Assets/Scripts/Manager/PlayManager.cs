@@ -1,12 +1,8 @@
+using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-using TMPro;
-
-public enum Goal 
-{
-    Score,
-    Time
-}
+using System.Collections;
 
 
 public class PlayManager : MonoBehaviour
@@ -14,27 +10,31 @@ public class PlayManager : MonoBehaviour
     public static PlayManager Instance;
 
     public BackGroundController backGroundController;
+    public GameManager gameManager;
+    public FadeContrller fadeContrller;
     public BaseState playerState;
-    private GameManager gameManager;
 
-    //¸ñÇ¥Ä¡(Á¡¼ö È¤Àº Å¸ÀÓ)
-    private float goal;
+    //ëª©í‘œì¹˜(ì ìˆ˜ í˜¹ì€ íƒ€ì„)
+    private float goalTime;
+    private float goalScore;
 
-    //ÇÃ·¹ÀÌ Á¡¼ö
+    //í”Œë ˆì´ ì ìˆ˜
     public int score;
 
-    //È¹µæ ÄÚÀÎ
+    //íšë“ ì½”ì¸
     public int coin;
 
-    //ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â
+    //í”Œë ˆì´ì–´ì˜ ì²´ë ¥
     public float maxHp;
     public float hp;
 
-    //ÇÃ·¹ÀÌ Å¸ÀÓ
+    //í”Œë ˆì´ íƒ€ì„
     public float time = 0;
+    public float endTime = 180;
 
-    //³­ÀÌµµ Á¶Àı Å¸ÀÓ
-    private float playTime = 0;
+    public float playTime = 0;
+
+    public bool isEnd = false;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI bestScoreText;
@@ -53,18 +53,19 @@ public class PlayManager : MonoBehaviour
             Destroy(this);
         }
 
+        playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
+        fadeContrller = GetComponent<FadeContrller>();
+
         hp = playerState.hp;
         maxHp = playerState.maxHp;
 
-        // Ã¼·Â º¯È­ ÀÌº¥Æ® ±¸µ¶
+        // ì²´ë ¥ ë³€í™” ì´ë²¤íŠ¸ êµ¬ë…
         playerState.OnHpChanged += UpdateHp;
         playerState.OnDie += GameOver;
-
-        ////¸ñÇ¥Ä¡ ¼³Á¤
-        //if (Random.Range(0, 2) <1)
-        //{
-            
-        //}
+        
+        //ëª©í‘œ ì‹œê°„ ì„¤ì •
+        goalTime = 360;
+        goalScore = 30000;
     }
 
     private void Start()
@@ -77,65 +78,91 @@ public class PlayManager : MonoBehaviour
     private void Update()
     {
         UpdateUI();
+
+        if (isEnd)
+        {
+            backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
+            fadeContrller.OnFadaOutandIn();
+        }
     }
 
     private void FixedUpdate()
     {
         playTime += Time.unscaledDeltaTime;
         time += Time.unscaledDeltaTime;
+        if (time >= endTime && !isEnd) 
+        { 
+            isEnd = true;
+            Debug.Log("ê²Œì„ ì˜¤ë²„ ì‹œì¼œì¤˜");
+            GameOver();
+        }
+
         UpdateDifficult();
     }
 
-    //Á¡¼ö Áö¼ÓÀûÀ¸·Î ´õÇØÁÖ±â
+    //ì ìˆ˜ ì§€ì†ì ìœ¼ë¡œ ë”í•´ì£¼ê¸°
     public void AddScore(int scoreValue)
     {
         score += scoreValue;
     }
 
-    //ÄÚÀÎ Áö¼ÓÀûÀ¸·Î ´õÇØÁÖ±â
+    //ì½”ì¸ ì§€ì†ì ìœ¼ë¡œ ë”í•´ì£¼ê¸°
     public void AddCoin(int CoinValue)
     {
         coin += CoinValue;
     }
 
-    //Ã¼·Â °»½Å
+    //ì²´ë ¥ ê°±ì‹ 
     private void UpdateHp(float maxHp, float currentHp)
     {
         this.hp = currentHp;
     }
 
-    //°ÔÀÓ ¿À¹ö½Ã ÄÚÀÎ°ú Á¡¼ö¸¦ °ÔÀÓ¸Å´ÏÀú ÀÎ½ºÅÏ½º¿¡ ÀúÀåÇØÁÜ
+    //ê²Œì„ ì˜¤ë²„ì‹œ ì½”ì¸ê³¼ ì ìˆ˜ë¥¼ ê²Œì„ë§¤ë‹ˆì € ì¸ìŠ¤í„´ìŠ¤ì— ì €ì¥í•´ì¤Œ
+
     public void GameOver()
     {
+        Debug.Log("í•´ë“œë ¸ìŠµë‹ˆë‹¤.");
+        Time.timeScale = 1.0f;
+
         gameManager.Score.Add(score);
         gameManager.totalCoin += coin;
 
         gameManager.bestScore = score > gameManager.bestScore ? score : gameManager.bestScore;
-        Time.timeScale = 0f;
 
-        ////½ºÄÚ¾î°¡ ¸ñÇ¥Ä¡¸¦ ´Ş¼ºÇßÀ»¶§
-        //if (score >= goal)
-        //{
-        //    SceneManager.LoadScene("ResultScene");
-        //}
-        ////½ºÄÚ¾î°¡ ¸ñÇ¥Ä¡ ´Ş¼ºÀ» ½ÇÆĞÇßÀ»¶§ 
-        //else
-        //{
-        //    SceneManager.LoadScene("ResultScene");
-        //}
+        ChangeScene _changeScene = new ChangeScene();
 
-        ////ÇÃ·¹ÀÌ ½Ã°£ÀÌ ¸ñÇ¥Ä¡¸¦ ´Ş¼ºÇßÀ»¶§
-        //if (score >= time)
-        //{
-        //    SceneManager.LoadScene("ResultScene");
-        //}
-        ////ÇÃ·¹ÀÌ ½Ã°£ÀÌ ¸ñÇ¥Ä¡ ´Ş¼ºÀ» ½ÇÆĞÇßÀ»¶§ 
-        //else
-        //{
-        //    SceneManager.LoadScene("ResultScene");
-        //}
+        //ëª©í‘œì‹œê°„ì— ë‹¬ì„±í•˜ì§€ ì•Šì•˜ì„ ë•Œ
+        if (time < goalTime)
+        {
+            StartCoroutine(GivemeDelay(1f));
+
+            _changeScene.ChangeResultBadScene();
+        }
+
+        //ìŠ¤ì½”ì–´ê°€ ëª©í‘œì¹˜ ë‹¬ì„±ì„ ì‹¤íŒ¨í–ˆì„ë•Œ 
+        else if (score < goalScore)
+        {
+            StartCoroutine(GivemeDelay(1f));
+            _changeScene.ChangeResultBadScene();
+        }
+
+        //ìŠ¤ì½”ì–´ê°€ ëª©í‘œì¹˜ë¥¼ ë‹¬ì„±í–ˆì„ ë•Œ
+        else
+        {
+            StartCoroutine(GivemeDelay(1f));
+            _changeScene.ChangeResultGoodScene();
+        }
     }
-    //³­ÀÌµµ Áõ°¡
+
+    IEnumerator GivemeDelay(float second)
+    {
+        yield return new WaitForSeconds(second);
+        backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
+        fadeContrller.OnFadaOutandIn();
+    }
+
+    //ë‚œì´ë„ ì¦ê°€
     private void UpdateDifficult()
     {
         if (playTime > 30)
@@ -152,13 +179,13 @@ public class PlayManager : MonoBehaviour
     private void UpdateUI()
     {
         if (playTimeText != null)
-            playTimeText.text = playTime.ToString("N2");
+            playTimeText.text = playTime.ToString("N0");
 
         if (coinText != null)
             coinText.text = coin.ToString();
 
         if (scoreText != null)
-            scoreText.text = "Score: " + score.ToString("N2");
+            scoreText.text = "Score: " + score.ToString("N0");
 
         if (bestScoreText != null)
             bestScoreText.text = gameManager.bestScore.ToString();

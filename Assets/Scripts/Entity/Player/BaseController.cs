@@ -164,8 +164,6 @@ public class BaseController : MonoBehaviour
 
     public virtual void Jump()
     {
-        baseState.isJump = true;
-
         if (baseState.isSliding)
         {
             EndSlide();
@@ -281,6 +279,7 @@ public class BaseController : MonoBehaviour
         float time = 0f;
         Vector3 startScale = transform.localScale;
         Vector3 targetScale = startScale * 2.0f;  // 2배 크기로 목표 설정
+        rayDistance = 1.5f;
 
 
         while (time < duration)
@@ -305,6 +304,7 @@ public class BaseController : MonoBehaviour
         float time = 0f;
         Vector3 startScale = transform.localScale;
         Vector3 targetScale = startScale / 2.0f; // 원래 크기로 복귀
+        rayDistance = 1;
 
 
         while (time < duration)
