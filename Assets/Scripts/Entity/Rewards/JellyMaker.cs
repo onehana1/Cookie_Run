@@ -26,7 +26,7 @@ public class JellyMaker : MonoBehaviour
     private GameObject coinObj;
 
     //이전에 설치된 젤리 오브젝트
-    private GameObject preJelly;
+    private GameObject preObj;
 
     //젤리가 도달해야하는 y값
     Vector2 pivot;
@@ -50,7 +50,6 @@ public class JellyMaker : MonoBehaviour
         coinObj = coinPrefab1;
 
         MakeJelly(posA);
-        MakeCoin(posA);
     }
 
 
@@ -58,10 +57,10 @@ public class JellyMaker : MonoBehaviour
     private void Update()
     {
         //일정 간격으로 젤리를 생성하기
-        if ((preJelly.transform.position - posA).magnitude >= length)
+        if ((preObj.transform.position - posA).magnitude >= length)
         {
 
-            if (Random.Range(0, 100) < 30)
+            if (Random.Range(0, 100) < 50)
             {
                 MakeJelly(posA);
                 return;
@@ -76,35 +75,22 @@ public class JellyMaker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Obstacle"))
+        if (collision.CompareTag("Pivot"))
         {
-            pivot = collision.transform.Find("Pivot").transform.position;
             obstacleQueue.Enqueue(collision);
             coinObj = coinPrefab2;
             jellyObj = jellyPrefab2;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Obstacle"))
-        {
-            obstacleQueue.Dequeue();
-            if (obstacleQueue.Count == 0) pivot.y = -3f;
-
-            jellyObj = jellyPrefab3;
-            coinObj = coinPrefab3;
-        }
-    }
-
     private void MakeJelly(Vector2 pos)
     {
-        preJelly = Instantiate(jellyObj, pos, Quaternion.identity, JellyObject.transform);
+        preObj = Instantiate(jellyObj, pos, Quaternion.identity, JellyObject.transform);
     }
 
     private void MakeCoin(Vector2 pos)
     {
-        preJelly = Instantiate(coinObj, pos, Quaternion.identity, JellyObject.transform);
+        preObj = Instantiate(coinObj, pos, Quaternion.identity, JellyObject.transform);
     }
 }
 ////1초에 50번 생성

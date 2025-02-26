@@ -125,4 +125,18 @@ public class ScholarController : BaseController
         return skillCooldown > 0;
     }
 
+    public override void Jump()
+    {
+        base.Jump();
+    }
+
+    public override void DoubleJump()
+    {
+        base.DoubleJump();
+    }
+
+    public override void StartSlide()
+    {
+        base.StartSlide();
+    }
 }
