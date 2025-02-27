@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3495414665929924312}
   - component: {fileID: 7120603645516289399}
   - component: {fileID: 3175553325215436795}
+  - component: {fileID: -4713027694287687219}
   m_Layer: 6
   m_Name: Scholar
   m_TagString: Player
@@ -190,6 +191,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashMultiplier: 2
   dashDuration: 5
+--- !u!114 &-4713027694287687219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091946685596707125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6a9ab3cc9a61c84f8611401575775a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3183362461961238118
 GameObject:
   m_ObjectHideFlags: 0
