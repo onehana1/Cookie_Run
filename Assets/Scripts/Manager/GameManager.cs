@@ -6,7 +6,8 @@ using UnityEngine;
 public enum Mode
 {
     Infinite,
-    Story
+    Story,
+    Count
 }
 
 public class GameManager : MonoBehaviour
@@ -29,6 +30,9 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            CurrentMode = Mode.Count;
+            totalCoin = 0;
+            bestScore = 0;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -36,8 +40,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        totalCoin = 0;
-        bestScore = 0;
+        SaveTotalCoin();
+        SaveBestScore();
+
     }
 
     //최고 점수 저장
