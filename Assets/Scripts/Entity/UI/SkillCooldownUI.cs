@@ -76,6 +76,8 @@ public class SkillCooldownUI : MonoBehaviour
     {
         isSkillActive = false; // 스킬 사용 시작
         cooldownTime = cooldown;
+        elapsedTime = 0f;
+        cooldownImage.fillAmount = 0f;
         StartCoroutine(HideCooldownUI(cooldown));
     }
 
