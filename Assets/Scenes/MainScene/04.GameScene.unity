@@ -2803,13 +2803,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backGroundController: {fileID: 0}
-  gameManager: {fileID: 0}
   fadeContrller: {fileID: 0}
+  gameManager: {fileID: 0}
   playerState: {fileID: 1839543786}
-  score: 0
-  coin: 0
   maxHp: 0
   hp: 0
+  score: 0
+  coin: 0
   isEnd: 0
   scoreText: {fileID: 7907852981123738670}
   bestScoreText: {fileID: 8356640374321580807}
@@ -2829,7 +2829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadePanel: {fileID: 1263690430}
-  backGroundImage: {fileID: 0}
+  backGroundImage: {fileID: 48819760}
   backGroundSprite: {fileID: 21300000, guid: a796c52c158d0c54ebbc192e573faff5, type: 3}
 --- !u!1 &641565697
 GameObject:
@@ -9588,7 +9588,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1766790323
 MonoBehaviour:
   m_ObjectHideFlags: 0
