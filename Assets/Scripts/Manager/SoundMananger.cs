@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SoundMananger : MonoBehaviour
 {
     public static SoundMananger instance;
 
+    [Header("Title")]
+    [SerializeField] private AudioSource titleEffect;
+
     [Header("BGM")]
     [SerializeField] private AudioSource lobbyBGM;
     [SerializeField] private AudioSource inGameBGM;
+    [SerializeField] private AudioSource clearBGM;
     [SerializeField] private AudioSource onBGM;
 
     [Header("Effect")]
@@ -20,6 +25,7 @@ public class SoundMananger : MonoBehaviour
     [SerializeField] private AudioSource coinEffect;
     [SerializeField] private AudioSource itemEffect;
     [SerializeField] private AudioSource clickEffect;
+    [SerializeField] private AudioSource sceneEffect;
 
     private void Awake()
     {
@@ -32,7 +38,28 @@ public class SoundMananger : MonoBehaviour
         {
             Destroy(this);
         }
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "01.StartScene")
+        {
+            PlayTitle();
+            StartCoroutine(OnTitle());
+        }
     }
+
+    IEnumerator OnTitle()
+    {
+        while (titleEffect.isPlaying)
+        {
+            yield return null;
+        }
+        PlayClearBGM();
+    }
+
+    public void PlayTitle()
+    {
+        titleEffect.Play();
+    }
+
     public void PlayLobbyBGM()
     {
         if (onBGM == lobbyBGM)
@@ -58,14 +85,27 @@ public class SoundMananger : MonoBehaviour
             onBGM.Stop();
         }
         onBGM = inGameBGM;
-        inGameBGM.Play();
+        onBGM.Play();
+    }
+
+    public void PlayClearBGM()
+    {
+        if (onBGM == clearBGM)
+        {
+            return;
+        }
+        if (onBGM != null)
+        {
+            onBGM.Stop();
+        }
+        onBGM = clearBGM;
+        onBGM.Play();
     }
 
     public void PlayJumpEffect()
     {
         jumpEffect.Play();
     }
-
 
     public void PlayObstacleEffect()
     {
@@ -90,5 +130,10 @@ public class SoundMananger : MonoBehaviour
     public void PlayClickEffect()
     {
         clickEffect.Play();
+    }
+
+    public void PlaySceneEffect()
+    {
+        sceneEffect.Play();
     }
 }

@@ -46,6 +46,4 @@ public class AudioMixerController : MonoBehaviour
     {
         audioMixer.SetFloat("Effect", Mathf.Log10(volume) * 20);
     }
-
-
 }
