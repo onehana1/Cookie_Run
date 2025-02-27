@@ -7,7 +7,7 @@ public class SkillCooldownUI : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] private Image cooldownImage;
-    [SerializeField] private Image background;
+   // [SerializeField] private Image background;
 
     [SerializeField] private ScholarController player;
     [SerializeField] private Transform playerTransform;
@@ -26,11 +26,12 @@ public class SkillCooldownUI : MonoBehaviour
     {
         if (player != null)
         {
-            cooldownTime = player.GetSkillCooldownTime();
-            player.OnSkillUsed += HandleSkillUsed;
-            StartCoroutine(UpdateCooldownUI());
+            cooldownTime = player.GetQuizCooldownTime();    // 이거 개선 가능할 것 같은데... 일단 퀴즈 쿨타임으로 고정
+            player.OnQuizUsed += HandleSkillUsed;
         }
         rectTransform = GetComponent<RectTransform>();
+        StartCoroutine(UpdateCooldownUI());
+
         mainCamera = Camera.main;
     }
 
@@ -47,47 +48,48 @@ public class SkillCooldownUI : MonoBehaviour
         rectTransform.Rotate(0, 180f, 0); // LookAt의 기본 동작이 반대 방향이므로 보정
     }
 
-    private IEnumerator UpdateCooldownUI()
+    private IEnumerator UpdateCooldownUI()  // 얘가 스킬 끝나자 마자 실행되길 바라는데 지금 안됨
     {
         while (true)
         {
-            if (isSkillActive)
+            if (!isSkillActive)
             {
-                cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 0f); // 투명화
-                background.color = new Color(0, 0, 0, 0.5f);
+                cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 1f);   //1 -> 4
 
-            }
-            else if (player.IsSkillOnCooldown())
-            {
-                cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 1f); // 다시 보이기
-                background.color = new Color(0, 0, 0, 0f); // 다시 보이기
+                elapsedTime += Time.deltaTime; // 시간 증가
+                cooldownImage.fillAmount = elapsedTime / cooldownTime; // 0 -> 1로 증가
 
-                elapsedTime += Time.deltaTime;
-                cooldownImage.fillAmount = elapsedTime / cooldownTime; // 0 → 1로 게이지 증가
-            }
-            else
-            {
-                elapsedTime = 0f;
-                cooldownImage.fillAmount = 0f; // 쿨타임 끝나면 다시 초기화
+                if (elapsedTime >= cooldownTime)
+                {
+                    elapsedTime = 0;
+                    cooldownImage.fillAmount = 0f;
+                    cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 0f);
+                }
             }
 
             yield return null;
         }
     }
 
+
     private void HandleSkillUsed(float cooldown)
     {
-        isSkillActive = true; // 스킬 사용 시작
+        isSkillActive = true; // 스킬 사용 시작   //2 -> 시작
+        cooldownTime = cooldown;
+        elapsedTime = 0f;
+        cooldownImage.fillAmount = 0f;
         StartCoroutine(HideCooldownUI(cooldown));
     }
 
+
     private IEnumerator HideCooldownUI(float duration)
     {
+        isSkillActive = false;  //3 이거 고쳤더니 이제는 hide안되네~ 당연함 false돼서 바로 위에 업데이트 실행되어버림 그냥 냅둘게요
         cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 0f); // 투명화
-        background.color = new Color(0, 0, 0, 0f); // 투명화
-
+     //   background.color = new Color(0, 0, 0, 0f); // 투명화
+         elapsedTime = 0f; 
         yield return new WaitForSeconds(duration); // 스킬 지속 시간 동안 대기
-        isSkillActive = false;
+
     }
 
 }

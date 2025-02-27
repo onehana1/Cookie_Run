@@ -17,6 +17,10 @@ public class PlayManager : MonoBehaviour
     //목표치(점수 혹은 타임)
     private float goalTime;
     private float goalScore;
+    
+    //게임 경과시간, 난이도 조절용 타임
+    private float time = 0;
+    private float playTime = 0;
 
     //플레이 점수
     public int score;
@@ -29,9 +33,6 @@ public class PlayManager : MonoBehaviour
     public float hp;
 
     //플레이 타임
-    private float time = 0;
-
-    private float playTime = 0;
 
     public bool isEnd = false;
 
@@ -65,6 +66,9 @@ public class PlayManager : MonoBehaviour
         //목표 시간 설정
         goalTime = 360;
         goalScore = 30000;
+
+        time = 0;
+        score = 0;
     }
 
     private void Start()
@@ -72,6 +76,8 @@ public class PlayManager : MonoBehaviour
         backGroundController = FindObjectOfType<BackGroundController>();
         gameManager = GameManager.Instance;
         playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
+
+        gameManager.preCoin = 0;
     }
 
     private void Update()

@@ -3,15 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Mode
+{
+    Infinite,
+    Story
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public int totalCoin;
+    //전 게임에서 획득한 코인, 스코어 기록
+    public int preCoin;
+    public List<int> Score;
 
+    //보유 코인, 최고 기록
+    public int totalCoin;
     public int bestScore;
 
-    public List<int> Score;
+    //게임내의 모드
+    public Mode CurrentMode;
 
     private void Awake()
     {

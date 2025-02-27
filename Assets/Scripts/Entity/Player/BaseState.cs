@@ -113,7 +113,7 @@ public class BaseState : MonoBehaviour
         StartCoroutine(InvincibilityTimer(duration));
     }
 
-    private IEnumerator InvincibilityTimer(float duration)
+    public IEnumerator InvincibilityTimer(float duration)
     {
         yield return new WaitForSeconds(duration);
         isInvincible = false;
