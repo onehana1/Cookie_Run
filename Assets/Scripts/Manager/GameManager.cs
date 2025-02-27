@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        totalCoin = 0;
-        bestScore = 0;
+        LoadBestScore();
+        LoadTotalCoin();
     }
 
     //최고 점수 저장
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     //최고 점수 불러오기
     private void LoadBestScore()
     {
-        bestScore = PlayerPrefs.GetInt("BestScore", 0);
+        bestScore = GameManager.Instance.bestScore;
     }
 
     //보유 코인 수 저장
@@ -63,6 +63,6 @@ public class GameManager : MonoBehaviour
     //보유 코인 수 불러오기
     private void LoadTotalCoin()
     {
-        totalCoin = PlayerPrefs.GetInt("TotalCoin", 0);
+        totalCoin = GameManager.Instance.totalCoin;
     }
 }

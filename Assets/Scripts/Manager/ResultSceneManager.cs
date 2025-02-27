@@ -1,17 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ResultSceneManager : MonoBehaviour
 {
-    void Start()
-    {
+    GameManager gameManager;
+    public TextMeshProUGUI bestScoreText;
+    public TextMeshProUGUI ScoreText;
+    public TextMeshProUGUI totalCoinText;
 
+    private void Start()
+    {
+        gameManager = GameManager.Instance;
+        UpdateBestScoreUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    void UpdateBestScoreUI()
     {
-        
+        int bestScore = gameManager.bestScore;
+        bestScoreText.text = bestScore.ToString("N0");
+
+        int lastScore = gameManager.Score[gameManager.Score.Count - 1];
+        ScoreText.text = lastScore.ToString("N0");
+
+        int totalCoin = gameManager.totalCoin;
+        totalCoinText.text = totalCoin.ToString("N0");
     }
 }
