@@ -14,7 +14,7 @@ public class FixObstacle : BaseObstacle
 
     private void FixedUpdate()
     {
-        if (animator != null && !isMove && transform.position.x < 0)
+        if (animator != null && !isMove && transform.position.x < 5)
         {
             isMove = true;
             animator.SetTrigger("Move");

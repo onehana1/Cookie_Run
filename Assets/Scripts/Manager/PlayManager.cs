@@ -1,38 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine;
+using System.Collections;
+
 
 public class PlayManager : MonoBehaviour
 {
     public static PlayManager Instance;
 
     public BackGroundController backGroundController;
+    public FadeContrller fadeContrller;
+    public GameManager gameManager;
     public BaseState playerState;
-    private GameManager gameManager;
 
+    //ëª©í‘œì¹˜(ì ìˆ˜ í˜¹ì€ íƒ€ì„)
+    private float goalTime;
+    private float goalScore;
+    
+    //ê²Œì„ ê²½ê³¼ì‹œê°„, ë‚œì´ë„ ì¡°ì ˆìš© íƒ€ì„
+    private float time = 0;
+    private float playTime = 0;
 
-    //ÇÃ·¹ÀÌ Á¡¼ö
-    public int score;
-
-    //È¹µæ ÄÚÀÎ
-    public int coin;
-
-    //ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â
+    //í”Œë ˆì´ì–´ì˜ ì²´ë ¥
     public float maxHp;
     public float hp;
 
-    //ÇÃ·¹ÀÌ Å¸ÀÓ
-    public float time = 0;
+    //í”Œë ˆì´ ì ìˆ˜
+    public int score;
 
-    //³­ÀÌµµ Á¶Àı Å¸ÀÓ
-    private float playTime = 0;
+    //íšë“ ì½”ì¸
+    public int coin;
+
+    //í”Œë ˆì´ íƒ€ì„
+    public bool isEnd = false;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI bestScoreText;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI totalCoinText;
     public TextMeshProUGUI playTimeText;
+
 
     private void Awake()
     {
@@ -45,64 +53,143 @@ public class PlayManager : MonoBehaviour
             Destroy(this);
         }
 
-        //ÇÊµå ¿¬°áÀÛ¾÷
-        gameManager = GameManager.Instance;
         playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
+        fadeContrller = GetComponent<FadeContrller>();
 
         hp = playerState.hp;
         maxHp = playerState.maxHp;
 
-        // Ã¼·Â º¯È­ ÀÌº¥Æ® ±¸µ¶
+        // ì²´ë ¥ ë³€í™” ì´ë²¤íŠ¸ êµ¬ë…
         playerState.OnHpChanged += UpdateHp;
         playerState.OnDie += GameOver;
+
+        time = 0;
+        score = 0;
     }
 
     private void Start()
     {
         backGroundController = FindObjectOfType<BackGroundController>();
+        gameManager = GameManager.Instance;
+        playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
+        
+
+        //ìŠ¤í† ë¦¬ëª¨ë“œ ì¼ ë•Œ
+        if (gameManager.CurrentMode == Mode.Story)
+        {
+            //ëª©í‘œ ì‹œê°„ ì„¤ì •
+            goalTime = 180;
+            goalScore = 15000;
+        }
+        gameManager.preCoin = 0;
     }
 
     private void Update()
     {
         UpdateUI();
+
+        if (isEnd)
+        {
+            backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
+            fadeContrller.OnFadaOutandIn();
+        }
     }
 
     private void FixedUpdate()
     {
         playTime += Time.unscaledDeltaTime;
         time += Time.unscaledDeltaTime;
+        if (time >= goalTime && !isEnd) 
+        { 
+            isEnd = true;
+            GameOver();
+        }
+
         UpdateDifficult();
     }
 
-    //Á¡¼ö Áö¼ÓÀûÀ¸·Î ´õÇØÁÖ±â
+    //ì ìˆ˜ ì§€ì†ì ìœ¼ë¡œ ë”í•´ì£¼ê¸°
     public void AddScore(int scoreValue)
     {
         score += scoreValue;
     }
 
-    //ÄÚÀÎ Áö¼ÓÀûÀ¸·Î ´õÇØÁÖ±â
+    //ì½”ì¸ ì§€ì†ì ìœ¼ë¡œ ë”í•´ì£¼ê¸°
     public void AddCoin(int CoinValue)
     {
         coin += CoinValue;
     }
 
-    //Ã¼·Â °»½Å
+    //ì²´ë ¥ ê°±ì‹ 
     private void UpdateHp(float maxHp, float currentHp)
     {
         this.hp = currentHp;
     }
 
+    //ê²Œì„ ì˜¤ë²„ì‹œ ì½”ì¸ê³¼ ì ìˆ˜ë¥¼ ê²Œì„ë§¤ë‹ˆì € ì¸ìŠ¤í„´ìŠ¤ì— ì €ì¥í•´ì¤Œ
 
-    //°ÔÀÓ ¿À¹ö½Ã ÄÚÀÎ°ú Á¡¼ö¸¦ °ÔÀÓ¸Å´ÏÀú ÀÎ½ºÅÏ½º¿¡ ÀúÀåÇØÁÜ
     public void GameOver()
     {
+        Time.timeScale = 1.0f;
+
         gameManager.Score.Add(score);
+        gameManager.preCoin = coin;
         gameManager.totalCoin += coin;
 
         gameManager.bestScore = score > gameManager.bestScore ? score : gameManager.bestScore;
+        if (gameManager.CurrentMode == Mode.Story)
+        {
+            //ëª©í‘œì‹œê°„ì— ë‹¬ì„±í•˜ì§€ ì•Šì•˜ì„ ë•Œ
+            if (time < goalTime)
+            {
+                StartCoroutine(GivemeDelay(5f, 0));
+            }
+
+            //ìŠ¤ì½”ì–´ê°€ ëª©í‘œì¹˜ ë‹¬ì„±ì„ ì‹¤íŒ¨í–ˆì„ë•Œ 
+            else if (score < goalScore)
+            {
+                StartCoroutine(GivemeDelay(5f, 0));
+            }
+
+            //ìŠ¤ì½”ì–´ê°€ ëª©í‘œì¹˜ë¥¼ ë‹¬ì„±í–ˆì„ ë•Œ
+            else
+            {
+                StartCoroutine(GivemeDelay(5f, 1));
+            }
+        }
+
+        else
+        {
+            StartCoroutine(GivemeDelay(5f));
+        }
     }
 
-    //³­ÀÌµµ Áõ°¡
+    //ìŠ¤í† ë¦¬ëª¨ë“œ ì»·ì‹  ë¡œë“œí•˜ëŠ” ì½”ë£¨í‹´
+    IEnumerator GivemeDelay(float second, int state)
+    {
+        backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
+        fadeContrller.OnFadaOutandIn();
+        yield return new WaitForSeconds(second);
+        if (state == 0)
+        {
+            ChangeScene.ChangeResultBadScene();
+        }
+        else
+        {
+            ChangeScene.ChangeResultGoodScene();
+        }
+    }
+
+    //ë¬´í•œëª¨ë“œ ê²°ê³¼ì°½ ë¡œë“œí•˜ëŠ” ì½”ë£¨í‹´
+    IEnumerator GivemeDelay(float second)
+    {
+        backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
+        fadeContrller.OnFadaOutandIn();
+        yield return new WaitForSeconds(second);
+        ChangeScene.ChangeResultScene();
+    }
+
+    //ë‚œì´ë„ ì¦ê°€
     private void UpdateDifficult()
     {
         if (playTime > 30)
@@ -116,21 +203,28 @@ public class PlayManager : MonoBehaviour
         }
     }
 
+    private void SetTimeToStringPretty()
+    {
+        int minutes = (int)(time / 60);
+        int seconds = (int)(time % 60);
+        playTimeText.text = $"{minutes:D2}:{seconds:D2}";
+    }
+
     private void UpdateUI()
     {
         if (playTimeText != null)
-            playTimeText.text = "Time: " + (int)playTime;
+            SetTimeToStringPretty();
 
         if (coinText != null)
-            coinText.text = "Coin: " + coin;
+            coinText.text = coin.ToString();
 
         if (scoreText != null)
-            scoreText.text = "Score: " + score;
+            scoreText.text = score.ToString("N0");
 
         if (bestScoreText != null)
-            bestScoreText.text = "Best Score: " + gameManager.bestScore;
+            bestScoreText.text = gameManager.bestScore.ToString();
 
         if (totalCoinText != null)
-            totalCoinText.text = "Total Coin: " + gameManager.totalCoin;
+            totalCoinText.text = gameManager.totalCoin.ToString();
     }
 }

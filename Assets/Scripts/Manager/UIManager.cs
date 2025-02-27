@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -9,6 +10,8 @@ public enum UIState
 public class UIManager : MonoBehaviour
 {
     static UIManager instance;
+    public event Action<bool> OnQuizModeChanged;    // ДыБо ёрµе
+    public event Action<bool> OnOXSelected; // ДыБо ёрµе
 
     public static UIManager Instance
     {
@@ -42,5 +45,14 @@ public class UIManager : MonoBehaviour
     public void OnClickExit()
     {
 
+    }
+
+    public void SetQuizMode(bool isQuizActive)
+    {
+        OnQuizModeChanged?.Invoke(isQuizActive);
+    }
+    public void SelectOXAnswer(bool isO)
+    {
+        OnOXSelected?.Invoke(isO); 
     }
 }

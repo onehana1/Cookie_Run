@@ -193,6 +193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10150f99ccd9b864f9cfcfc1fb48066d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magnetDuration: 5
+  magnetDuration: 6
   magnetRange: 5
   attractionSpeed: 5

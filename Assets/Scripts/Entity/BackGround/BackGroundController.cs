@@ -15,7 +15,7 @@ public class BackGroundController : MonoBehaviour
     public float backGroundLayer2MoveSpeed;//배경 오브젝트2 이동속도
     public float landMoveSpeed;//땅 이동속도;
 
-    private float backGroundImageWidth;
+    public float backGroundImageWidth;
     private float backGroundObjectWidth;
 
     public GameObject backGroundImage;

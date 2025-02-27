@@ -7,6 +7,7 @@ public class MapCreater : MonoBehaviour
 {
     public GameObject[] mapPrefabs;//맵 프리팹
     public Queue <GameObject> maps;//생성된 맵들
+    public GameObject endMap;
     Transform firstEndAnchor = null;//첫번째 맵의 끝나는 지점
     Transform lastEndAnchor = null;//마지막 맵의 끝나는 지점
     
@@ -35,7 +36,14 @@ public class MapCreater : MonoBehaviour
 
         if(lastEndAnchor.transform.position.x <= 15)//맵 \생성
         {
-            CreateMap();       
+            if (!PlayManager.Instance.isEnd)
+            {
+                CreateMap();
+            }
+            else
+            {
+                CreateEndMap();
+            }
         }
     }
 
@@ -45,6 +53,14 @@ public class MapCreater : MonoBehaviour
         int randomMapNumber = Random.Range(0, mapPrefabs.Length);
         GameObject go = Instantiate(mapPrefabs[randomMapNumber], this.transform);
 
+        go.transform.position = lastEndAnchor.position;
+        lastEndAnchor = go.GetComponent<MapController>().endAnchor;
+        maps.Enqueue(go);
+    }
+
+    private void CreateEndMap()
+    {
+        GameObject go = Instantiate(endMap, this.transform);
         go.transform.position = lastEndAnchor.position;
         lastEndAnchor = go.GetComponent<MapController>().endAnchor;
         maps.Enqueue(go);

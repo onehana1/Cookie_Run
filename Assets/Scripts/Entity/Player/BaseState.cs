@@ -53,7 +53,7 @@ public class BaseState : MonoBehaviour
 
     public void TakeDamage(float damage, HPReduceType hPReduceType = HPReduceType.Damage)
     {
-        if (!isLive) return;
+        if (isInvincible || !isLive) return;
 
         hp -= damage;
         Debug.Log($"현재 체력: {hp}");
@@ -70,7 +70,8 @@ public class BaseState : MonoBehaviour
             hp = 0;
             isLive = false;
             Debug.Log("캐릭터 사망");
-            OnDie?.Invoke();
+            PlayManager.Instance.GameOver();
+            Die();
         }
     }
 
@@ -112,7 +113,7 @@ public class BaseState : MonoBehaviour
         StartCoroutine(InvincibilityTimer(duration));
     }
 
-    private IEnumerator InvincibilityTimer(float duration)
+    public IEnumerator InvincibilityTimer(float duration)
     {
         yield return new WaitForSeconds(duration);
         isInvincible = false;

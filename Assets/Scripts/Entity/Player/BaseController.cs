@@ -15,6 +15,7 @@ public class BaseController : MonoBehaviour
     protected Rigidbody2D rb;
     protected AnimationHandler animationHandler;
     protected SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject jumpEffect;
 
     public BaseState baseState;
 
@@ -39,8 +40,12 @@ public class BaseController : MonoBehaviour
 
     [Header("Collider Size")]
     private BoxCollider2D boxCollider;
-    public Vector2 originalColliderSize = new Vector2(1.0f, 1.55f);
-    public Vector2 slideColliderSize = new Vector2(1.8f, 0.7f);
+    public Vector2 originalColliderSize = new Vector2(0.3f, 0.6f);
+    public Vector2 originalColliderOffset = new Vector2(0.0f, -0.07f);
+
+    public Vector2 slideColliderSize = new Vector2(0.5f, 0.4f);
+    public Vector2 slideColliderOffset = new Vector2(0.0f, -0.01f);
+
 
     [Header("Raycast")]
     public float rayDistance = 1f;
@@ -55,6 +60,11 @@ public class BaseController : MonoBehaviour
         baseState = GetComponent<BaseState>();
 
         slideColliderSize = new Vector2(originalColliderSize.x, originalColliderSize.y * 0.5f);
+
+        if (jumpEffect != null)
+        {
+            jumpEffect.SetActive(false); 
+        }
 
         baseState.OnTakeDamage += HandleTakeDamage;
         baseState.OnDie += Die;
@@ -84,12 +94,11 @@ public class BaseController : MonoBehaviour
     private void FixedUpdate()
     {
         OnGround();
-        transform.position = new Vector3(-7.4f, transform.position.y, 0);//플레이어 고정
+        transform.position = new Vector3(-4f, transform.position.y, 0);//플레이어 고정
     }
 
     protected virtual void HandleAction()
     {
-        Debug.Log("ㅇㅇ");
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!baseState.isJump)//baseState.isGrounded || 
@@ -132,7 +141,8 @@ public class BaseController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D))    // 죽음 테스트
         {
-            Die();
+            baseState.Die();
+            Debug.Log("죽니?");
         }
 
         if (Input.GetKeyDown(KeyCode.I))    // 무적 테스트
@@ -155,8 +165,6 @@ public class BaseController : MonoBehaviour
 
     public virtual void Jump()
     {
-        baseState.isJump = true;
-
         if (baseState.isSliding)
         {
             EndSlide();
@@ -191,6 +199,7 @@ public class BaseController : MonoBehaviour
 
         // 콜라이더 크기 변경
         boxCollider.size = slideColliderSize;
+        boxCollider.offset = slideColliderOffset;
         transform.position -= new Vector3(0, originalColliderSize.y - slideColliderSize.y - 0.1f, 0);
     }
 
@@ -271,6 +280,7 @@ public class BaseController : MonoBehaviour
         float time = 0f;
         Vector3 startScale = transform.localScale;
         Vector3 targetScale = startScale * 2.0f;  // 2배 크기로 목표 설정
+        rayDistance = 1.5f;
 
 
         while (time < duration)
@@ -295,6 +305,7 @@ public class BaseController : MonoBehaviour
         float time = 0f;
         Vector3 startScale = transform.localScale;
         Vector3 targetScale = startScale / 2.0f; // 원래 크기로 복귀
+        rayDistance = 1;
 
 
         while (time < duration)
@@ -322,17 +333,6 @@ public class BaseController : MonoBehaviour
     }
 
 
-    private void TakeHit(float damage)
-    {
-        if (baseState.isHit || baseState.isInvincible) return;
-
-        baseState.isHit = true;
-        baseState.TakeDamage(damage);
-
-        baseState.StartInvincibility(invinvibleTime);
-        StartCoroutine(ResetHitState());
-
-    }
     private IEnumerator ResetHitState() // OnStateExit vs 코루틴 생각하다가 피격 애니메이션 1프레임 고정이라 코루틴 사용
     {
         yield return new WaitForSeconds(hitTime); // 피격 애니메이션 길이만큼 대기
@@ -345,8 +345,9 @@ public class BaseController : MonoBehaviour
     private void Die()
     {
         if (baseState.isLive) return;
-        baseState.Die();
+        baseState.TakeDamage(1000);
         boxCollider.size = slideColliderSize;
+        animationHandler.SetHit(false);
         animationHandler.SetDie();
     }
 
@@ -430,12 +431,32 @@ public class BaseController : MonoBehaviour
         animationHandler.SetSkill(false);
     }
 
+    private void PlayJumpEffect()
+    {
+        if(jumpEffect != null)
+        {
+            jumpEffect.SetActive(true);
+            StartCoroutine(DisableJumpEffect());
+        }
+    }
+    private IEnumerator DisableJumpEffect()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (jumpEffect != null)
+        {
+            jumpEffect.SetActive(false);
+        }
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Debug.Log("충돌");
             baseState.TakeDamage(damage);
+
+            if (!baseState.isLive)
+                baseState.Die();
         }
     }
 
@@ -447,6 +468,7 @@ public class BaseController : MonoBehaviour
 
         if (hit.collider != null)
         {
+            if (!baseState.isGrounded) PlayJumpEffect();
             if (!baseState.isRand || baseState.isFall)
             {
                 animationHandler.SetFalling(false);

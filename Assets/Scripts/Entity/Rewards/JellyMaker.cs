@@ -6,58 +6,75 @@ using UnityEngine.Rendering;
 
 public class JellyMaker : MonoBehaviour
 {
-    //Á©¸® ºÎ¸ğ¿ÀºêÁ§Æ®
-    public GameObject JellyObject; 
+    //ì ¤ë¦¬ ë¶€ëª¨ì˜¤ë¸Œì íŠ¸
+    public GameObject JellyObject;
 
-    //»ı¼ºµÇ´Â Á©¸® ÇÁ¸®Æé Á¾·ù
+    //ìƒì„±ë˜ëŠ” ì ¤ë¦¬ í”„ë¦¬í© ì¢…ë¥˜
     public GameObject jellyPrefab1;
     public GameObject jellyPrefab2;
     public GameObject jellyPrefab3;
 
-    //»ı¼ºµÇ´Â ÄÚÀÎ ÇÁ¸®Æé Á¾·ù
+    //ìƒì„±ë˜ëŠ” ì½”ì¸ í”„ë¦¬í© ì¢…ë¥˜
     public GameObject coinPrefab1;
     public GameObject coinPrefab2;
     public GameObject coinPrefab3;
 
-    //»ı¼ºÇÒ ¿ÀºêÁ§Æ®
+    //ìƒì„±í•  ì˜¤ë¸Œì íŠ¸
     private GameObject jellyObj;
     private GameObject coinObj;
 
-    //ÀÌÀü¿¡ ¼³Ä¡µÈ Á©¸® ¿ÀºêÁ§Æ®
+    //ì´ì „ì— ì„¤ì¹˜ëœ ì˜¤ë¸Œì íŠ¸(ìœ„ì¹˜ í¬ì°©ìš©)
     private GameObject preObj;
 
-    //Á©¸®°¡ µµ´ŞÇØ¾ßÇÏ´Â y°ª
+    //ì ¤ë¦¬ê°€ ë„ë‹¬í•´ì•¼í•˜ëŠ” yê°’
     Vector2 pivot;
 
-    //±×¶ó¿îµåÀÇ ±âº» pivot°ª
+    //ê·¸ë¼ìš´ë“œì˜ ê¸°ë³¸ pivotê°’
     Vector2 groundVector = new Vector2(20f, -3f);
 
-    //±æÀÌ¸¦ ±¸ÇÏ´Â º¤ÅÍ posA°¡ ¸ŞÀÌÄ¿ÀÇ º¤ÅÍ
-    Vector3 posA;
-
+    //ê¸¸ì´ì™€ ê¸¸ì´ë¥¼ ì¸¡ì •í•  ë²¡í„° posA
+    Vector3 posA; 
     float length = 1f;
 
-    [SerializeField] float t = 0.2f;
+    //ëŸ¬í”„ ë³´ê°„ ë¹„ìœ¨? ê·¸ê²ƒ
+    float t = 0.2f;
+
+    //ì ¤ë¦¬/ì½”ì¸ íƒ€ì…& ì¶œë ¥ ê°¯ìˆ˜
+    int type;
+    int typeCount;
+
 
     private void Awake()
     {
         pivot = groundVector;
         posA = transform.position;
 
-        jellyObj = jellyPrefab1;
-        coinObj = coinPrefab1;
-
-        MakeJelly(posA);
+        type = Random.Range(0, 100);
+        typeCount = Random.Range(5, 10);
     }
 
-
+    private void Start()
+    {
+        if (type < 50)
+        {
+            MakeJelly(posA);
+            return;
+        }
+        MakeCoin(posA);
+    }
 
     private void Update()
     {
-        //ÀÏÁ¤ °£°İÀ¸·Î Á©¸®¸¦ »ı¼ºÇÏ±â
+        if (typeCount == 0)
+        {
+            type = Random.Range(0, 100);
+            typeCount = Random.Range(5, 10);
+        }
+
+        //ì¼ì • ê°„ê²©ìœ¼ë¡œ ì ¤ë¦¬ë¥¼ ìƒì„±í•˜ê¸°
         if ((preObj.transform.position - posA).magnitude >= length)
         {
-            if (Random.Range(0, 100) < 50)
+            if (type < 50)
             {
                 MakeJelly(posA);
                 return;
@@ -65,75 +82,61 @@ public class JellyMaker : MonoBehaviour
             MakeCoin(posA);
         }
 
-        //Á©¸®, ÄÚÀÎÀÇ y°ª À§Ä¡ ¼öÁ¤ÇÏ´Â Ã³¸®
+        //ì ¤ë¦¬, ì½”ì¸ì˜ yê°’ ìœ„ì¹˜ ìˆ˜ì •í•˜ëŠ” ì²˜ë¦¬
         posA.y = Mathf.Lerp(posA.y, pivot.y, t);
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Pivot"))
         {
+            if(collision.name == "EndPivot")
+            {
+                this.gameObject.SetActive(false);
+            }
             coinObj = coinPrefab2;
             jellyObj = jellyPrefab2;
             pivot = collision.transform.position;
         }
     }
 
+    //ì ¤ë¦¬ ìƒì„±ë¡œì§
     private void MakeJelly(Vector2 pos)
     {
-        //switch (Random.Range(0, 100))
-        //{
-        //    case < 20:
-        //        jellyObj = jellyPrefab3;
-        //        break;
-        //    case < 50:
-        //        jellyObj = jellyPrefab2;
-        //        break;
-        //    default:
-        //        jellyObj = jellyPrefab1;
-        //        break;
-        //}
+        switch (type)
+        {
+            case < 20:
+                jellyObj = jellyPrefab3;
+                break;
+            case < 40:
+                jellyObj = jellyPrefab2;
+                break;
+            default:
+                jellyObj = jellyPrefab1;
+                break;
+        }
 
         preObj = Instantiate(jellyObj, pos, Quaternion.identity, JellyObject.transform);
+        typeCount--;
     }
 
+    //ì½”ì¸ ìƒì„±ë¡œì§
     private void MakeCoin(Vector2 pos)
     {
-        //switch (Random.Range(0, 100))
-        //{
-        //    case < 20:
-        //        coinObj = coinPrefab3;
-        //        break;
-        //    case < 50:
-        //        coinObj = coinPrefab2;
-        //        break;
-        //    default:
-        //        coinObj = coinPrefab1;
-        //        break;
-        //}
+        switch (type)
+        {
+            case > 80:
+                coinObj = coinPrefab3;
+                break;
+            case > 60:
+                coinObj = coinPrefab2;
+                break;
+            default:
+                coinObj = coinPrefab1;
+                break;
+        }
 
         preObj = Instantiate(coinObj, pos, Quaternion.identity, JellyObject.transform);
+        typeCount--;
     }
 }
-////1ÃÊ¿¡ 50¹ø »ı¼º
-//private void FixedUpdate()
-//{
-//    //ÀÏÁ¤ ½Ã°£°£°İÀ¸·Î Á©¸®¸¦ »ı¼ºÇÔ
-//    time += Time.fixedDeltaTime;
-//    posB = transform.position;
-//    if (time >= 0.2f)
-//    {
-//        time = 0;
-//        MakeJelly(position);
-//    }
-
-//    if ((posB - posA).magnitude >= length)
-//    {
-//        MakeJelly(posB);
-//        posA = posB;
-//    }
-
-//    //ÇÇ¹ş °ª ¹Ş¾Æ¼­ ·¯ÇÁ Àû¿ë?
-//    position.y = Mathf.Lerp(position.y, pivot.y, 0.25f);
-//}
