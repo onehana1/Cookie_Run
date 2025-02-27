@@ -108,10 +108,17 @@ public class StudySkill : MonoBehaviour
             SelectRandomQuestion(); // 퀴즈 선택 후 UI 업데이트
 
             // 정답을 선택할 때까지 대기
-            while (!isAnswerSelected)
+            while (!isAnswerSelected && (Time.time - startTime) < quizDuration)   // 이거 대기 쳐 해버리니까  안넘어가잖아ㅛ -> 고침
             {
                 yield return null;
             }
+
+            if ((Time.time - startTime) >= quizDuration)
+            {
+                Debug.Log("시간 끝났어 꺼져");
+                break;
+            }
+
 
             yield return new WaitForSeconds(questionWaitTime); // 다음 문제 전 대기
 
@@ -162,7 +169,7 @@ public class StudySkill : MonoBehaviour
         background.SetActive(false);
 
         UIManager.Instance.SetQuizMode(false); // UI 복구
-        Debug.Log("OX 퀴즈 종료!");
+        Debug.Log("EndQuiz - OX 퀴즈 종료!");
     }
 
 }
