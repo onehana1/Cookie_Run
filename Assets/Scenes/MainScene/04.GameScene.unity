@@ -10649,16 +10649,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 662154299}
     - target: {fileID: 2402286592208473226, guid: ab2b883ee26558c4ab8169fc5016276a, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2402286592208473226, guid: ab2b883ee26558c4ab8169fc5016276a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1276010307}
     - target: {fileID: 2402286592208473226, guid: ab2b883ee26558c4ab8169fc5016276a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: JumpBottonClick
+      value: JumpButtonClick
       objectReference: {fileID: 0}
     - target: {fileID: 2402286592208473226, guid: ab2b883ee26558c4ab8169fc5016276a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: BottonUI, Assembly-CSharp
+      value: ButtonUI, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3713649162085936476, guid: ab2b883ee26558c4ab8169fc5016276a, type: 3}
       propertyPath: m_Pivot.x
