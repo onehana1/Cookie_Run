@@ -7,33 +7,37 @@ public class Pause : MonoBehaviour
 {
     public GameObject PauseMenu;
     public Button activateButton;
-    private bool isPaused = false;
+    public bool isActive = false;
 
     void Start()
     {
-        activateButton.onClick.AddListener(TogglePause);
-    }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P)) // P 키 입력 감지
+        if (activateButton != null)
         {
-            TogglePause();
+            activateButton.onClick.AddListener(ActivateObject);
         }
     }
 
-    public void TogglePause()
+    public void PauseButton()
     {
-        isPaused = !isPaused; // 현재 상태 반전
-
-        if (isPaused)
+        SoundMananger.instance.PlayClickEffect();
+        if (!isActive)
         {
-            PauseMenu.SetActive(true);
+            isActive = true;
+            PauseMenu.SetActive(isActive);
             Time.timeScale = 0;
         }
         else
         {
-            PauseMenu.SetActive(false);
+            isActive = false;
+            PauseMenu.SetActive(isActive);
             Time.timeScale = 1;
         }
+    }
+
+    void ActivateObject()
+    {
+        SoundMananger.instance.PlayClickEffect();
+        PauseMenu.SetActive(false);
+        Time.timeScale = 1;
     }
 }
