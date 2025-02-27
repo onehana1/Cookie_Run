@@ -181,6 +181,7 @@ public class ScholarController : BaseController
         quizCooldown = quizCooldownTime;        // 쿨타임 설정
         OnQuizUsed?.Invoke(quizCooldownTime);   // 쿨타임 ui에 보내주고
 
+        
         yield return StartCoroutine(studySkill.StartQuiz(studySkill.quizDuration));
         animationHandler.SetSkill(false);
         baseState.isInvincible = false;

@@ -662,7 +662,6 @@ GameObject:
   - component: {fileID: 4699537037877416401}
   - component: {fileID: 4723832742321939739}
   - component: {fileID: 7578700866294650789}
-  - component: {fileID: 5738985578720683684}
   m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -787,20 +786,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &5738985578720683684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2168228992133321632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!1 &3183362461961238118
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,6 +925,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roll: {fileID: 599143439271822773}
   background: {fileID: 9184730004067240164}
+  checkImage: {fileID: 0}
+  correctImage: {fileID: 0}
+  incorrectImage: {fileID: 0}
   questionText: {fileID: 7578700866294650789}
   oButton: {fileID: 0}
   xButton: {fileID: 0}
