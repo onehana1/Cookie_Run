@@ -356,6 +356,7 @@ public class BaseController : MonoBehaviour
 
     private void StartRescue()
     {
+        SoundMananger.instance.PlayResqueEffect();
         Vector3 targetPos = new Vector3(transform.position.x, returnGroundY, transform.position.z);
         rb.gravityScale = 0.0f;
         baseState.isRescue = true;

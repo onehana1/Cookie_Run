@@ -66,6 +66,7 @@ public class PlayerGalloping : MonoBehaviour
     {
         if (isBoosting && other.CompareTag("Obstacle"))
         {
+            SoundMananger.instance.PlayDestroyEffect();
             Destroy(other.gameObject);
             Debug.Log("Àå¾Ö¹° ÆÄ±«!");
         }

@@ -39,6 +39,7 @@ public class GiantMode : MonoBehaviour
     {
         if (isGiantActive && other.CompareTag("Obstacle"))
         {
+            SoundMananger.instance.PlayDestroyEffect();
             Destroy(other.gameObject); // Àå¾Ö¹° ÆÄ±«
         }
     }

@@ -6,7 +6,7 @@ public class ChangeScene : MonoBehaviour
     public static void ChangeLobbyScene()
     {
         Time.timeScale = 1;
-        SoundMananger.instance.PlaySceneEffect();
+        SoundMananger.instance.PlayLobbyEffect();
         SoundMananger.instance.PlayLobbyBGM();
         SceneManager.LoadScene("02.LobbyScene");
     }
@@ -14,7 +14,7 @@ public class ChangeScene : MonoBehaviour
     public static void ChangeChoiceScene()
     {
         Time.timeScale = 1;
-        SoundMananger.instance.PlaySceneEffect();
+        SoundMananger.instance.PlayChoiceEffect();
         SoundMananger.instance.PlayLobbyBGM();
         SceneManager.LoadScene("03.StageScene");
     }
@@ -39,13 +39,13 @@ public class ChangeScene : MonoBehaviour
     {
         Time.timeScale = 1;
         SoundMananger.instance.PlayClearBGM();
-        SoundMananger.instance.PlayLobbyBGM();
+        SoundMananger.instance.PlayNPCEffect();
         SceneManager.LoadScene("ResultCutScene_Good");
     }
     public static void ChangeResultBadScene()
     {
         Time.timeScale = 1;
-        SoundMananger.instance.PlaySceneEffect();
+        SoundMananger.instance.PlayTeacherEffect();
         SoundMananger.instance.PlayLobbyBGM();
         SceneManager.LoadScene("ResultCutScene");
     }

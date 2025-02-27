@@ -10,7 +10,7 @@ public class NHealPack : MonoBehaviour
     {
         if (other.CompareTag("Player")) // 플레이어와 충돌했을 때
         {
-            SoundMananger.instance.PlayItemEffect();
+            SoundMananger.instance.PlayHealEffect();
             BaseState baseState = other.GetComponent<BaseState>(); // 플레이어의 BaseState 가져오기
 
             if (baseState != null)
