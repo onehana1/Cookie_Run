@@ -30,7 +30,6 @@ public class PlayManager : MonoBehaviour
 
     //플레이 타임
     private float time = 0;
-    private float endTime = 180;
 
     private float playTime = 0;
 
@@ -90,7 +89,7 @@ public class PlayManager : MonoBehaviour
     {
         playTime += Time.unscaledDeltaTime;
         time += Time.unscaledDeltaTime;
-        if (time >= endTime && !isEnd) 
+        if (time >= goalTime && !isEnd) 
         { 
             isEnd = true;
             GameOver();
@@ -131,31 +130,36 @@ public class PlayManager : MonoBehaviour
         //목표시간에 달성하지 않았을 때
         if (time < goalTime)
         {
-            StartCoroutine(GivemeDelay(1f));
-
-            ChangeScene.ChangeResultBadScene();
+            StartCoroutine(GivemeDelay(5f, 0));
+    
         }
 
         //스코어가 목표치 달성을 실패했을때 
         else if (score < goalScore)
         {
-            StartCoroutine(GivemeDelay(1f));
-            ChangeScene.ChangeResultBadScene();
+            StartCoroutine(GivemeDelay(5f, 0));
         }
 
         //스코어가 목표치를 달성했을 때
         else
         {
-            StartCoroutine(GivemeDelay(1f));
-            ChangeScene.ChangeResultGoodScene();
+            StartCoroutine(GivemeDelay(5f, 1));
         }
     }
 
-    IEnumerator GivemeDelay(float second)
+    IEnumerator GivemeDelay(float second, int state)
     {
-        yield return new WaitForSeconds(second);
         backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
         fadeContrller.OnFadaOutandIn();
+        yield return new WaitForSeconds(second);
+        if (state == 0)
+        {
+            ChangeScene.ChangeResultBadScene();
+        }
+        else
+        {
+            ChangeScene.ChangeResultGoodScene();
+        }
     }
 
     //난이도 증가
