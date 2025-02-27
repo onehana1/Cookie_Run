@@ -27,6 +27,13 @@ public class SoundMananger : MonoBehaviour
     [SerializeField] private AudioSource clickEffect;
     [SerializeField] private AudioSource sceneEffect;
 
+    [Header("Audio Mixer")]
+    [SerializeField] private AudioMixer audioMixer;
+
+    public float MasterVolume;
+    public float BGMVolume;
+    public float EffectVolume;
+
     private void Awake()
     {
         if (instance == null)
@@ -38,21 +45,37 @@ public class SoundMananger : MonoBehaviour
         {
             Destroy(this);
         }
+        MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        BGMVolume = PlayerPrefs.GetFloat("BGMVolume", 1f);
+        EffectVolume = PlayerPrefs.GetFloat("EffectVolume", 1f);
+
+        audioMixer.SetFloat("Master", Mathf.Log10(MasterVolume) * 20);
+        audioMixer.SetFloat("BGM", Mathf.Log10(BGMVolume) * 20);
+        audioMixer.SetFloat("Effect", Mathf.Log10(EffectVolume) * 20);
+
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == "01.StartScene")
         {
             PlayTitle();
-            StartCoroutine(OnTitle());
+            StartCoroutine(OnTitlePlay(scene.name));
         }
     }
 
-    IEnumerator OnTitle()
+    IEnumerator OnTitlePlay(string name)
     {
+        Scene scene = SceneManager.GetActiveScene();
         while (titleEffect.isPlaying)
         {
             yield return null;
+            if (scene.name != name)
+            {
+                titleEffect.Stop();
+            }
         }
-        PlayClearBGM();
+        if(scene.name == name)
+        {
+            PlayClearBGM();
+        }
     }
 
     public void PlayTitle()
@@ -124,7 +147,7 @@ public class SoundMananger : MonoBehaviour
 
     public void PlayItemEffect()
     {
-        itemEffect.Play();
+        itemEffect.Play();  
     }
 
     public void PlayClickEffect()

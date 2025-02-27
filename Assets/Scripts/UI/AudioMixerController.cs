@@ -13,7 +13,7 @@ public class AudioMixerController : MonoBehaviour
     [SerializeField] private Slider BGMSlider;
     [SerializeField] private Slider EffectSlider;
 
-    private void Awake()
+    private void Start()
     {
         MasterSlider = transform.Find("MasterSlider").GetComponent<Slider>();
         BGMSlider = transform.Find("BGMSlider").GetComponent<Slider>();
@@ -22,19 +22,19 @@ public class AudioMixerController : MonoBehaviour
         if (MasterSlider != null)
         {
             MasterSlider.onValueChanged.AddListener(SetMasterValue);
-            MasterSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
+            MasterSlider.value = SoundMananger.instance.MasterVolume;
             SetMasterValue(MasterSlider.value);
         }
         if (BGMSlider != null)
         {
             BGMSlider.onValueChanged.AddListener(SetBGMValue);
-            BGMSlider.value = PlayerPrefs.GetFloat("BGMVolume", 1f);
+            BGMSlider.value = SoundMananger.instance.BGMVolume;
             SetBGMValue(BGMSlider.value);
         }
         if (EffectSlider != null)
         {
             EffectSlider.onValueChanged.AddListener(SetEffectValue);
-            EffectSlider.value = PlayerPrefs.GetFloat("EffectVolume", 1f);
+            EffectSlider.value = SoundMananger.instance.EffectVolume;
             SetEffectValue(EffectSlider.value);
         }
     }
@@ -47,7 +47,7 @@ public class AudioMixerController : MonoBehaviour
 
     public void SetBGMValue(float volume)
     {
-        PlayerPrefs.SetFloat("BGNVolume", volume);
+        PlayerPrefs.SetFloat("BGMVolume", volume);
         audioMixer.SetFloat("BGM", Mathf.Log10(volume) * 20);
     }
 

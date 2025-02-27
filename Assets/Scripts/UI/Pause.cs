@@ -7,17 +7,31 @@ public class Pause : MonoBehaviour
 {
     public GameObject PauseMenu;
     public Button activateButton;
+    public bool isActive = false;
 
     void Start()
     {
-        activateButton.onClick.AddListener(ActivateObject);
+        if (activateButton != null)
+        {
+            activateButton.onClick.AddListener(ActivateObject);
+        }
     }
 
     public void PauseButton()
     {
         SoundMananger.instance.PlayClickEffect();
-        PauseMenu.SetActive(true);
-        Time.timeScale = 0;
+        if (!isActive)
+        {
+            isActive = true;
+            PauseMenu.SetActive(isActive);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            isActive = false;
+            PauseMenu.SetActive(isActive);
+            Time.timeScale = 1;
+        }
     }
 
     void ActivateObject()

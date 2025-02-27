@@ -733,6 +733,7 @@ MonoBehaviour:
   itemEffect: {fileID: 938483272771383793}
   clickEffect: {fileID: 4382000663832853377}
   sceneEffect: {fileID: 4348736544048491423}
+  audioMixer: {fileID: 24100000, guid: c3ed4028da5de0546807eb1d87f3dd97, type: 2}
 --- !u!1 &5120412463238098647
 GameObject:
   m_ObjectHideFlags: 0
