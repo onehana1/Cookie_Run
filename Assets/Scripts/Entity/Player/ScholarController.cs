@@ -44,9 +44,9 @@ public class ScholarController : BaseController
     protected override void Start()
     {
         base.Start();
-        originalColliderSize = new Vector2(0.6f, 0.82f);
-        slideColliderSize = new Vector2(originalColliderSize.x, 0.5f);
-        skillCooldown = skillCollTime;
+        originalColliderSize = new Vector2(0.3f, 0.8f);
+        slideColliderSize = new Vector2(0.5f, 0.4f);
+    skillCooldown = skillCollTime;
         quizCooldown = quizCooldownTime;
 
         quizCooldown = 0;
