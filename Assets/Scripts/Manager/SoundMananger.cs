@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundMananger : MonoBehaviour
 {
@@ -31,7 +33,6 @@ public class SoundMananger : MonoBehaviour
             Destroy(this);
         }
     }
-
     public void PlayLobbyBGM()
     {
         if (onBGM == lobbyBGM)
