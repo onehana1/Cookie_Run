@@ -122,7 +122,6 @@ public class StudySkill : MonoBehaviour
 
             if ((Time.time - startTime) >= quizDuration)
             {
-                Debug.Log("½Ã°£ ³¡³µ¾î ²¨Á®");
                 break;
             }
 
