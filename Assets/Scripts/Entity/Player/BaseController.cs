@@ -172,6 +172,7 @@ public class BaseController : MonoBehaviour
 
         if (baseState.isGrounded || !baseState.isJump)
         {
+            SoundMananger.instance.PlayJumpEffect();
             baseState.isJump = true;
             rb.velocity = Vector2.zero;
             rb.velocity = new Vector2(0f, baseState.jumpForce);
@@ -183,6 +184,7 @@ public class BaseController : MonoBehaviour
     public virtual void DoubleJump()
     {        
         if (baseState.isDoubleJump || !baseState.isJump) return;
+        SoundMananger.instance.PlayJumpEffect();
         animationHandler.SetFalling(false);
         animationHandler.SetDoubleJump();
 
@@ -305,7 +307,7 @@ public class BaseController : MonoBehaviour
         float time = 0f;
         Vector3 startScale = transform.localScale;
         Vector3 targetScale = startScale / 2.0f; // 원래 크기로 복귀
-        rayDistance = 1;
+        rayDistance = 0.8f;
 
 
         while (time < duration)
@@ -452,11 +454,17 @@ public class BaseController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            SoundMananger.instance.PlayObstacleEffect();
             Debug.Log("충돌");
             baseState.TakeDamage(damage);
 
             if (!baseState.isLive)
                 baseState.Die();
+
+            if (baseState.isBigger)
+            {
+                Destroy(collision.gameObject);
+            }
         }
     }
 
@@ -490,6 +498,8 @@ public class BaseController : MonoBehaviour
             }
             baseState.isGrounded = false;
         }
+
+
 
         Debug.DrawRay(transform.position, Vector2.down * rayDistance, Color.red);
     }
