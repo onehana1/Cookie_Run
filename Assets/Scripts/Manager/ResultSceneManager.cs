@@ -8,7 +8,7 @@ public class ResultSceneManager : MonoBehaviour
     GameManager gameManager;
     public TextMeshProUGUI bestScoreText;
     public TextMeshProUGUI ScoreText;
-    public TextMeshProUGUI totalCoinText;
+    public TextMeshProUGUI CoinText;
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class ResultSceneManager : MonoBehaviour
         int lastScore = gameManager.Score[gameManager.Score.Count - 1];
         ScoreText.text = lastScore.ToString("N0");
 
-        int totalCoin = gameManager.totalCoin;
-        totalCoinText.text = totalCoin.ToString("N0");
+        int coin = gameManager.preCoin ;
+        CoinText.text = coin.ToString("N0");
     }
 }
