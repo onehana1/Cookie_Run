@@ -3815,6 +3815,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Magnet
       objectReference: {fileID: 0}
+    - target: {fileID: 4969490330653268753, guid: ca80f13413675124fa1cce4a2b4024d0, type: 3}
+      propertyPath: m_SortingOrder
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
