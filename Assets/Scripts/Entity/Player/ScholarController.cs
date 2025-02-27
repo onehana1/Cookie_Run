@@ -127,10 +127,12 @@ public class ScholarController : BaseController
             {
                 Debug.Log("AutoQuizSkill");
                 yield return StartCoroutine(OXQuizSkill());
+
             }
 
             yield return new WaitForSeconds(quizCooldown > 0 ? quizCooldown : 0.1f);
         }
+
     }
 
     private IEnumerator Skill()
@@ -166,10 +168,6 @@ public class ScholarController : BaseController
     private IEnumerator OXQuizSkill()
     {
         if (baseState.isDead || studySkill.isQuizActive) yield break;
-
-        baseState.StartInvincibility(invinvibleTime);
-        StartBlinkEffect(invinvibleTime);
-
         Debug.Log("OX 퀴즈 시작!");
 
         quizING += Time.deltaTime;
@@ -182,11 +180,6 @@ public class ScholarController : BaseController
         OnQuizUsed?.Invoke(quizCooldownTime);   // 쿨타임 ui에 보내주고
 
         yield return StartCoroutine(studySkill.StartQuiz(studySkill.quizDuration));
-
-
-        studySkill.isQuizActive = false;
-        UIManager.Instance.SetQuizMode(false); // ui 원래대로
-
         animationHandler.SetSkill(false);
         baseState.isInvincible = false;
         isSkillActive = false;
@@ -194,6 +187,10 @@ public class ScholarController : BaseController
         baseState.StartInvincibility(invinvibleTime);
         StartBlinkEffect(invinvibleTime);
 
+        studySkill.isQuizActive = false;
+        UIManager.Instance.SetQuizMode(false); // ui 원래대로
+
+        Debug.Log("무적 가보자고");
 
     }
 
