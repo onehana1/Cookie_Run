@@ -14,11 +14,16 @@ public class Giant : MonoBehaviour
 
             if (playerController != null)
             {
-                playerController.SendMessage("SetBigger", duration); // 거대화
+                // SetBigger 메서드가 존재하는 경우 직접 호출
+                playerController.SetBigger(duration); // 거대화
 
-                // GiantMode 컴포넌트 추가 및 활성화
-                GiantMode giantMode = playerController.gameObject.AddComponent<GiantMode>();
-                giantMode.ActivateGiantMode(playerController, duration);
+                // 이미 GiantMode가 활성화되었는지 확인하고, 없다면 활성화
+                GiantMode giantMode = playerController.GetComponent<GiantMode>();
+                if (giantMode == null)
+                {
+                    giantMode = playerController.gameObject.AddComponent<GiantMode>();
+                    giantMode.ActivateGiantMode(playerController, duration);
+                }
             }
 
             Destroy(gameObject); // 아이템 사용 후 제거
