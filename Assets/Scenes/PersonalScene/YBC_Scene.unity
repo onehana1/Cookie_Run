@@ -198,7 +198,6 @@ MonoBehaviour:
   coinPrefab1: {fileID: 7329925579530640211, guid: 69337a501b860c74e8da360e005e4d6d, type: 3}
   coinPrefab2: {fileID: 6559524414807742962, guid: fafc3808a668002458ed8e05b1da2331, type: 3}
   coinPrefab3: {fileID: 8435828143595964592, guid: f58534100c89f8646a7f1c8c99771264, type: 3}
-  t: 0.2
 --- !u!61 &100991104
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -443,6 +442,8 @@ MonoBehaviour:
   - {fileID: 7732014552764844455, guid: 0e54d811df77a114b9d1395ec02b046c, type: 3}
   - {fileID: 2106889640280601970, guid: ad443065518b7514db027c4065c4e31e, type: 3}
   - {fileID: 3438986870123902487, guid: f587a22b7b573b84bb99ae0f89443247, type: 3}
+  - {fileID: 4842092029251188540, guid: 4aedf1a288b08564c85bf02b9a092c94, type: 3}
+  - {fileID: 2130442138225629942, guid: 30bd60df48c61fc469703efd39a5626b, type: 3}
   endMap: {fileID: 5949746557786754275, guid: 8c3ae41cc9dc09b4a97f30cb94936472, type: 3}
 --- !u!4 &414698421
 Transform:
@@ -684,6 +685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalCoin: 0
+  bestScore: 0
   Score: 
 --- !u!4 &747415032
 Transform:
@@ -840,6 +842,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3175553325215436795, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3277304081663604649, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
       propertyPath: jumpForce
       value: 6
@@ -859,6 +865,14 @@ PrefabInstance:
     - target: {fileID: 4094375965541245188, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
       propertyPath: isAutoSkillActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094375965541245188, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
+      propertyPath: originalColliderSize.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094375965541245188, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
+      propertyPath: originalColliderSize.y
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4096843300203995399, guid: e6472f51b0f17a0448ab3bbec313be5e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -930,19 +944,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242e6451c97de8a448fe0331840d8df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerState: {fileID: 0}
   backGroundController: {fileID: 0}
   gameManager: {fileID: 0}
   fadeContrller: {fileID: 0}
+  playerState: {fileID: 0}
   score: 0
-  bestScore: 0
   coin: 0
-  totalCoin: 0
   maxHp: 0
   hp: 0
-  time: 0
-  endTime: 180
-  playTime: 0
   isEnd: 0
   scoreText: {fileID: 0}
   bestScoreText: {fileID: 0}

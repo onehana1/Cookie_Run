@@ -10,8 +10,8 @@ public class PlayManager : MonoBehaviour
     public static PlayManager Instance;
 
     public BackGroundController backGroundController;
-    public GameManager gameManager;
     public FadeContrller fadeContrller;
+    public GameManager gameManager;
     public BaseState playerState;
 
     //목표치(점수 혹은 타임)
@@ -22,18 +22,17 @@ public class PlayManager : MonoBehaviour
     private float time = 0;
     private float playTime = 0;
 
+    //플레이어의 체력
+    public float maxHp;
+    public float hp;
+
     //플레이 점수
     public int score;
 
     //획득 코인
     public int coin;
 
-    //플레이어의 체력
-    public float maxHp;
-    public float hp;
-
     //플레이 타임
-
     public bool isEnd = false;
 
     public TextMeshProUGUI scoreText;
@@ -41,6 +40,7 @@ public class PlayManager : MonoBehaviour
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI totalCoinText;
     public TextMeshProUGUI playTimeText;
+
 
     private void Awake()
     {
@@ -62,10 +62,6 @@ public class PlayManager : MonoBehaviour
         // 체력 변화 이벤트 구독
         playerState.OnHpChanged += UpdateHp;
         playerState.OnDie += GameOver;
-        
-        //목표 시간 설정
-        goalTime = 360;
-        goalScore = 30000;
 
         time = 0;
         score = 0;
@@ -76,7 +72,15 @@ public class PlayManager : MonoBehaviour
         backGroundController = FindObjectOfType<BackGroundController>();
         gameManager = GameManager.Instance;
         playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
+        
 
+        //스토리모드 일 때
+        if (gameManager.CurrentMode == Mode.Story)
+        {
+            //목표 시간 설정
+            goalTime = 180;
+            goalScore = 15000;
+        }
         gameManager.preCoin = 0;
     }
 
@@ -129,30 +133,38 @@ public class PlayManager : MonoBehaviour
         Time.timeScale = 1.0f;
 
         gameManager.Score.Add(score);
+        gameManager.preCoin = coin;
         gameManager.totalCoin += coin;
 
         gameManager.bestScore = score > gameManager.bestScore ? score : gameManager.bestScore;
-
-        //목표시간에 달성하지 않았을 때
-        if (time < goalTime)
+        if (gameManager.CurrentMode == Mode.Story)
         {
-            StartCoroutine(GivemeDelay(5f, 0));
-    
+            //목표시간에 달성하지 않았을 때
+            if (time < goalTime)
+            {
+                StartCoroutine(GivemeDelay(5f, 0));
+            }
+
+            //스코어가 목표치 달성을 실패했을때 
+            else if (score < goalScore)
+            {
+                StartCoroutine(GivemeDelay(5f, 0));
+            }
+
+            //스코어가 목표치를 달성했을 때
+            else
+            {
+                StartCoroutine(GivemeDelay(5f, 1));
+            }
         }
 
-        //스코어가 목표치 달성을 실패했을때 
-        else if (score < goalScore)
-        {
-            StartCoroutine(GivemeDelay(5f, 0));
-        }
-
-        //스코어가 목표치를 달성했을 때
         else
         {
-            StartCoroutine(GivemeDelay(5f, 1));
+            StartCoroutine(GivemeDelay(5f));
         }
     }
 
+    //스토리모드 컷신 로드하는 코루틴
     IEnumerator GivemeDelay(float second, int state)
     {
         backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
@@ -166,6 +178,15 @@ public class PlayManager : MonoBehaviour
         {
             ChangeScene.ChangeResultGoodScene();
         }
+    }
+
+    //무한모드 결과창 로드하는 코루틴
+    IEnumerator GivemeDelay(float second)
+    {
+        backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
+        fadeContrller.OnFadaOutandIn();
+        yield return new WaitForSeconds(second);
+        ChangeScene.ChangeResultScene();
     }
 
     //난이도 증가

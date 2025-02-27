@@ -54,7 +54,7 @@ public class SkillCooldownUI : MonoBehaviour
         {
             if (!isSkillActive)
             {
-                cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 1f);
+                cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 1f);   //1 -> 4
 
                 elapsedTime += Time.deltaTime; // 시간 증가
                 cooldownImage.fillAmount = elapsedTime / cooldownTime; // 0 -> 1로 증가
@@ -74,7 +74,7 @@ public class SkillCooldownUI : MonoBehaviour
 
     private void HandleSkillUsed(float cooldown)
     {
-        isSkillActive = false; // 스킬 사용 시작
+        isSkillActive = true; // 스킬 사용 시작   //2 -> 시작
         cooldownTime = cooldown;
         elapsedTime = 0f;
         cooldownImage.fillAmount = 0f;
@@ -84,11 +84,12 @@ public class SkillCooldownUI : MonoBehaviour
 
     private IEnumerator HideCooldownUI(float duration)
     {
+        isSkillActive = false;  //3 이거 고쳤더니 이제는 hide안되네~ 당연함 false돼서 바로 위에 업데이트 실행되어버림 그냥 냅둘게요
         cooldownImage.color = new Color(cooldownImage.color.r, cooldownImage.color.g, cooldownImage.color.b, 0f); // 투명화
      //   background.color = new Color(0, 0, 0, 0f); // 투명화
          elapsedTime = 0f; 
         yield return new WaitForSeconds(duration); // 스킬 지속 시간 동안 대기
-        isSkillActive = false;
+
     }
 
 }

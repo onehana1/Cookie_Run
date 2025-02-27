@@ -6,7 +6,8 @@ using UnityEngine;
 public enum Mode
 {
     Infinite,
-    Story
+    Story,
+    Count
 }
 
 public class GameManager : MonoBehaviour
@@ -29,6 +30,9 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            CurrentMode = Mode.Count;
+            totalCoin = 0;
+            bestScore = 0;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -36,8 +40,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        LoadBestScore();
-        LoadTotalCoin();
+        SaveTotalCoin();
+        SaveBestScore();
+
     }
 
     //최고 점수 저장
@@ -50,7 +55,7 @@ public class GameManager : MonoBehaviour
     //최고 점수 불러오기
     private void LoadBestScore()
     {
-        bestScore = GameManager.Instance.bestScore;
+        bestScore = PlayerPrefs.GetInt("BestScore", 0);
     }
 
     //보유 코인 수 저장
@@ -63,6 +68,6 @@ public class GameManager : MonoBehaviour
     //보유 코인 수 불러오기
     private void LoadTotalCoin()
     {
-        totalCoin = GameManager.Instance.totalCoin;
+        totalCoin = PlayerPrefs.GetInt("TotalCoin", 0);
     }
 }
