@@ -100,6 +100,7 @@ public class PlayManager : MonoBehaviour
         playTime += Time.unscaledDeltaTime;
         time += Time.unscaledDeltaTime;
 
+        //스토리모드의 엔딩조건
         if (gameManager.CurrentMode == Mode.Story)
         {
             if (time >= goalTime && !isEnd)
