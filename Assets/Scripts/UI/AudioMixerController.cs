@@ -21,19 +21,19 @@ public class AudioMixerController : MonoBehaviour
 
         if (MasterSlider != null)
         {
-            MasterSlider.onValueChanged.AddListener(SetMasterValue);
+            MasterSlider.onValueChanged.AddListener(SetMasterValue);//값이바뀌면 저장
             MasterSlider.value = SoundMananger.instance.MasterVolume;
             SetMasterValue(MasterSlider.value);
         }
         if (BGMSlider != null)
         {
-            BGMSlider.onValueChanged.AddListener(SetBGMValue);
+            BGMSlider.onValueChanged.AddListener(SetBGMValue);//값이바뀌면 저장
             BGMSlider.value = SoundMananger.instance.BGMVolume;
             SetBGMValue(BGMSlider.value);
         }
         if (EffectSlider != null)
         {
-            EffectSlider.onValueChanged.AddListener(SetEffectValue);
+            EffectSlider.onValueChanged.AddListener(SetEffectValue);//값이바뀌면 저장
             EffectSlider.value = SoundMananger.instance.EffectVolume;
             SetEffectValue(EffectSlider.value);
         }
