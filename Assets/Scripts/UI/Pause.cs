@@ -15,12 +15,14 @@ public class Pause : MonoBehaviour
 
     public void PauseButton()
     {
+        SoundMananger.instance.PlayClickEffect();
         PauseMenu.SetActive(true);
         Time.timeScale = 0;
     }
 
     void ActivateObject()
     {
+        SoundMananger.instance.PlayClickEffect();
         PauseMenu.SetActive(false);
         Time.timeScale = 1;
     }

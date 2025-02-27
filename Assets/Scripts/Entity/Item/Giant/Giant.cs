@@ -10,8 +10,9 @@ public class Giant : MonoBehaviour
     {
         if (other.CompareTag("Player")) // 플레이어가 아이템을 먹으면
         {
+            SoundMananger.instance.PlayItemEffect();
             BaseController playerController = other.GetComponent<BaseController>();
-
+            
             if (playerController != null)
             {
                 // SetBigger 메서드가 존재하는 경우 직접 호출
