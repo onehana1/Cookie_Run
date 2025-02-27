@@ -29,15 +29,17 @@ public class StudySkill : MonoBehaviour
     Dictionary<string, bool> oxQuizzes = new Dictionary<string, bool>
         {
             { "과거 시험은 매년 열렸다.", false },
-            { "문과 장원급제자가 최고다.", true },
+            { "과거 시험의 최종 관문을 전시라고 했다.", true },
             { "무과 시험도 있었다.", true },
             { "과거 시험은 누구나 응시 가능했다.", false },
             { "과거 급제 후 바로 벼슬했다.", true },
             { "서당은 과거 시험 준비 학교다.", true },
-            { "과거 시험 부정행위는 처벌받았다.", true },
+            { "문과 시험에서는 시를 짓는 문제도 출제되었다.", true },
             { "과거 시험은 한양에서만 열렸다.", false },
             { "잡과에서는 의학도 시험 봤다.", true },
-            { "과거 시험 답안은 연필로 썼다.", false }
+            { "과거 시험 답안은 연필로 썼다.", false },
+            { "문과 시험에서는 한문이 아닌 한글로 답안을 작성했다. ", false }
+
         };
 
 
