@@ -307,7 +307,7 @@ public class BaseController : MonoBehaviour
         float time = 0f;
         Vector3 startScale = transform.localScale;
         Vector3 targetScale = startScale / 2.0f; // 원래 크기로 복귀
-        rayDistance = 1;
+        rayDistance = 0.8f;
 
 
         while (time < duration)
@@ -460,6 +460,11 @@ public class BaseController : MonoBehaviour
 
             if (!baseState.isLive)
                 baseState.Die();
+
+            if (baseState.isBigger)
+            {
+                Destroy(collision.gameObject);
+            }
         }
     }
 
@@ -493,6 +498,8 @@ public class BaseController : MonoBehaviour
             }
             baseState.isGrounded = false;
         }
+
+
 
         Debug.DrawRay(transform.position, Vector2.down * rayDistance, Color.red);
     }
