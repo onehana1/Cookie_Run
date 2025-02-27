@@ -22,6 +22,7 @@ public class BaseCoin : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            SoundMananger.instance.PlayCoinEffect();
             Destroy(gameObject);
             PlayManager.Instance.AddCoin(coin);
         }

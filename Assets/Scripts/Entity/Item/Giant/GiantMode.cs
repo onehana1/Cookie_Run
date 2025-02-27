@@ -20,7 +20,7 @@ public class GiantMode : MonoBehaviour
         playerController.baseState.StartInvincibility(duration);
 
         // 장애물 파괴 기능 활성화
-        playerCollider.isTrigger = true;
+        // playerCollider.isTrigger = true;
 
         // 일정 시간 후 원래 상태로 복구
         StartCoroutine(DisableGiantMode(duration));
@@ -31,7 +31,7 @@ public class GiantMode : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         // 원래 상태로 복구
-        playerCollider.isTrigger = false;
+        // playerCollider.isTrigger = false;
         isGiantActive = false;
     }
 

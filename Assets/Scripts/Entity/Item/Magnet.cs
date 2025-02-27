@@ -12,6 +12,7 @@ public class Magnet : MonoBehaviour
     {
         if (other.CompareTag("Player")) // 플레이어가 자석을 먹으면
         {
+            SoundMananger.instance.PlayItemEffect();
             StartCoroutine(ActivateMagnet(other.gameObject)); // 자석 효과 활성화
             Destroy(gameObject); // 자석 아이템 삭제
         }
