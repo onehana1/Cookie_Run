@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!82 &240090575 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 4723770469406647908, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
-  m_PrefabInstance: {fileID: 1897895616}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &247128750
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,38 +610,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
-    - target: {fileID: 4348736544048491423, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4723770469406647908, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8463765285303752349, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
-      propertyPath: m_Name
-      value: TitleBGM
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959945533793104733, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
-      propertyPath: Loop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959945533793104733, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959945533793104733, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 9137132332727279028, guid: c3ed4028da5de0546807eb1d87f3dd97, type: 2}
-    - target: {fileID: 9150340635301772121, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
-      propertyPath: onBGM
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 9150340635301772121, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
-      propertyPath: titleEffect
-      value: 
-      objectReference: {fileID: 240090575}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

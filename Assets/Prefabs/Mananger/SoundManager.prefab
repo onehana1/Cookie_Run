@@ -331,12 +331,12 @@ AudioSource:
   m_GameObject: {fileID: 2159241268586336196}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 9137132332727279028, guid: c3ed4028da5de0546807eb1d87f3dd97, type: 2}
   m_audioClip: {fileID: 8300000, guid: b22b2d5b55aa6a14d946601c5c63040f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -721,11 +721,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d83997e2457a848ada7fcd7af5833e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TitleEffect: {fileID: 0}
+  titleEffect: {fileID: 4723770469406647908}
   lobbyBGM: {fileID: 1881345362694714909}
   inGameBGM: {fileID: 5328632324314512127}
   clearBGM: {fileID: 8959945533793104733}
-  onBGM: {fileID: 4723770469406647908}
+  onBGM: {fileID: 0}
   jumpEffect: {fileID: 4342572382772669083}
   obstacleEffect: {fileID: 1876971177979506289}
   jellyEffect: {fileID: 4984997340962448975}
@@ -1032,7 +1032,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 3317384834507670595, guid: c3ed4028da5de0546807eb1d87f3dd97, type: 2}
   m_audioClip: {fileID: 8300000, guid: 93de8b5702af351459b77c4d9671f60f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1423,7 +1423,7 @@ GameObject:
   - component: {fileID: 7588674297288835701}
   - component: {fileID: 4723770469406647908}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TitleBGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1455,7 +1455,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 9137132332727279028, guid: c3ed4028da5de0546807eb1d87f3dd97, type: 2}
   m_audioClip: {fileID: 8300000, guid: 780b949098f540645b931e87dfaa0928, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
