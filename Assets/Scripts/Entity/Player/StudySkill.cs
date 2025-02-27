@@ -11,6 +11,11 @@ public class StudySkill : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private GameObject roll; // 두루마기 이미지
     [SerializeField] private GameObject background; // 두루마기 이미지
+    [SerializeField] private GameObject checkImage; // 체크
+    [SerializeField] private GameObject correctImage; // 맞음
+    [SerializeField] private GameObject incorrectImage; // 틀림
+
+
 
     [SerializeField] private TMP_Text questionText; // OX 퀴즈 텍스트
 
@@ -125,6 +130,9 @@ public class StudySkill : MonoBehaviour
             yield return new WaitForSeconds(questionWaitTime); // 다음 문제 전 대기
 
             currentQuestionCount++;
+            checkImage.SetActive(false);
+            correctImage.SetActive(false);
+            incorrectImage.SetActive(false);
 
             if (currentQuestionCount < maxQuestions)
             {
@@ -154,15 +162,39 @@ public class StudySkill : MonoBehaviour
         if (playerAnswer == currentQuestion.Value)
         {
             Debug.Log("정답!");
-          //  PlayManager.Instance.AddScore(100);
+            checkImage.SetActive(true);
+            CorrectImageDelay(1f, true);
+            correctImage.SetActive(true);
+            incorrectImage.SetActive(false);
+             PlayManager.Instance.AddScore(100);
         }
         else
         {
             Debug.Log("오답!");
+            checkImage.SetActive(true);
+            CorrectImageDelay(1f, false);
+            correctImage.SetActive(false);
+            incorrectImage.SetActive(true);
         }
     }
 
 
+    private IEnumerator CorrectImageDelay(float delay, bool correct)
+    {
+        yield return new WaitForSeconds(delay);
+        if(correct)
+        {
+            correctImage.SetActive(true);
+            incorrectImage.SetActive(false);
+        }
+        else
+        {
+            correctImage.SetActive(false);
+            incorrectImage.SetActive(true);
+        }
+
+
+    }
 
     private void EndQuiz()
     {
@@ -170,6 +202,9 @@ public class StudySkill : MonoBehaviour
         roll.SetActive(false);
         background.SetActive(false);
 
+        checkImage.SetActive(false);
+        correctImage.SetActive(false);
+        incorrectImage.SetActive(false);
         UIManager.Instance.SetQuizMode(false); // UI 복구
         Debug.Log("EndQuiz - OX 퀴즈 종료!");
     }
