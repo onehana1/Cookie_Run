@@ -30,7 +30,6 @@ public class PlayManager : MonoBehaviour
 
     //플레이 타임
     private float time = 0;
-    private float endTime = 180;
 
     private float playTime = 0;
 
@@ -90,10 +89,9 @@ public class PlayManager : MonoBehaviour
     {
         playTime += Time.unscaledDeltaTime;
         time += Time.unscaledDeltaTime;
-        if (time >= endTime && !isEnd) 
+        if (time >= goalTime && !isEnd) 
         { 
             isEnd = true;
-            Debug.Log("게임 오버 시켜줘");
             GameOver();
         }
 
@@ -122,7 +120,6 @@ public class PlayManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("해드렸습니다.");
         Time.timeScale = 1.0f;
 
         gameManager.Score.Add(score);
@@ -130,36 +127,39 @@ public class PlayManager : MonoBehaviour
 
         gameManager.bestScore = score > gameManager.bestScore ? score : gameManager.bestScore;
 
-        ChangeScene _changeScene = new ChangeScene();
-
         //목표시간에 달성하지 않았을 때
         if (time < goalTime)
         {
-            StartCoroutine(GivemeDelay(1f));
-
-            _changeScene.ChangeResultBadScene();
+            StartCoroutine(GivemeDelay(5f, 0));
+    
         }
 
         //스코어가 목표치 달성을 실패했을때 
         else if (score < goalScore)
         {
-            StartCoroutine(GivemeDelay(1f));
-            _changeScene.ChangeResultBadScene();
+            StartCoroutine(GivemeDelay(5f, 0));
         }
 
         //스코어가 목표치를 달성했을 때
         else
         {
-            StartCoroutine(GivemeDelay(1f));
-            _changeScene.ChangeResultGoodScene();
+            StartCoroutine(GivemeDelay(5f, 1));
         }
     }
 
-    IEnumerator GivemeDelay(float second)
+    IEnumerator GivemeDelay(float second, int state)
     {
-        yield return new WaitForSeconds(second);
         backGroundController.backGroundImageWidth = fadeContrller.backGroundSprite.bounds.size.x * 2.5f;
         fadeContrller.OnFadaOutandIn();
+        yield return new WaitForSeconds(second);
+        if (state == 0)
+        {
+            ChangeScene.ChangeResultBadScene();
+        }
+        else
+        {
+            ChangeScene.ChangeResultGoodScene();
+        }
     }
 
     //난이도 증가

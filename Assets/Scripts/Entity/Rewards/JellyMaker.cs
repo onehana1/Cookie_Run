@@ -108,7 +108,7 @@ public class JellyMaker : MonoBehaviour
             case < 20:
                 jellyObj = jellyPrefab3;
                 break;
-            case < 50:
+            case < 40:
                 jellyObj = jellyPrefab2;
                 break;
             default:
@@ -125,10 +125,10 @@ public class JellyMaker : MonoBehaviour
     {
         switch (type)
         {
-            case < 20:
+            case > 80:
                 coinObj = coinPrefab3;
                 break;
-            case < 50:
+            case > 60:
                 coinObj = coinPrefab2;
                 break;
             default:

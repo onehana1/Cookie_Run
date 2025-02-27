@@ -167,6 +167,9 @@ public class ScholarController : BaseController
     {
         if (baseState.isDead || studySkill.isQuizActive) yield break;
 
+        baseState.StartInvincibility(invinvibleTime);
+        StartBlinkEffect(invinvibleTime);
+
         Debug.Log("OX ƒ˚¡Ó Ω√¿€!");
 
         quizING += Time.deltaTime;
@@ -190,6 +193,7 @@ public class ScholarController : BaseController
 
         baseState.StartInvincibility(invinvibleTime);
         StartBlinkEffect(invinvibleTime);
+
 
     }
 
