@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScholarController : BaseController
@@ -8,6 +9,8 @@ public class ScholarController : BaseController
     [SerializeField] private float skillCollTime; // 스킬 쿨타임
     [SerializeField] private float skillDurationTime = 5;
     [SerializeField] private float quizCooldownTime = 10f;  // ox
+
+
 
 
 
@@ -23,7 +26,10 @@ public class ScholarController : BaseController
     private float quizCooldown = 0; // ox
 
     private bool isSkillActive = false;
- 
+
+    private float quizING = 0;
+
+
 
 
     public event System.Action<float> OnSkillUsed;  // 스킬 이벤트
@@ -41,9 +47,13 @@ public class ScholarController : BaseController
         originalColliderSize = new Vector2(0.6f, 0.82f);
         slideColliderSize = new Vector2(originalColliderSize.x, 0.5f);
         skillCooldown = skillCollTime;
+        quizCooldown = quizCooldownTime;
+
         quizCooldown = 0;
 
-        StartCoroutine(DelayedAutoSkillStart());
+        // StartCoroutine(DelayedAutoSkillStart());
+        StartCoroutine(AutoQuizSkill());
+
     }
 
     protected override void Update()
@@ -88,7 +98,7 @@ public class ScholarController : BaseController
         }
     }
 
-    private IEnumerator AutoSkill()
+    private IEnumerator AutoSkill() // 기존 스킬
     {
         Debug.Log("AutoSkill 시작");
         while (isAutoSkillActive)
@@ -98,10 +108,28 @@ public class ScholarController : BaseController
             if (skillCooldown <= 0)
             {
                 Debug.Log("AutoSkill");
+                quizING = 0;
                 yield return StartCoroutine(Skill());
             }
 
             yield return new WaitForSeconds(skillCooldown > 0 ? skillCooldown : 0.1f);
+        }
+    }
+
+    private IEnumerator AutoQuizSkill()
+    {
+        Debug.Log("AutoQuizSkill 시작");
+        while (isAutoSkillActive)
+        {
+            if (baseState.isDead) yield break;
+
+            if (quizCooldown <= 0)
+            {
+                Debug.Log("AutoQuizSkill");
+                yield return StartCoroutine(OXQuizSkill());
+            }
+
+            yield return new WaitForSeconds(quizCooldown > 0 ? quizCooldown : 0.1f);
         }
     }
 
@@ -140,22 +168,29 @@ public class ScholarController : BaseController
         if (baseState.isDead || studySkill.isQuizActive) yield break;
 
         Debug.Log("OX 퀴즈 시작!");
-        quizCooldown = quizCooldownTime;
 
+        quizING += Time.deltaTime;
+        baseState.isInvincible = true;
+        animationHandler.SetSkill(true);
+        isSkillActive = true;
         UIManager.Instance.SetQuizMode(true);
+
+        quizCooldown = quizCooldownTime;        // 쿨타임 설정
+        OnQuizUsed?.Invoke(quizCooldownTime);   // 쿨타임 ui에 보내주고
 
         yield return StartCoroutine(studySkill.StartQuiz(studySkill.quizDuration));
 
-        Debug.Log("코루틴 이후");
-
-        OnQuizUsed?.Invoke(quizCooldownTime);
-
-        yield return new WaitForSeconds(studySkill.quizDuration);
 
         studySkill.isQuizActive = false;
         UIManager.Instance.SetQuizMode(false); // ui 원래대로
 
-        Debug.Log("OX 퀴즈 종료!");
+        animationHandler.SetSkill(false);
+        baseState.isInvincible = false;
+        isSkillActive = false;
+
+        baseState.StartInvincibility(invinvibleTime);
+        StartBlinkEffect(invinvibleTime);
+
     }
 
 
@@ -164,6 +199,7 @@ public class ScholarController : BaseController
     {
         return skillCollTime;
     }
+
 
     public float GetQuizCooldownTime()
     {
