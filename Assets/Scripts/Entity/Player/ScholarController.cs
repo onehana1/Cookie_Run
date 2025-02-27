@@ -48,6 +48,7 @@ public class ScholarController : BaseController
         slideColliderSize = new Vector2(0.63f, 0.4f);
         slideColliderOffset = new Vector2(0, -0.03f);
         skillCooldown = skillCollTime;
+
         quizCooldown = quizCooldownTime;
 
         quizCooldown = 0;
