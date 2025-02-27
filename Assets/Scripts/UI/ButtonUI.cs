@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BottonUI : MonoBehaviour
+public class ButtonUI : MonoBehaviour
 {
     public BaseController baseController;
     private bool isQuizMode = false;
@@ -27,8 +27,18 @@ public class BottonUI : MonoBehaviour
         UpdateButtonState(true); // 초기 버튼 상태 설정
     }
 
+    private void Update()
+    {
+        if (isQuizMode)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                return;
+            }
+        }
+    }
 
-    public void JumpBottonClick()
+    public void JumpButtonClick()
     {
         if (baseController.baseState.isDead) return;
         if (!baseController.baseState.isJump)
@@ -37,7 +47,7 @@ public class BottonUI : MonoBehaviour
             baseController.DoubleJump();
     }
 
-    public void SlideBottonDown()
+    public void SlideButtonDown()
     {
         if (baseController.baseState.isDead) return;
 
@@ -74,6 +84,7 @@ public class BottonUI : MonoBehaviour
         xButton.gameObject.SetActive(isQuizActive);
         jumpButton.gameObject.SetActive(!isQuizActive);
         slideButton.gameObject.SetActive(!isQuizActive);
+        isQuizMode = isQuizActive;
     }
 
 }

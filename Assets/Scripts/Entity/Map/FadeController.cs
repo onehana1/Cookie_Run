@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FadeContrller : MonoBehaviour
+public class FadeController : MonoBehaviour
 {
     public GameObject fadePanel;
     public GameObject backGroundImage;

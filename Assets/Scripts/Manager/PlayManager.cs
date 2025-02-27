@@ -10,7 +10,7 @@ public class PlayManager : MonoBehaviour
     public static PlayManager Instance;
 
     public BackGroundController backGroundController;
-    public FadeContrller fadeContrller;
+    public FadeController fadeContrller;
     public GameManager gameManager;
     public BaseState playerState;
 
@@ -54,7 +54,7 @@ public class PlayManager : MonoBehaviour
         }
 
         playerState = GameObject.FindWithTag("Player").GetComponent<BaseState>();
-        fadeContrller = GetComponent<FadeContrller>();
+        fadeContrller = GetComponent<FadeController>();
 
         hp = playerState.hp;
         maxHp = playerState.maxHp;

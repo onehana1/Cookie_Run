@@ -67,7 +67,9 @@ public class ScholarController : BaseController
         }
 
         if (!studySkill.isQuizActive && quizCooldown > 0)
+        {
             quizCooldown -= Time.deltaTime;
+        }
 
         AddHandleAction();
     }

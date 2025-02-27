@@ -116,7 +116,7 @@ public class BaseState : MonoBehaviour
     public IEnumerator InvincibilityTimer(float duration)
     {
         yield return new WaitForSeconds(duration);
-        isInvincible = false;
+         isInvincible = false;
     }
 
     public void SetMoveSpeed(float speed)
