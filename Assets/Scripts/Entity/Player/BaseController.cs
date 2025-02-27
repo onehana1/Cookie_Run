@@ -249,7 +249,7 @@ public class BaseController : MonoBehaviour
 
     private Coroutine biggerCoroutine;
 
-    private void SetBigger(float itemTime)
+    public void SetBigger(float itemTime)
     {
 
         if (baseState.isBigger)
