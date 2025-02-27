@@ -99,12 +99,16 @@ public class PlayManager : MonoBehaviour
     {
         playTime += Time.unscaledDeltaTime;
         time += Time.unscaledDeltaTime;
-        if (time >= goalTime && !isEnd) 
-        { 
-            isEnd = true;
-            GameOver();
-        }
 
+        //스토리모드의 엔딩조건
+        if (gameManager.CurrentMode == Mode.Story)
+        {
+            if (time >= goalTime && !isEnd)
+            {
+                isEnd = true;
+                GameOver();
+            }
+        }
         UpdateDifficult();
     }
 
@@ -127,7 +131,6 @@ public class PlayManager : MonoBehaviour
     }
 
     //게임 오버시 코인과 점수를 게임매니저 인스턴스에 저장해줌
-
     public void GameOver()
     {
         Time.timeScale = 1.0f;
@@ -136,6 +139,7 @@ public class PlayManager : MonoBehaviour
         gameManager.preCoin = coin;
         gameManager.totalCoin += coin;
 
+        //스토리모드 
         gameManager.bestScore = score > gameManager.bestScore ? score : gameManager.bestScore;
         if (gameManager.CurrentMode == Mode.Story)
         {
