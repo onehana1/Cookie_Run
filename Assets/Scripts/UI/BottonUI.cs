@@ -24,7 +24,7 @@ public class BottonUI : MonoBehaviour
         oButton.onClick.AddListener(() => UIManager.Instance.SelectOXAnswer(true));
         xButton.onClick.AddListener(() => UIManager.Instance.SelectOXAnswer(false));
 
-        UpdateButtonState(false); // 초기 버튼 상태 설정
+        UpdateButtonState(true); // 초기 버튼 상태 설정
     }
 
 
