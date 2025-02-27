@@ -2608,6 +2608,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!82 &602681016 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3427695260305156641, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
+  m_PrefabInstance: {fileID: 1657232507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &605129476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5678,7 +5683,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 1, g: 0.98823535, b: 0.87843144, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -8700,6 +8705,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 9150340635301772121, guid: 248192e537a9e7448a54f3345e4a9be9, type: 3}
+      propertyPath: destoryEffect
+      value: 
+      objectReference: {fileID: 602681016}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

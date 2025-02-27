@@ -161,6 +161,7 @@ public class StudySkill : MonoBehaviour
         if (playerAnswer == currentQuestion.Value)
         {
             Debug.Log("정답!");
+            SoundMananger.instance.PlaySkillCorrectEffect();
             checkImage.SetActive(true);
             CorrectImageDelay(1f, true);
             correctImage.SetActive(true);
@@ -170,6 +171,7 @@ public class StudySkill : MonoBehaviour
         else
         {
             Debug.Log("오답!");
+            SoundMananger.instance.PlaySkillIncorrectEffect();
             checkImage.SetActive(true);
             CorrectImageDelay(1f, false);
             correctImage.SetActive(false);

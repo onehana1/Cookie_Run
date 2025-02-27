@@ -23,9 +23,21 @@ public class SoundMananger : MonoBehaviour
     [SerializeField] private AudioSource obstacleEffect;
     [SerializeField] private AudioSource jellyEffect;
     [SerializeField] private AudioSource coinEffect;
-    [SerializeField] private AudioSource itemEffect;
+    [SerializeField] private AudioSource healEffect;
     [SerializeField] private AudioSource clickEffect;
     [SerializeField] private AudioSource sceneEffect;
+    [SerializeField] private AudioSource magnetEffect;
+    [SerializeField] private AudioSource giantEffect;
+    [SerializeField] private AudioSource gallopingEffect;
+    [SerializeField] private AudioSource resqueEffect;
+    [SerializeField] private AudioSource choiceEffect;
+    [SerializeField] private AudioSource skillCorrectEffect;
+    [SerializeField] private AudioSource skillIncorrectEffect;
+    [SerializeField] private AudioSource lobbyEffect;
+    [SerializeField] private AudioSource pauseEffect;
+    [SerializeField] private AudioSource clearNPCEffect;
+    [SerializeField] private AudioSource destoryEffect;
+    [SerializeField] private AudioSource[] teacherEffect;
 
     [Header("Audio Mixer")]
     [SerializeField] private AudioMixer audioMixer;
@@ -72,7 +84,7 @@ public class SoundMananger : MonoBehaviour
                 titleEffect.Stop();
             }
         }
-        if(scene.name == name)
+        if (scene.name == name)
         {
             PlayClearBGM();
         }
@@ -135,9 +147,9 @@ public class SoundMananger : MonoBehaviour
         obstacleEffect.Play();
     }
 
-    public void PlayJellyEffect() 
-    { 
-        jellyEffect.Play(); 
+    public void PlayJellyEffect()
+    {
+        jellyEffect.Play();
     }
 
     public void PlayCoinEffect()
@@ -145,9 +157,9 @@ public class SoundMananger : MonoBehaviour
         coinEffect.Play();
     }
 
-    public void PlayItemEffect()
+    public void PlayHealEffect()
     {
-        itemEffect.Play();  
+        healEffect.Play();
     }
 
     public void PlayClickEffect()
@@ -158,5 +170,66 @@ public class SoundMananger : MonoBehaviour
     public void PlaySceneEffect()
     {
         sceneEffect.Play();
+    }
+
+    public void PlayMagnetEffect()
+    {
+        magnetEffect.Play();
+    }
+
+    public void PlayGiantEffect()
+    {
+        giantEffect.Play();
+    }
+
+    public void PlayGallopingEffect()
+    {
+        gallopingEffect.Play();
+    }
+
+    public void PlayResqueEffect()
+    {
+        resqueEffect.Play();
+    }
+
+    public void PlayChoiceEffect()
+    {
+        choiceEffect.Play();
+    }
+
+    public void PlaySkillCorrectEffect()
+    {
+        skillCorrectEffect.Play();
+    }
+
+    public void PlaySkillIncorrectEffect()
+    {
+        skillIncorrectEffect.Play();
+    }
+
+    public void PlayLobbyEffect()
+    {
+        lobbyEffect.Play();
+    }
+
+    public void PlayPauseEffect()
+    {
+        pauseEffect.Play();
+    }
+
+    public void PlayTeacherEffect()
+    {
+        int num = UnityEngine.Random.Range(0, teacherEffect.Length);
+        teacherEffect[num].Play();
+    }
+
+    public void PlayDestroyEffect()
+    {
+        destoryEffect.Play();
+    }
+
+    public void PlayNPCEffect()
+    {
+        clearNPCEffect.Play();
     }
 }

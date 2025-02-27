@@ -11,7 +11,7 @@ public class Galloping : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SoundMananger.instance.PlayItemEffect();
+            SoundMananger.instance.PlayGallopingEffect();
             PlayerGalloping playerGalloping = other.GetComponent<PlayerGalloping>();
             if (playerGalloping != null)
             {
