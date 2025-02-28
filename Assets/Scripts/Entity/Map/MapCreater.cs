@@ -58,7 +58,7 @@ public class MapCreater : MonoBehaviour
         maps.Enqueue(go);
     }
 
-    private void CreateEndMap()
+    private void CreateEndMap()//마지막 맵 생성
     {
         GameObject go = Instantiate(endMap, this.transform);
         go.transform.position = lastEndAnchor.position;

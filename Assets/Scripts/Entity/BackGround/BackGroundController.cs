@@ -15,7 +15,7 @@ public class BackGroundController : MonoBehaviour
     public float backGroundLayer2MoveSpeed;//배경 오브젝트2 이동속도
     public float landMoveSpeed;//땅 이동속도;
 
-    public float backGroundImageWidth;
+    public float backGroundImageWidth;//배경 이미지 넓이
     private float backGroundObjectWidth;
 
     public GameObject backGroundImage;
@@ -88,7 +88,7 @@ public class BackGroundController : MonoBehaviour
                 if (tf.transform.position.x <= objectPivot)//일정 위치에 도달하면
                 {
                     tf.transform.position = new Vector3(tf.transform.position.x + width * (transforms.Length - 1),
-                        tf.transform.position.y, 0);//위치 조정
+                                                        tf.transform.position.y, 0);//위치 조정
                 }
             }
         }

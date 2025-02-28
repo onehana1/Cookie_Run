@@ -14,12 +14,12 @@ public class FixObstacle : BaseObstacle
 
     private void FixedUpdate()
     {
-        if (animator != null && !isMove && transform.position.x < 5)
+        if (animator != null && !isMove && transform.position.x < 5) //애니메이션 실행
         {
             isMove = true;
             animator.SetTrigger("Move");
         } 
-        else if(transform.position.x < -13)
+        else if(transform.position.x < -13)//애니메이션 삭제
         {
             Destroy(this.gameObject);
         }
