@@ -12,7 +12,19 @@ public enum Mode
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    private GameManager _instance;
+
+    public GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new GameObject("GameManager").AddComponent<GameManager>();
+            }
+            return _instance;
+        }
+    }
 
     //전 게임에서 획득한 코인, 스코어 기록
     public int preCoin;
@@ -27,9 +39,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (_instance == null)
         {
-            Instance = this;
+            _instance = this;
             CurrentMode = Mode.Count;
             totalCoin = 0;
             bestScore = 0;
